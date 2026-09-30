@@ -6,6 +6,10 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). The
 
 ## [Unreleased]
 
+## [0.1.0] - 2026-09-30
+
+First release.
+
 ### Added
 
 - Company search client (Recherche d'entreprises): `rechercher`, `parSiren` and `parSiret`, with typed objects `Entreprise`, `Etablissement`, `Dirigeant` and `SearchResult`.
@@ -16,3 +20,6 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). The
 - Laravel validation rules: `Siren`, `Siret` and `EntrepriseExiste`.
 - Test fakes and factories: `FakeApiGouv`, `FakeEntreprises`, `FakeAdresse` and `Factories`.
 - Documentation in English and French.
+
+[Unreleased]: https://github.com/kaveraa/api-gouv-publique-fr/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/kaveraa/api-gouv-publique-fr/releases/tag/v0.1.0
