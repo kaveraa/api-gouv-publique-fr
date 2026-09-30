@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="art/banner.svg" alt="api-gouv-publique-fr - Typed PHP client for French public APIs" width="100%">
+</p>
+
 # api-gouv-publique-fr
 
 Read this in French: [README.fr.md](README.fr.md)

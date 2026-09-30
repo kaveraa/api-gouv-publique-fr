@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="art/banner.svg" alt="api-gouv-publique-fr - Client PHP typé pour les API publiques françaises" width="100%">
+</p>
+
 # api-gouv-publique-fr
 
 Lire en anglais : [README.md](README.md)
