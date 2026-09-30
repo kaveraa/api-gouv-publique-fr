@@ -10,7 +10,7 @@
 
 **English** - [Français](https://github.com/kaveraa/api-gouv-publique-fr/blob/main/README.fr.md)
 
-A typed PHP client for French public APIs. Version 1 covers company search ("Recherche d'entreprises") and address search (the BAN, served by the Geoplateforme). Version 0.2 adds the Geo API (communes, departements, regions, EPCI). It works in any PHP project. It has an optional bridge for Laravel.
+A typed PHP client for French public APIs. Version 0.1 covers company search ("Recherche d'entreprises") and address search (the BAN, served by the Geoplateforme). Version 0.2 adds the Geo API (communes, departements, regions, EPCI). It works in any PHP project. It has an optional bridge for Laravel.
 
 This is an unofficial project. It is not affiliated with the French State.
 

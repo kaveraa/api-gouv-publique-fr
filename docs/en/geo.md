@@ -39,6 +39,8 @@ $here = ApiGouv::geo()->communeParCoordonnees(49.897442, 2.290084); // Amiens, o
 | `centre` | ?Coordonnees | The centre point, with `latitude` and `longitude`. |
 | `score` | ?float | Match score of a search by name. |
 
+`centre` is a `Kaveraa\ApiGouv\Adresse\Coordonnees`, the same class the address client uses (with `latitude` and `longitude`).
+
 `score` is only set by `rechercherCommunes`. It is `null` for all other methods.
 
 ## Departements and regions
@@ -125,7 +127,7 @@ try {
 
 ## Cache
 
-The Geo API cache time is 86400 seconds (one day). In Laravel, change it with `geo.cache_ttl`. The lists of departements and regions rarely change, so a long time is fine. An empty result is cached like any successful answer. The cache is off by default. See [Errors, cache and rate limit](errors-cache-rate-limit.md).
+The Geo API cache time is 86400 seconds (one day) by default in Laravel. In plain PHP, `Requester` uses the `$ttl` you pass (3600 by default). In Laravel, change it with `geo.cache_ttl`. The lists of departements and regions rarely change, so a long time is fine. An empty result is cached like any successful answer. The cache is off by default. See [Errors, cache and rate limit](errors-cache-rate-limit.md).
 
 ## Use cases
 
