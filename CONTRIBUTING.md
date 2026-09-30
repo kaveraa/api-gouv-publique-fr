@@ -49,6 +49,13 @@ Fixtures are real API answers saved in `tests/fixtures`. To add one:
 2. Remove any personal data that you do not need.
 3. Load it in a test with `loadFixture('entreprises_new.json')` and a `FakeTransport`.
 
+## Change the banner
+
+The README files load `art/banner.svg` through a URL that names a commit, not the `main` branch. Packagist serves README images through a CDN that caches a branch URL for a year, so a new banner would never show there. When you change the banner:
+
+1. Commit the new `art/banner.svg`.
+2. Put that commit in the image URL of `README.md` and `README.fr.md`, in a second commit.
+
 ## Code of conduct
 
 Be kind and be clear. Give people the benefit of the doubt.

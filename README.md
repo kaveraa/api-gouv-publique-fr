@@ -1,6 +1,6 @@
 # API Gouv Publique FR
 
-<p align="center"><img src="https://raw.githubusercontent.com/kaveraa/api-gouv-publique-fr/main/art/banner.svg" alt="API Gouv Publique FR" width="100%"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/kaveraa/api-gouv-publique-fr/36c7cc6/art/banner.svg" alt="API Gouv Publique FR" width="100%"></p>
 
 [![Tests](https://github.com/kaveraa/api-gouv-publique-fr/actions/workflows/tests.yml/badge.svg)](https://github.com/kaveraa/api-gouv-publique-fr/actions/workflows/tests.yml)
 [![Packagist](https://img.shields.io/packagist/v/kaveraa/api-gouv-publique-fr.svg)](https://packagist.org/packages/kaveraa/api-gouv-publique-fr)
