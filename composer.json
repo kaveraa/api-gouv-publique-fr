@@ -3,6 +3,14 @@
     "description": "Typed PHP client for French public APIs (company search and address) with a Laravel bridge. Unofficial.",
     "type": "library",
     "license": "MIT",
+    "homepage": "https://github.com/kaveraa/api-gouv-publique-fr",
+    "authors": [
+        { "name": "Augustin Kavera", "homepage": "https://github.com/kaveraa" }
+    ],
+    "support": {
+        "issues": "https://github.com/kaveraa/api-gouv-publique-fr/issues",
+        "source": "https://github.com/kaveraa/api-gouv-publique-fr"
+    },
     "keywords": ["api-gouv", "siren", "siret", "adresse", "ban", "laravel", "france", "open-data"],
     "require": {
         "php": "^8.3",

@@ -13,7 +13,7 @@ jobs:
   live:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: shivammathur/setup-php@v2
         with:
           php-version: '8.4'
@@ -26,6 +26,13 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh issue create --repo "${{ github.repository }}" \
-            --title "Live API tests failed" \
-            --body "The weekly live tests failed. An API may have changed. See ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          run_url="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          open=$(gh issue list --repo "${{ github.repository }}" --state open --search "Live API tests failed in:title" --json number --jq 'length')
+          if [ "$open" = "0" ]; then
+            gh issue create --repo "${{ github.repository }}" \
+              --title "Live API tests failed" \
+              --body "The weekly live tests failed. An API may have changed. See $run_url"
+          else
+            number=$(gh issue list --repo "${{ github.repository }}" --state open --search "Live API tests failed in:title" --json number --jq '.[0].number')
+            gh issue comment "$number" --repo "${{ github.repository }}" --body "The live tests failed again. See $run_url"
+          fi
