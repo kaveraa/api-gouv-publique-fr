@@ -36,6 +36,11 @@ final class Factories
     /** @param array{siren?: string, nomComplet?: string, sigle?: ?string, activitePrincipale?: ?string, categorie?: ?string, natureJuridique?: ?string, etatAdministratif?: ?string, dateCreation?: ?DateTimeImmutable, trancheEffectif?: ?string, nombreEtablissements?: int, nombreEtablissementsOuverts?: int, siege?: ?Etablissement, dirigeants?: list<Dirigeant>, etablissementsCorrespondants?: list<Etablissement>} $attributes Constructor argument names of the DTO. */
     public static function entreprise(array $attributes = []): Entreprise
     {
+        // A changed SIREN must not keep the default head office of another company.
+        if (isset($attributes['siren']) && ! isset($attributes['siege'])) {
+            $attributes['siege'] = self::etablissement(['siren' => $attributes['siren'], 'siret' => $attributes['siren'].'00040']);
+        }
+
         return new Entreprise(...array_merge([
             'siren' => '812487973',
             'nomComplet' => 'ACME',

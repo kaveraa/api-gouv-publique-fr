@@ -80,6 +80,9 @@ final class Requester
             }
         }
 
-        return substr(trim($response->body), 0, 200);
+        $body = trim($response->body);
+
+        // Cut on a character boundary; fall back to bytes when the body is not UTF-8.
+        return preg_match('/^.{0,200}/su', $body, $match) === 1 ? $match[0] : substr($body, 0, 200);
     }
 }

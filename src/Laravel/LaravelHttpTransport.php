@@ -35,7 +35,7 @@ final class LaravelHttpTransport implements Transport
                     throw: false,
                 )
                 ->get($url, $query);
-        } catch (ConnectionException $e) {
+        } catch (ConnectionException|RequestException $e) {
             throw new ApiException('Network error: '.$e->getMessage(), 0, $e);
         }
 

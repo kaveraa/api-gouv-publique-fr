@@ -77,7 +77,7 @@ it('rejects an empty query and a limit outside 1..50', function (string $query, 
 
 it('rejects coordinates outside the valid range', function (float $lat, float $lon) {
     adresseClient(new FakeTransport)->geocoderInverse($lat, $lon);
-})->with([[91.0, 0.0], [-91.0, 0.0], [0.0, 181.0], [0.0, -181.0]])->throws(InvalidArgumentException::class);
+})->with([[91.0, 0.0], [-91.0, 0.0], [0.0, 181.0], [0.0, -181.0], [NAN, 0.0], [0.0, NAN], [INF, 0.0], [0.0, -INF]])->throws(InvalidArgumentException::class);
 
 it('raises InvalidResponseException for a feature without a point', function () {
     $broken = '{"type":"FeatureCollection","features":[{"type":"Feature","properties":{"label":"x"}}]}';

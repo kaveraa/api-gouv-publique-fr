@@ -12,6 +12,13 @@ it('reads text, dropping empty and non scalar values', function () {
         ->and(Payload::text(null))->toBeNull();
 });
 
+it('reads booleans as missing text', function () {
+    expect(Payload::text(false))->toBeNull()
+        ->and(Payload::text(true))->toBeNull()
+        ->and(Payload::text(0))->toBe('0')
+        ->and(Payload::text(1.5))->toBe('1.5');
+});
+
 it('reads strings, ints and floats with a fallback', function () {
     expect(Payload::string(5))->toBe('5')
         ->and(Payload::string(null, 'x'))->toBe('x')

@@ -31,6 +31,29 @@ it('finds stored companies by SIREN, SIRET and name, and records the calls', fun
         ->and($fake->calls)->toHaveCount(4);
 });
 
+it('derives the default head office from an overridden SIREN', function () {
+    $first = Factories::entreprise(['siren' => '123456782', 'nomComplet' => 'FIRST']);
+    $second = Factories::entreprise(['siren' => '987654321', 'nomComplet' => 'SECOND']);
+    $fake = (new FakeEntreprises)->with($first, $second);
+
+    expect($second->siege?->siren)->toBe('987654321')
+        ->and($second->siege?->siret)->toBe('98765432100040')
+        ->and($fake->parSiret($second->siege->siret))->toBe($second->siege);
+});
+
+it('keeps a given head office untouched', function () {
+    $siege = Factories::etablissement(['siret' => '11111111100011']);
+
+    expect(Factories::entreprise(['siren' => '987654321', 'siege' => $siege])->siege)->toBe($siege);
+});
+
+it('rejects a malformed SIREN or SIRET like the real client', function (string $value) {
+    $fake = new FakeEntreprises;
+
+    expect(fn () => $fake->parSiren($value))->toThrow(InvalidArgumentException::class, 'A SIREN must have 9 digits.')
+        ->and(fn () => $fake->parSiret($value))->toThrow(InvalidArgumentException::class, 'A SIRET must have 14 digits.');
+})->with(['', '12345', 'abcdefghi', '1234567890']);
+
 it('throws NotFoundException for an unknown SIREN or SIRET', function () {
     $fake = new FakeEntreprises;
 

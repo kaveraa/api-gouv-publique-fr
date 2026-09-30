@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Kaveraa\ApiGouv\Support;
 
+use InvalidArgumentException;
+
 final class Identifiers
 {
     // La Poste SIRET values do not follow Luhn; their digit sum must be a multiple of 5.
@@ -13,6 +15,17 @@ final class Identifiers
     {
         // The u flag also removes U+00A0 and U+202F. Invalid UTF-8 gives null, so it becomes '' and is rejected.
         return (string) preg_replace('/\s+/u', '', $value);
+    }
+
+    /** Removes spaces, then requires exactly $length digits. */
+    public static function digitsOrFail(string $value, int $length, string $label): string
+    {
+        $digits = self::normalize($value);
+        if (! preg_match('/^\d{'.$length.'}$/', $digits)) {
+            throw new InvalidArgumentException("A {$label} must have {$length} digits.");
+        }
+
+        return $digits;
     }
 
     public static function isSiren(mixed $value): bool

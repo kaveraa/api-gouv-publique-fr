@@ -12,6 +12,7 @@ use Kaveraa\ApiGouv\Entreprises\SearchResult;
 use Kaveraa\ApiGouv\Exceptions\NotFoundException;
 use Kaveraa\ApiGouv\Support\Identifiers;
 
+/** Search filters and paging are ignored; only the text is matched. */
 final class FakeEntreprises implements EntreprisesApi
 {
     /** @var list<array{0: string, 1: string}> */
@@ -42,7 +43,7 @@ final class FakeEntreprises implements EntreprisesApi
 
     public function parSiren(string $siren): Entreprise
     {
-        $siren = Identifiers::normalize($siren);
+        $siren = Identifiers::digitsOrFail($siren, 9, 'SIREN');
         $this->calls[] = ['parSiren', $siren];
 
         foreach ($this->entreprises as $entreprise) {
@@ -56,7 +57,7 @@ final class FakeEntreprises implements EntreprisesApi
 
     public function parSiret(string $siret): Etablissement
     {
-        $siret = Identifiers::normalize($siret);
+        $siret = Identifiers::digitsOrFail($siret, 14, 'SIRET');
         $this->calls[] = ['parSiret', $siret];
 
         foreach ($this->entreprises as $entreprise) {

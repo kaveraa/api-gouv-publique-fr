@@ -7,10 +7,10 @@ namespace Kaveraa\ApiGouv\Support;
 /** Reads loosely typed decoded JSON (or config) values into precise types. */
 final class Payload
 {
-    /** Empty strings count as missing. */
+    /** Empty strings and booleans count as missing. */
     public static function text(mixed $value): ?string
     {
-        return is_scalar($value) && $value !== '' ? (string) $value : null;
+        return (is_string($value) || is_int($value) || is_float($value)) && $value !== '' ? (string) $value : null;
     }
 
     public static function string(mixed $value, string $default = ''): string

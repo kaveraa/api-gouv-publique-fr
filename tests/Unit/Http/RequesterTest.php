@@ -66,6 +66,17 @@ it('maps other errors to ApiException and keeps the api message', function () {
     }
 });
 
+it('cuts a long plain error body on a character boundary', function () {
+    $transport = new FakeTransport(FakeTransport::json(str_repeat("\u{E9}", 300), 500));
+
+    try {
+        requester($transport)->getJson('x');
+        $this->fail('Expected ApiException');
+    } catch (ApiException $e) {
+        expect(preg_match('//u', $e->getMessage()))->toBe(1);
+    }
+});
+
 it('maps 5xx to ApiException', function () {
     requester(new FakeTransport(FakeTransport::json('oops', 503)))->getJson('x');
 })->throws(ApiException::class);

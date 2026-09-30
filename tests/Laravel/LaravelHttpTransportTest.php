@@ -2,8 +2,10 @@
 
 declare(strict_types=1);
 
+use GuzzleHttp\Psr7\Response;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\Request;
+use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Facades\Http;
 use Kaveraa\ApiGouv\Exceptions\ApiException;
 use Kaveraa\ApiGouv\Laravel\LaravelHttpTransport;
@@ -54,3 +56,9 @@ it('wraps connection failures in ApiException', function () {
 
     (new LaravelHttpTransport(retryDelayMs: 0))->get('https://example.test/x');
 })->throws(ApiException::class, 'cannot connect');
+
+it('wraps request exceptions in ApiException', function () {
+    Http::fake(fn () => throw new RequestException(new Illuminate\Http\Client\Response(new Response(500))));
+
+    (new LaravelHttpTransport(retryDelayMs: 0))->get('https://example.test/x');
+})->throws(ApiException::class, 'Network error');

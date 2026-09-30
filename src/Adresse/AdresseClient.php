@@ -24,7 +24,7 @@ final class AdresseClient implements AdresseApi
 
     public function geocoderInverse(float $latitude, float $longitude): ?Adresse
     {
-        if ($latitude < -90 || $latitude > 90 || $longitude < -180 || $longitude > 180) {
+        if (! is_finite($latitude) || ! is_finite($longitude) || abs($latitude) > 90 || abs($longitude) > 180) {
             throw new InvalidArgumentException('The coordinates are out of range.');
         }
 
