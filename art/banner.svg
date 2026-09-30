@@ -12,12 +12,14 @@
   <text x="80" y="226" font-family="'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="28" fill="#b9c8e2">Typed PHP client for French public APIs</text>
 
   <g font-family="'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="20" fill="#e6edf9">
-    <rect x="80" y="262" width="196" height="44" rx="22" fill="#16325a" stroke="#2c4a7a"/>
-    <text x="178" y="291" text-anchor="middle">Company search</text>
-    <rect x="292" y="262" width="176" height="44" rx="22" fill="#16325a" stroke="#2c4a7a"/>
-    <text x="380" y="291" text-anchor="middle">Address (BAN)</text>
-    <rect x="484" y="262" width="196" height="44" rx="22" fill="#16325a" stroke="#2c4a7a"/>
-    <text x="582" y="291" text-anchor="middle">Laravel bridge</text>
+    <rect x="80" y="262" width="180" height="44" rx="22" fill="#16325a" stroke="#2c4a7a"/>
+    <text x="170" y="291" text-anchor="middle">Company search</text>
+    <rect x="276" y="262" width="160" height="44" rx="22" fill="#16325a" stroke="#2c4a7a"/>
+    <text x="356" y="291" text-anchor="middle">Address (BAN)</text>
+    <rect x="452" y="262" width="104" height="44" rx="22" fill="#16325a" stroke="#2c4a7a"/>
+    <text x="504" y="291" text-anchor="middle">Geo API</text>
+    <rect x="572" y="262" width="170" height="44" rx="22" fill="#16325a" stroke="#2c4a7a"/>
+    <text x="657" y="291" text-anchor="middle">Laravel bridge</text>
   </g>
 
   <rect x="772" y="96" width="428" height="208" rx="16" fill="#06111f" stroke="#2c4a7a"/>
