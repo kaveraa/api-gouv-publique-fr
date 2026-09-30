@@ -13,6 +13,8 @@ use Kaveraa\ApiGouv\ApiGouvClient;
 use Kaveraa\ApiGouv\Cache\ResponseCache;
 use Kaveraa\ApiGouv\Entreprises\EntreprisesApi;
 use Kaveraa\ApiGouv\Entreprises\EntreprisesClient;
+use Kaveraa\ApiGouv\Geo\GeoApi;
+use Kaveraa\ApiGouv\Geo\GeoClient;
 use Kaveraa\ApiGouv\Http\Requester;
 use Kaveraa\ApiGouv\Http\Transport;
 use Kaveraa\ApiGouv\Support\Payload;
@@ -30,13 +32,15 @@ final class ApiGouvServiceProvider extends ServiceProvider
         ));
 
         $this->app->singleton(ApiGouvClient::class, fn (Application $app) => new ApiGouvClient(
-            new EntreprisesClient($this->requester($app, 'entreprises', 3600)),
-            new AdresseClient($this->requester($app, 'adresse', 86400)),
+            new EntreprisesClient($this->requester($app, 'entreprises', 3600, 'https://recherche-entreprises.api.gouv.fr')),
+            new AdresseClient($this->requester($app, 'adresse', 86400, 'https://data.geopf.fr/geocodage')),
+            new GeoClient($this->requester($app, 'geo', 86400, 'https://geo.api.gouv.fr')),
         ));
 
         // Resolved on each call so ApiGouv::fake() also reaches injected interfaces.
         $this->app->bind(EntreprisesApi::class, fn (Application $app) => $app->make(ApiGouvClient::class)->entreprises());
         $this->app->bind(AdresseApi::class, fn (Application $app) => $app->make(ApiGouvClient::class)->adresse());
+        $this->app->bind(GeoApi::class, fn (Application $app) => $app->make(ApiGouvClient::class)->geo());
     }
 
     public function boot(): void
@@ -49,8 +53,8 @@ final class ApiGouvServiceProvider extends ServiceProvider
         }
     }
 
-    // The default ttl matches config/api-gouv.php, for a config that leaves it unset.
-    private function requester(Application $app, string $api, int $defaultTtl): Requester
+    // The defaults match config/api-gouv.php, for a published config that leaves a key unset.
+    private function requester(Application $app, string $api, int $defaultTtl, string $defaultBaseUrl): Requester
     {
         $cache = null;
         if (config('api-gouv.cache.enabled')) {
@@ -59,7 +63,7 @@ final class ApiGouvServiceProvider extends ServiceProvider
 
         return new Requester(
             $app->make(Transport::class),
-            Payload::string(config("api-gouv.{$api}.base_url")),
+            Payload::text(config("api-gouv.{$api}.base_url")) ?? $defaultBaseUrl,
             $cache,
             Payload::int(config("api-gouv.{$api}.cache_ttl"), $defaultTtl),
         );

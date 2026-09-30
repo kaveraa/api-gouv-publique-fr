@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Kaveraa\ApiGouv\Adresse\AdresseClient;
 use Kaveraa\ApiGouv\Entreprises\EntreprisesClient;
+use Kaveraa\ApiGouv\Geo\GeoClient;
 use Kaveraa\ApiGouv\Http\Psr18Transport;
 use Kaveraa\ApiGouv\Http\Requester;
 use Nyholm\Psr7\Factory\Psr17Factory;
@@ -48,4 +49,22 @@ it('still reverse geocodes a point', function () {
     $client = new AdresseClient(new Requester(liveTransport(), 'https://data.geopf.fr/geocodage'));
 
     expect($client->geocoderInverse(49.897442, 2.290084)?->commune)->toBe('Amiens');
+});
+
+it('still finds a commune by INSEE code', function () {
+    $client = new GeoClient(new Requester(liveTransport(), 'https://geo.api.gouv.fr'));
+
+    expect($client->commune('80021')->nom)->toBe('Amiens');
+});
+
+it('still lists the communes of a postal code', function () {
+    $client = new GeoClient(new Requester(liveTransport(), 'https://geo.api.gouv.fr'));
+
+    expect($client->communesParCodePostal('80300'))->not->toBeEmpty();
+});
+
+it('still finds a region', function () {
+    $client = new GeoClient(new Requester(liveTransport(), 'https://geo.api.gouv.fr'));
+
+    expect($client->region('32')->nom)->toBe('Hauts-de-France');
 });

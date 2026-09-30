@@ -7,6 +7,7 @@ use Illuminate\Support\ServiceProvider;
 use Kaveraa\ApiGouv\Adresse\AdresseApi;
 use Kaveraa\ApiGouv\ApiGouvClient;
 use Kaveraa\ApiGouv\Entreprises\EntreprisesApi;
+use Kaveraa\ApiGouv\Geo\GeoApi;
 use Kaveraa\ApiGouv\Http\Transport;
 use Kaveraa\ApiGouv\Laravel\ApiGouv;
 use Kaveraa\ApiGouv\Laravel\ApiGouvServiceProvider;
@@ -83,4 +84,37 @@ it('publishes the config file and the translations under their tags', function (
         ->and(basename((string) array_key_first($config)))->toBe('api-gouv.php')
         ->and(array_values($lang))->toBe([app()->langPath('vendor/api-gouv')])
         ->and(basename((string) array_key_first($lang)))->toBe('lang');
+});
+
+it('merges the geo config and binds the geo client', function () {
+    expect(config('api-gouv.geo.base_url'))->toBe('https://geo.api.gouv.fr')
+        ->and(config('api-gouv.geo.cache_ttl'))->toBe(86400)
+        ->and(app(GeoApi::class))->toBe(app(ApiGouvClient::class)->geo());
+});
+
+it('finds a commune through the facade with Http::fake', function () {
+    Http::fake(['geo.api.gouv.fr/*' => Http::response(loadFixture('geo_commune.json'))]);
+
+    expect(ApiGouv::geo()->commune('80021')->nom)->toBe('Amiens');
+
+    Http::assertSent(fn ($request) => str_starts_with($request->url(), 'https://geo.api.gouv.fr/communes/80021?fields='));
+});
+
+it('caches geo responses and falls back to the geo ttl when the key is missing', function () {
+    config(['api-gouv.cache.enabled' => true, 'api-gouv.cache.store' => 'array', 'api-gouv.geo.cache_ttl' => null]);
+    app()->forgetInstance(ApiGouvClient::class);
+    Http::fake(['geo.api.gouv.fr/*' => Http::response(loadFixture('geo_regions.json'))]);
+
+    ApiGouv::geo()->regions();
+    ApiGouv::geo()->regions();
+
+    Http::assertSentCount(1);
+});
+
+it('still works when a published config has no geo block', function () {
+    config(['api-gouv.geo' => null]);
+    app()->forgetInstance(ApiGouvClient::class);
+    Http::fake(['geo.api.gouv.fr/*' => Http::response(loadFixture('geo_region.json'))]);
+
+    expect(ApiGouv::geo()->region('32')->nom)->toBe('Hauts-de-France');
 });

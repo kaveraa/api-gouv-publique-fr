@@ -10,6 +10,10 @@ use Kaveraa\ApiGouv\Adresse\Coordonnees;
 use Kaveraa\ApiGouv\Entreprises\Dirigeant;
 use Kaveraa\ApiGouv\Entreprises\Entreprise;
 use Kaveraa\ApiGouv\Entreprises\Etablissement;
+use Kaveraa\ApiGouv\Geo\Commune;
+use Kaveraa\ApiGouv\Geo\Departement;
+use Kaveraa\ApiGouv\Geo\Epci;
+use Kaveraa\ApiGouv\Geo\Region;
 
 final class Factories
 {
@@ -75,6 +79,54 @@ final class Factories
             'type' => 'housenumber',
             'score' => 0.9,
             'coordonnees' => new Coordonnees(latitude: 48.86, longitude: 2.34),
+        ], $attributes));
+    }
+
+    /** @param array{code?: string, nom?: string, codesPostaux?: list<string>, population?: ?int, codeDepartement?: ?string, codeRegion?: ?string, siren?: ?string, codeEpci?: ?string, centre?: ?Coordonnees, score?: ?float} $attributes Constructor argument names of the DTO. */
+    public static function commune(array $attributes = []): Commune
+    {
+        return new Commune(...array_merge([
+            'code' => '80021',
+            'nom' => 'Amiens',
+            'codesPostaux' => ['80000', '80080', '80090'],
+            'population' => 136449,
+            'codeDepartement' => '80',
+            'codeRegion' => '32',
+            'siren' => '218000198',
+            'codeEpci' => '248000531',
+            'centre' => new Coordonnees(latitude: 49.8987, longitude: 2.2847),
+            'score' => null,
+        ], $attributes));
+    }
+
+    /** @param array{code?: string, nom?: string, codeRegion?: ?string} $attributes Constructor argument names of the DTO. */
+    public static function departement(array $attributes = []): Departement
+    {
+        return new Departement(...array_merge([
+            'code' => '80',
+            'nom' => 'Somme',
+            'codeRegion' => '32',
+        ], $attributes));
+    }
+
+    /** @param array{code?: string, nom?: string} $attributes Constructor argument names of the DTO. */
+    public static function region(array $attributes = []): Region
+    {
+        return new Region(...array_merge([
+            'code' => '32',
+            'nom' => 'Hauts-de-France',
+        ], $attributes));
+    }
+
+    /** @param array{code?: string, nom?: string, population?: ?int, codesDepartements?: list<string>, codesRegions?: list<string>} $attributes Constructor argument names of the DTO. */
+    public static function epci(array $attributes = []): Epci
+    {
+        return new Epci(...array_merge([
+            'code' => '248000531',
+            'nom' => 'CA Amiens Métropole',
+            'population' => 182854,
+            'codesDepartements' => ['80'],
+            'codesRegions' => ['32'],
         ], $attributes));
     }
 }

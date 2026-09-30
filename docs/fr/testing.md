@@ -4,7 +4,7 @@ Le paquet fournit des faux pour que vos tests n'appellent pas les vraies API.
 
 ## ApiGouv::fake() avec Factories (Laravel)
 
-`ApiGouv::fake()` remplace les clients pour le reste du test. Il remplace aussi les interfaces injectées `EntreprisesApi` et `AdresseApi`. Il renvoie un `FakeApiGouv`.
+`ApiGouv::fake()` remplace les clients pour le reste du test. Il remplace aussi les interfaces injectées `EntreprisesApi`, `AdresseApi` et `GeoApi`. Il renvoie un `FakeApiGouv`.
 
 ```php
 use Kaveraa\ApiGouv\Laravel\ApiGouv;
@@ -22,11 +22,39 @@ it('shows the company name', function () {
 });
 ```
 
-`Factories` a trois méthodes : `Factories::entreprise()`, `Factories::etablissement()` et `Factories::adresse()`. Chacune prend un tableau des champs à changer. Les noms sont ceux du constructeur de l'objet.
+`Factories` a sept méthodes : `Factories::entreprise()`, `Factories::etablissement()`, `Factories::adresse()`, `Factories::commune()`, `Factories::departement()`, `Factories::region()` et `Factories::epci()`. Chacune prend un tableau des champs à changer. Les noms sont ceux du constructeur de l'objet.
 
 ```php
 $fake->adresse()->with(Factories::adresse(['label' => '8 Boulevard du Port 80000 Amiens']));
 ```
+
+### Faux Geo
+
+```php
+$fake = ApiGouv::fake();
+$fake->geo()->with(Factories::commune());
+
+echo ApiGouv::geo()->commune('80021')->nom;   // Amiens
+```
+
+`with()` prend un ou plusieurs objets : une `Commune`, un `Departement`, une `Region` ou un `Epci`. Les quatre fabriques ont ces valeurs par défaut :
+
+| Fabrique | Valeurs par défaut |
+| --- | --- |
+| `Factories::commune()` | Amiens, code `80021`, codes postaux `80000`, `80080` et `80090`, département `80`, région `32`, EPCI `248000531`. |
+| `Factories::departement()` | Somme, code `80`, région `32`. |
+| `Factories::region()` | Hauts-de-France, code `32`. |
+| `Factories::epci()` | CA Amiens Métropole, code `248000531`, département `80`, région `32`. |
+
+Comment `FakeGeo` compare :
+
+- `commune()`, `departement()`, `region()` et `epci()` comparent le code. Sinon ils lancent `NotFoundException`.
+- `communesParCodePostal()` compare les codes postaux des communes stockées.
+- `rechercherCommunes()` trouve les communes dont le nom contient le texte (sans tenir compte des majuscules). `limit` ne fait que couper la liste.
+- `communeParCoordonnees()` renvoie la commune stockée dont le `centre` est le plus proche, ou `null` s'il n'y en a pas.
+- `communesDuDepartement()` et `departementsDeLaRegion()` demandent que le département ou la région soit aussi stocké. Sinon ils lancent `NotFoundException`.
+- `epcisDuDepartement()` compare `codesDepartements`.
+- Les codes et les limites sont vérifiés comme dans le vrai client.
 
 Comportement des faux :
 
@@ -34,7 +62,7 @@ Comportement des faux :
 - `FakeEntreprises::rechercher()` trouve les entreprises dont `nomComplet` contient le texte (sans tenir compte des majuscules).
 - `FakeAdresse::rechercher()` et `autocompleter()` trouvent les adresses dont `label` contient le texte.
 - `FakeAdresse::geocoderInverse()` renvoie l'adresse connue la plus proche, ou `null` s'il n'y en a pas.
-- Les deux faux gardent leurs appels dans `$calls`, sous forme de paires nom de méthode et argument.
+- Les trois faux gardent leurs appels dans `$calls`, sous forme de paires nom de méthode et argument.
 - Les faux ignorent les filtres et la pagination de la recherche. Seul le texte est comparé.
 - `Factories::entreprise()` construit le siège par défaut à partir du `siren` donné, donc `parSiret()` trouve la bonne entreprise. Donnez `siege` pour utiliser le vôtre.
 - `parSiren()` et `parSiret()` refusent un numéro mal formé avec `InvalidArgumentException`, comme le vrai client.
@@ -68,7 +96,7 @@ Une bonne source de vraies réponses est le dossier `tests/fixtures` de ce dép�
 
 ## Les faux en PHP simple
 
-`FakeEntreprises` et `FakeAdresse` n'ont pas besoin de Laravel. Ils implémentent `EntreprisesApi` et `AdresseApi`. Donnez-les au code que vous testez.
+`FakeEntreprises`, `FakeAdresse` et `FakeGeo` n'ont pas besoin de Laravel. Ils implémentent `EntreprisesApi`, `AdresseApi` et `GeoApi`. Donnez-les au code que vous testez.
 
 ```php
 use Kaveraa\ApiGouv\Testing\Factories;
