@@ -1,0 +1,63 @@
+# Démarrage rapide
+
+## Installation
+
+```bash
+composer require kaveraa/api-gouv-publique-fr
+```
+
+Il faut PHP 8.3 ou plus récent. Laravel 11, 12 ou 13 est optionnel. Il n'y a pas besoin de clé d'API.
+
+## Premier appel avec Laravel
+
+Le paquet s'enregistre tout seul. Utilisez la façade `ApiGouv` :
+
+```php
+use Kaveraa\ApiGouv\Laravel\ApiGouv;
+
+$company = ApiGouv::entreprises()->parSiren('812487973');
+echo $company->nomComplet;            // OCTO
+
+$addresses = ApiGouv::adresse()->rechercher('8 bd du port amiens', 1);
+echo $addresses[0]->label;            // 8 Boulevard du Port 80000 Amiens
+```
+
+## Premier appel en PHP simple
+
+Installez un client PSR-18 et une fabrique PSR-17, par exemple :
+
+```bash
+composer require symfony/http-client nyholm/psr7
+```
+
+Puis :
+
+```php
+use Kaveraa\ApiGouv\Entreprises\EntreprisesClient;
+use Kaveraa\ApiGouv\Http\Psr18Transport;
+use Kaveraa\ApiGouv\Http\Requester;
+use Nyholm\Psr7\Factory\Psr17Factory;
+use Symfony\Component\HttpClient\Psr18Client;
+
+$transport = new Psr18Transport(new Psr18Client(), new Psr17Factory());
+$client = new EntreprisesClient(new Requester($transport, 'https://recherche-entreprises.api.gouv.fr'));
+
+echo $client->parSiren('812487973')->nomComplet;
+```
+
+## Ce que vous recevez
+
+Vous recevez des objets typés. Toutes les propriétés sont en lecture seule.
+
+- `Entreprise` : `siren`, `nomComplet`, `sigle`, `activitePrincipale`, `categorie`, `natureJuridique`, `etatAdministratif`, `dateCreation`, `trancheEffectif`, `nombreEtablissements`, `nombreEtablissementsOuverts`, `siege`, `dirigeants`, `etablissementsCorrespondants`.
+- `Etablissement` : `siret`, `siren`, `estSiege`, `etatAdministratif`, `adresse`, `codePostal`, `commune`, `codeCommune`, `activitePrincipale`, `dateCreation`, `latitude`, `longitude`, `enseignes`.
+- `Adresse` : `id`, `label`, `numero`, `rue`, `nom`, `codePostal`, `codeCommune`, `commune`, `contexte`, `type`, `score`, `coordonnees`.
+
+Les tableaux complets sont dans [Recherche d'entreprises](entreprises.md) et [Recherche d'adresses](adresse.md).
+
+## Pour continuer
+
+- [Recherche d'entreprises](entreprises.md)
+- [Recherche d'adresses](adresse.md)
+- [Laravel](laravel.md)
+- [Erreurs, cache et limite de débit](errors-cache-rate-limit.md)
