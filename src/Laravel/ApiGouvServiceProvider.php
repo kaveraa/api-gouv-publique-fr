@@ -40,8 +40,11 @@ final class ApiGouvServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
+        $this->loadTranslationsFrom(__DIR__.'/../../lang', 'api-gouv');
+
         if ($this->app->runningInConsole()) {
             $this->publishes([__DIR__.'/../../config/api-gouv.php' => config_path('api-gouv.php')], 'api-gouv-config');
+            $this->publishes([__DIR__.'/../../lang' => $this->app->langPath('vendor/api-gouv')], 'api-gouv-lang');
         }
     }
 
