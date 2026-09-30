@@ -28,6 +28,11 @@ final class Payload
         return is_numeric($value) ? (float) $value : null;
     }
 
+    public static function intOrNull(mixed $value): ?int
+    {
+        return is_numeric($value) ? (int) $value : null;
+    }
+
     /** @return array<string, mixed> */
     public static function map(mixed $value): array
     {
