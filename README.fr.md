@@ -18,7 +18,7 @@ Ce projet est non officiel. Il n'est pas affilié à l'État français.
 ## Prérequis
 
 - PHP 8.3 ou plus récent
-- Laravel 11, 12 ou 13 (optionnel)
+- Laravel 12 ou 13 (optionnel)
 
 ## Installation
 

@@ -6,7 +6,7 @@
 composer require kaveraa/api-gouv-publique-fr
 ```
 
-You need PHP 8.3 or newer. Laravel 11, 12 or 13 is optional. You do not need an API key.
+You need PHP 8.3 or newer. Laravel 12 or 13 is optional. You do not need an API key.
 
 ## First call in Laravel
 

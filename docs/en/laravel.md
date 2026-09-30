@@ -1,6 +1,6 @@
 # Laravel
 
-The package supports Laravel 11, 12 and 13. The service provider and the `ApiGouv` alias are found automatically.
+The package supports Laravel 12 and 13. Laravel 11 no longer receives security fixes, so it is not supported. The service provider and the `ApiGouv` alias are found automatically.
 
 ## Publish the config
 

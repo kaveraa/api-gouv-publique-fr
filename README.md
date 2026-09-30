@@ -18,7 +18,7 @@ This is an unofficial project. It is not affiliated with the French State.
 ## Requirements
 
 - PHP 8.3 or newer
-- Laravel 11, 12 or 13 (optional)
+- Laravel 12 or 13 (optional)
 
 ## Install
 

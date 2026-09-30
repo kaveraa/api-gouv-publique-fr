@@ -1,6 +1,6 @@
 # Laravel
 
-Le paquet fonctionne avec Laravel 11, 12 et 13. Le fournisseur de services et l'alias `ApiGouv` sont trouvés automatiquement.
+Le paquet fonctionne avec Laravel 12 et 13. Laravel 11 ne reçoit plus de correctifs de sécurité, il n'est donc pas pris en charge. Le fournisseur de services et l'alias `ApiGouv` sont trouvés automatiquement.
 
 ## Publier la config
 
