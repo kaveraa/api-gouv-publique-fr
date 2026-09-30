@@ -52,7 +52,7 @@ echo $address?->commune;   // Amiens
 | `codePostal` | ?string | Postal code. |
 | `codeCommune` | ?string | Town code (INSEE). |
 | `commune` | ?string | Town name. |
-| `contexte` | ?string | Department, county and region. |
+| `contexte` | ?string | Department code, department name and region. |
 | `type` | ?string | Kind of result, for example "housenumber" or "street". |
 | `score` | ?float | Match score from 0 to 1. |
 | `coordonnees` | Coordonnees | The position. |

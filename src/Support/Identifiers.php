@@ -11,7 +11,8 @@ final class Identifiers
 
     public static function normalize(string $value): string
     {
-        return (string) preg_replace('/\s+/', '', $value);
+        // The u flag also removes U+00A0 and U+202F. Invalid UTF-8 gives null, so it becomes '' and is rejected.
+        return (string) preg_replace('/\s+/u', '', $value);
     }
 
     public static function isSiren(mixed $value): bool

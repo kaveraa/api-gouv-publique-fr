@@ -41,6 +41,27 @@ it('reads the address api base url from the config', function () {
     Http::assertSent(fn ($request) => str_starts_with($request->url(), 'https://custom.test/geo/search'));
 });
 
+it('falls back to a default cache ttl when none is configured', function () {
+    config([
+        'api-gouv.cache.enabled' => true,
+        'api-gouv.cache.store' => 'array',
+        'api-gouv.adresse.cache_ttl' => null,
+        'api-gouv.entreprises.cache_ttl' => null,
+    ]);
+    app()->forgetInstance(ApiGouvClient::class);
+    Http::fake([
+        'data.geopf.fr/*' => Http::response(loadFixture('adresse_search.json')),
+        'recherche-entreprises.api.gouv.fr/*' => Http::response(loadFixture('entreprises_siren.json')),
+    ]);
+
+    ApiGouv::adresse()->rechercher('8 bd du port amiens');
+    ApiGouv::adresse()->rechercher('8 bd du port amiens');
+    ApiGouv::entreprises()->parSiren('812487973');
+    ApiGouv::entreprises()->parSiren('812487973');
+
+    Http::assertSentCount(2);
+});
+
 it('caches responses when the cache is enabled', function () {
     config(['api-gouv.cache.enabled' => true, 'api-gouv.cache.store' => 'array']);
     app()->forgetInstance(ApiGouvClient::class);

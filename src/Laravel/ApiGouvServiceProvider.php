@@ -30,8 +30,8 @@ final class ApiGouvServiceProvider extends ServiceProvider
         ));
 
         $this->app->singleton(ApiGouvClient::class, fn (Application $app) => new ApiGouvClient(
-            new EntreprisesClient($this->requester($app, 'entreprises')),
-            new AdresseClient($this->requester($app, 'adresse')),
+            new EntreprisesClient($this->requester($app, 'entreprises', 3600)),
+            new AdresseClient($this->requester($app, 'adresse', 86400)),
         ));
 
         // Resolved on each call so ApiGouv::fake() also reaches injected interfaces.
@@ -49,7 +49,8 @@ final class ApiGouvServiceProvider extends ServiceProvider
         }
     }
 
-    private function requester(Application $app, string $api): Requester
+    // The default ttl matches config/api-gouv.php, for a config that leaves it unset.
+    private function requester(Application $app, string $api, int $defaultTtl): Requester
     {
         $cache = null;
         if (config('api-gouv.cache.enabled')) {
@@ -60,7 +61,7 @@ final class ApiGouvServiceProvider extends ServiceProvider
             $app->make(Transport::class),
             Payload::string(config("api-gouv.{$api}.base_url")),
             $cache,
-            Payload::int(config("api-gouv.{$api}.cache_ttl"), 3600),
+            Payload::int(config("api-gouv.{$api}.cache_ttl"), $defaultTtl),
         );
     }
 }

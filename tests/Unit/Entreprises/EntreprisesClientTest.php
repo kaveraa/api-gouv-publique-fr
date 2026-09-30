@@ -23,6 +23,15 @@ it('finds a company by SIREN', function () {
         ->and($transport->calls[0][1])->toBe(['q' => '812487973', 'page' => 1, 'per_page' => 1]);
 });
 
+it('accepts non-breaking spaces in a SIREN', function () {
+    $transport = new FakeTransport(FakeTransport::json(loadFixture('entreprises_siren.json')));
+
+    $entreprise = entreprisesClient($transport)->parSiren("812\u{A0}487\u{A0}973");
+
+    expect($entreprise->nomComplet)->toBe('OCTO')
+        ->and($transport->calls[0][1]['q'])->toBe('812487973');
+});
+
 it('throws NotFoundException when the API returns 200 with no result', function () {
     entreprisesClient(new FakeTransport(FakeTransport::json(loadFixture('entreprises_empty.json'))))->parSiren('000000000');
 })->throws(NotFoundException::class);
