@@ -6,7 +6,7 @@ No. This is an unofficial package. It is not made by the French State and it is 
 
 ## Which APIs are included?
 
-Version 1 has two: "Recherche d'entreprises" (company search) and the address API (BAN). The Geo API and the INSEE SIRENE API are not included.
+Three: "Recherche d'entreprises" (company search), the address API (BAN) and the Geo API (communes, departements, regions, EPCI). The Geo API is included since 0.2.0. The INSEE SIRENE API is not included.
 
 ## Why French method names?
 
@@ -22,7 +22,7 @@ Yes. The core package needs only a PSR-18 client and a PSR-17 factory. See [Plai
 
 ## Does it need an API key?
 
-No. Both APIs are open. You do not need an account.
+No. All the APIs are open. You do not need an account.
 
 ## Why does the `Siren` rule not call the API?
 

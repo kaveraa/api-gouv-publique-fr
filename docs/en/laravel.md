@@ -23,6 +23,8 @@ This creates `config/api-gouv.php`. You only need it if you want to change a val
 | `entreprises.cache_ttl` | `3600` | Cache time for company answers, in seconds. |
 | `adresse.base_url` | `https://data.geopf.fr/geocodage` | Base URL of the address API. |
 | `adresse.cache_ttl` | `86400` | Cache time for address answers, in seconds. |
+| `geo.base_url` | `https://geo.api.gouv.fr` | Base URL of the Geo API. |
+| `geo.cache_ttl` | `86400` | Cache time for Geo answers, in seconds. |
 
 ## The facade
 
@@ -31,21 +33,24 @@ use Kaveraa\ApiGouv\Laravel\ApiGouv;
 
 ApiGouv::entreprises()->parSiren('812487973');
 ApiGouv::adresse()->rechercher('8 bd du port amiens', 1);
+ApiGouv::geo()->commune('80021');
 ```
 
 ## Dependency injection
 
-You can inject the interfaces `EntreprisesApi` and `AdresseApi`:
+You can inject the interfaces `EntreprisesApi`, `AdresseApi` and `GeoApi`:
 
 ```php
 use Kaveraa\ApiGouv\Adresse\AdresseApi;
 use Kaveraa\ApiGouv\Entreprises\EntreprisesApi;
+use Kaveraa\ApiGouv\Geo\GeoApi;
 
 class CompanyController
 {
     public function __construct(
         private EntreprisesApi $entreprises,
         private AdresseApi $adresse,
+        private GeoApi $geo,
     ) {}
 
     public function show(string $siren)

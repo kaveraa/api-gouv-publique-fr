@@ -10,7 +10,7 @@
 
 [English](https://github.com/kaveraa/api-gouv-publique-fr/blob/main/README.md) - **Français**
 
-Un client PHP typé pour les API publiques françaises. La version 1 couvre la recherche d'entreprises et la recherche d'adresses (la BAN, servie par la Géoplateforme). Il fonctionne dans tout projet PHP. Il a un pont optionnel pour Laravel.
+Un client PHP typé pour les API publiques françaises. La version 1 couvre la recherche d'entreprises et la recherche d'adresses (la BAN, servie par la Géoplateforme). La version 0.2 ajoute l'API Geo (communes, départements, régions, EPCI). Il fonctionne dans tout projet PHP. Il a un pont optionnel pour Laravel.
 
 Ce projet est non officiel. Il n'est pas affilié à l'État français.
 
@@ -36,6 +36,9 @@ echo $company->siege->commune;        // BORDEAUX
 
 $addresses = ApiGouv::adresse()->rechercher('8 bd du port amiens', 1);
 echo $addresses[0]->label;            // 8 Boulevard du Port 80000 Amiens
+
+$commune = ApiGouv::geo()->commune('80021');
+echo $commune->nom;                   // Amiens
 ```
 
 ## Exemple en PHP simple
@@ -60,6 +63,7 @@ echo $client->parSiren('812487973')->nomComplet;
 - [Démarrage rapide](docs/fr/quick-start.md)
 - [Recherche d'entreprises](docs/fr/entreprises.md)
 - [Recherche d'adresses](docs/fr/adresse.md)
+- [API Geo](docs/fr/geo.md)
 - [Laravel](docs/fr/laravel.md)
 - [PHP simple et Symfony](docs/fr/plain-php.md)
 - [Erreurs, cache et limite de débit](docs/fr/errors-cache-rate-limit.md)
@@ -68,16 +72,16 @@ echo $client->parSiren('812487973')->nomComplet;
 
 ## Fonctionnalités
 
-- Des objets typés (DTO) pour les entreprises, les établissements, les dirigeants et les adresses.
+- Des objets typés (DTO) pour les entreprises, les établissements, les dirigeants, les adresses, les communes, les départements, les régions et les EPCI.
 - Une classe d'exception par problème, avec un parent commun : `ApiException`.
 - Un cache de réponses optionnel, désactivé par défaut. Il fonctionne avec tout cache PSR-16.
 - Une nouvelle tentative en cas de limite de débit dans Laravel (HTTP 429).
 - Des règles de validation Laravel : `Siren`, `Siret` et `EntrepriseExiste`.
 - Des faux et des fabriques pour vos propres tests.
 
-## Non inclus dans la v1
+## Non inclus
 
-L'API Geo et l'API INSEE SIRENE ne sont pas incluses.
+L'API INSEE SIRENE n'est pas incluse.
 
 ## Avis : projet non officiel
 

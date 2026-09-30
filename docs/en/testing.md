@@ -4,7 +4,7 @@ The package has fakes so your tests do not call the real APIs.
 
 ## ApiGouv::fake() with Factories (Laravel)
 
-`ApiGouv::fake()` replaces the clients for the rest of the test. It also replaces the injected `EntreprisesApi` and `AdresseApi`. It returns a `FakeApiGouv`.
+`ApiGouv::fake()` replaces the clients for the rest of the test. It also replaces the injected `EntreprisesApi`, `AdresseApi` and `GeoApi`. It returns a `FakeApiGouv`.
 
 ```php
 use Kaveraa\ApiGouv\Laravel\ApiGouv;
@@ -22,11 +22,39 @@ it('shows the company name', function () {
 });
 ```
 
-`Factories` has three methods: `Factories::entreprise()`, `Factories::etablissement()` and `Factories::adresse()`. Each takes an array of the fields you want to change. The names are the constructor names of the object.
+`Factories` has seven methods: `Factories::entreprise()`, `Factories::etablissement()`, `Factories::adresse()`, `Factories::commune()`, `Factories::departement()`, `Factories::region()` and `Factories::epci()`. Each takes an array of the fields you want to change. The names are the constructor names of the object.
 
 ```php
 $fake->adresse()->with(Factories::adresse(['label' => '8 Boulevard du Port 80000 Amiens']));
 ```
+
+### Geo fake
+
+```php
+$fake = ApiGouv::fake();
+$fake->geo()->with(Factories::commune());
+
+echo ApiGouv::geo()->commune('80021')->nom;   // Amiens
+```
+
+`with()` takes one or more objects: a `Commune`, a `Departement`, a `Region` or an `Epci`. The four factories have these defaults:
+
+| Factory | Defaults |
+| --- | --- |
+| `Factories::commune()` | Amiens, code `80021`, postal codes `80000`, `80080` and `80090`, departement `80`, region `32`, EPCI `248000531`. |
+| `Factories::departement()` | Somme, code `80`, region `32`. |
+| `Factories::region()` | Hauts-de-France, code `32`. |
+| `Factories::epci()` | CA Amiens Métropole, code `248000531`, departement `80`, region `32`. |
+
+How `FakeGeo` matches:
+
+- `commune()`, `departement()`, `region()` and `epci()` match by code. Otherwise they throw `NotFoundException`.
+- `communesParCodePostal()` matches the postal codes of the stored communes.
+- `rechercherCommunes()` matches the commune names that contain the text (not case sensitive). The `limit` only cuts the list.
+- `communeParCoordonnees()` returns the stored commune with the nearest `centre`, or `null` when there is none.
+- `communesDuDepartement()` and `departementsDeLaRegion()` need the departement or the region to be stored too. Otherwise they throw `NotFoundException`.
+- `epcisDuDepartement()` matches `codesDepartements`.
+- Codes and limits are checked like in the real client.
 
 How the fakes behave:
 
@@ -68,7 +96,7 @@ A good source of real answers is the folder `tests/fixtures` of this repository.
 
 ## Fakes in plain PHP
 
-`FakeEntreprises` and `FakeAdresse` do not need Laravel. They implement `EntreprisesApi` and `AdresseApi`. Give them to the code you test.
+`FakeEntreprises`, `FakeAdresse` and `FakeGeo` do not need Laravel. They implement `EntreprisesApi`, `AdresseApi` and `GeoApi`. Give them to the code you test.
 
 ```php
 use Kaveraa\ApiGouv\Testing\Factories;

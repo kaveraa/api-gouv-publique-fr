@@ -63,7 +63,7 @@ Le cache économise des appels et accélère votre code. Il est désactivé par 
 
 - Seules les réponses réussies sont mises en cache. Les erreurs ne sont jamais stockées.
 - La clé est construite avec l'URL et les paramètres. L'ordre des paramètres n'a pas d'importance.
-- La durée de cache est réglée par API : 3600 secondes pour les entreprises et 86400 secondes pour les adresses (défauts Laravel).
+- La durée de cache est réglée par API : 3600 secondes pour les entreprises, 86400 secondes pour les adresses et 86400 secondes pour l'API Geo (défauts Laravel).
 - Un résultat de recherche vide est mis en cache comme toute réponse réussie. Une entreprise créée récemment continue de renvoyer "introuvable" jusqu'à la fin de `cache_ttl`. Gardez `cache_ttl` court si vous cherchez de nouvelles entreprises, ou laissez le cache désactivé (par défaut).
 
 Dans Laravel, mettez `cache.enabled` à `true`. Voir [Laravel](laravel.md). En PHP simple, donnez un `ResponseCache` à `Requester`. Voir [PHP simple](plain-php.md).

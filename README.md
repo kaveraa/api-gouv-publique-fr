@@ -10,7 +10,7 @@
 
 **English** - [Français](https://github.com/kaveraa/api-gouv-publique-fr/blob/main/README.fr.md)
 
-A typed PHP client for French public APIs. Version 1 covers company search ("Recherche d'entreprises") and address search (the BAN, served by the Geoplateforme). It works in any PHP project. It has an optional bridge for Laravel.
+A typed PHP client for French public APIs. Version 1 covers company search ("Recherche d'entreprises") and address search (the BAN, served by the Geoplateforme). Version 0.2 adds the Geo API (communes, departements, regions, EPCI). It works in any PHP project. It has an optional bridge for Laravel.
 
 This is an unofficial project. It is not affiliated with the French State.
 
@@ -36,6 +36,9 @@ echo $company->siege->commune;        // BORDEAUX
 
 $addresses = ApiGouv::adresse()->rechercher('8 bd du port amiens', 1);
 echo $addresses[0]->label;            // 8 Boulevard du Port 80000 Amiens
+
+$commune = ApiGouv::geo()->commune('80021');
+echo $commune->nom;                   // Amiens
 ```
 
 ## Plain PHP example
@@ -60,6 +63,7 @@ echo $client->parSiren('812487973')->nomComplet;
 - [Quick start](docs/en/quick-start.md)
 - [Company search](docs/en/entreprises.md)
 - [Address search](docs/en/adresse.md)
+- [Geo API](docs/en/geo.md)
 - [Laravel](docs/en/laravel.md)
 - [Plain PHP and Symfony](docs/en/plain-php.md)
 - [Errors, cache and rate limit](docs/en/errors-cache-rate-limit.md)
@@ -68,16 +72,16 @@ echo $client->parSiren('812487973')->nomComplet;
 
 ## Features
 
-- Typed objects (DTOs) for companies, establishments, managers and addresses.
+- Typed objects (DTOs) for companies, establishments, managers, addresses, communes, departements, regions and EPCI.
 - One exception class per problem, all with a common parent: `ApiException`.
 - Optional response cache, off by default. It works with any PSR-16 cache.
 - Rate limit retry in Laravel (HTTP 429).
 - Laravel validation rules: `Siren`, `Siret` and `EntrepriseExiste`.
 - Test fakes and factories for your own tests.
 
-## Not included in v1
+## Not included
 
-The Geo API and the INSEE SIRENE API are not included.
+The INSEE SIRENE API is not included.
 
 ## Unofficial notice
 
