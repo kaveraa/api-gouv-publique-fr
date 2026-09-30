@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Kaveraa\ApiGouv\Adresse\Coordonnees;
 use Kaveraa\ApiGouv\Exceptions\NotFoundException;
 use Kaveraa\ApiGouv\Testing\Factories;
 use Kaveraa\ApiGouv\Testing\FakeAdresse;
@@ -38,8 +39,8 @@ it('throws NotFoundException for an unknown SIREN or SIRET', function () {
 });
 
 it('filters stored addresses and finds the nearest one', function () {
-    $paris = Factories::adresse(['label' => '1 rue Test 75001 Paris', 'coordonnees' => new Kaveraa\ApiGouv\Adresse\Coordonnees(48.86, 2.34)]);
-    $lyon = Factories::adresse(['label' => '2 rue Test 69001 Lyon', 'coordonnees' => new Kaveraa\ApiGouv\Adresse\Coordonnees(45.76, 4.83)]);
+    $paris = Factories::adresse(['label' => '1 rue Test 75001 Paris', 'coordonnees' => new Coordonnees(48.86, 2.34)]);
+    $lyon = Factories::adresse(['label' => '2 rue Test 69001 Lyon', 'coordonnees' => new Coordonnees(45.76, 4.83)]);
     $fake = (new FakeAdresse)->with($paris, $lyon);
 
     expect($fake->rechercher('paris'))->toBe([$paris])

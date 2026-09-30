@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Kaveraa\ApiGouv\Entreprises;
 
+use Kaveraa\ApiGouv\Support\Payload;
+
 final readonly class Dirigeant
 {
     public function __construct(
@@ -20,18 +22,13 @@ final readonly class Dirigeant
     public static function fromArray(array $data): self
     {
         return new self(
-            type: (string) ($data['type_dirigeant'] ?? 'inconnu'),
-            qualite: self::text($data['qualite'] ?? null),
-            nom: self::text($data['nom'] ?? null),
-            prenoms: self::text($data['prenoms'] ?? null),
-            denomination: self::text($data['denomination'] ?? null),
-            siren: self::text($data['siren'] ?? null),
-            anneeDeNaissance: self::text($data['annee_de_naissance'] ?? null),
+            type: Payload::string($data['type_dirigeant'] ?? null, 'inconnu'),
+            qualite: Payload::text($data['qualite'] ?? null),
+            nom: Payload::text($data['nom'] ?? null),
+            prenoms: Payload::text($data['prenoms'] ?? null),
+            denomination: Payload::text($data['denomination'] ?? null),
+            siren: Payload::text($data['siren'] ?? null),
+            anneeDeNaissance: Payload::text($data['annee_de_naissance'] ?? null),
         );
-    }
-
-    private static function text(mixed $value): ?string
-    {
-        return is_scalar($value) && $value !== '' ? (string) $value : null;
     }
 }

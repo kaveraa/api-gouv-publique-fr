@@ -7,6 +7,7 @@ namespace Kaveraa\ApiGouv\Entreprises;
 use DateTimeImmutable;
 use Kaveraa\ApiGouv\Exceptions\InvalidResponseException;
 use Kaveraa\ApiGouv\Support\Dates;
+use Kaveraa\ApiGouv\Support\Payload;
 
 final readonly class Etablissement
 {
@@ -30,27 +31,22 @@ final readonly class Etablissement
     /** @param array<string, mixed> $data */
     public static function fromArray(array $data): self
     {
-        $siret = (string) ($data['siret'] ?? throw new InvalidResponseException('Missing "siret" in an establishment.'));
+        $siret = Payload::text($data['siret'] ?? null) ?? throw new InvalidResponseException('Missing "siret" in an establishment.');
 
         return new self(
             siret: $siret,
             siren: substr($siret, 0, 9),
             estSiege: (bool) ($data['est_siege'] ?? false),
-            etatAdministratif: self::text($data['etat_administratif'] ?? null),
-            adresse: self::text($data['adresse'] ?? null),
-            codePostal: self::text($data['code_postal'] ?? null),
-            commune: self::text($data['libelle_commune'] ?? null),
-            codeCommune: self::text($data['commune'] ?? null),
-            activitePrincipale: self::text($data['activite_principale'] ?? null),
-            dateCreation: Dates::parse(self::text($data['date_creation'] ?? null)),
-            latitude: isset($data['latitude']) ? (float) $data['latitude'] : null,
-            longitude: isset($data['longitude']) ? (float) $data['longitude'] : null,
-            enseignes: array_values(array_map('strval', (array) ($data['liste_enseignes'] ?? []))),
+            etatAdministratif: Payload::text($data['etat_administratif'] ?? null),
+            adresse: Payload::text($data['adresse'] ?? null),
+            codePostal: Payload::text($data['code_postal'] ?? null),
+            commune: Payload::text($data['libelle_commune'] ?? null),
+            codeCommune: Payload::text($data['commune'] ?? null),
+            activitePrincipale: Payload::text($data['activite_principale'] ?? null),
+            dateCreation: Dates::parse(Payload::text($data['date_creation'] ?? null)),
+            latitude: Payload::float($data['latitude'] ?? null),
+            longitude: Payload::float($data['longitude'] ?? null),
+            enseignes: Payload::strings($data['liste_enseignes'] ?? null),
         );
-    }
-
-    private static function text(mixed $value): ?string
-    {
-        return is_scalar($value) && $value !== '' ? (string) $value : null;
     }
 }

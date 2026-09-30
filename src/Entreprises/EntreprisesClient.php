@@ -8,6 +8,7 @@ use InvalidArgumentException;
 use Kaveraa\ApiGouv\Exceptions\NotFoundException;
 use Kaveraa\ApiGouv\Http\Requester;
 use Kaveraa\ApiGouv\Support\Identifiers;
+use Kaveraa\ApiGouv\Support\Payload;
 
 final class EntreprisesClient implements EntreprisesApi
 {
@@ -17,7 +18,7 @@ final class EntreprisesClient implements EntreprisesApi
     {
         $query = is_string($query) ? new SearchQuery($query) : $query;
 
-        return SearchResult::fromArray($this->http->getJson('search', $query->toParams()));
+        return SearchResult::fromArray(Payload::map($this->http->getJson('search', $query->toParams())));
     }
 
     public function parSiren(string $siren): Entreprise

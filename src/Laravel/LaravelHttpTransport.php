@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Http;
 use Kaveraa\ApiGouv\Exceptions\ApiException;
 use Kaveraa\ApiGouv\Http\Response;
 use Kaveraa\ApiGouv\Http\Transport;
+use Kaveraa\ApiGouv\Support\Payload;
 
 final class LaravelHttpTransport implements Transport
 {
@@ -40,7 +41,7 @@ final class LaravelHttpTransport implements Transport
 
         $headers = [];
         foreach ($response->headers() as $name => $values) {
-            $headers[strtolower($name)] = $values[0] ?? '';
+            $headers[strtolower($name)] = Payload::strings($values)[0] ?? '';
         }
 
         return new Response($response->status(), $response->body(), $headers);

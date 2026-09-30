@@ -23,7 +23,7 @@ final class ApiGouv extends Facade
     public static function fake(): FakeApiGouv
     {
         $fake = new FakeApiGouv;
-        static::swap($fake);
+        self::swap($fake);
 
         return $fake;
     }

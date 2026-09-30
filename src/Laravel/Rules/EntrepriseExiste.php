@@ -10,6 +10,7 @@ use Kaveraa\ApiGouv\Entreprises\EntreprisesApi;
 use Kaveraa\ApiGouv\Exceptions\ApiException;
 use Kaveraa\ApiGouv\Exceptions\NotFoundException;
 use Kaveraa\ApiGouv\Support\Identifiers;
+use Kaveraa\ApiGouv\Support\Payload;
 
 /** Opt-in rule: it calls the API, so validation depends on an external service. */
 final class EntrepriseExiste implements ValidationRule
@@ -23,7 +24,7 @@ final class EntrepriseExiste implements ValidationRule
         }
 
         try {
-            app(EntreprisesApi::class)->parSiren(Identifiers::normalize((string) $value));
+            app(EntreprisesApi::class)->parSiren(Identifiers::normalize(Payload::string($value)));
         } catch (NotFoundException) {
             $fail('api-gouv::validation.entreprise_existe')->translate();
         } catch (ApiException) {

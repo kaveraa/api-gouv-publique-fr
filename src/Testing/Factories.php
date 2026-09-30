@@ -7,12 +7,13 @@ namespace Kaveraa\ApiGouv\Testing;
 use DateTimeImmutable;
 use Kaveraa\ApiGouv\Adresse\Adresse;
 use Kaveraa\ApiGouv\Adresse\Coordonnees;
+use Kaveraa\ApiGouv\Entreprises\Dirigeant;
 use Kaveraa\ApiGouv\Entreprises\Entreprise;
 use Kaveraa\ApiGouv\Entreprises\Etablissement;
 
 final class Factories
 {
-    /** @param array<string, mixed> $attributes Constructor argument names of the DTO. */
+    /** @param array{siret?: string, siren?: string, estSiege?: bool, etatAdministratif?: ?string, adresse?: ?string, codePostal?: ?string, commune?: ?string, codeCommune?: ?string, activitePrincipale?: ?string, dateCreation?: ?DateTimeImmutable, latitude?: ?float, longitude?: ?float, enseignes?: list<string>} $attributes Constructor argument names of the DTO. */
     public static function etablissement(array $attributes = []): Etablissement
     {
         return new Etablissement(...array_merge([
@@ -32,7 +33,7 @@ final class Factories
         ], $attributes));
     }
 
-    /** @param array<string, mixed> $attributes Constructor argument names of the DTO. */
+    /** @param array{siren?: string, nomComplet?: string, sigle?: ?string, activitePrincipale?: ?string, categorie?: ?string, natureJuridique?: ?string, etatAdministratif?: ?string, dateCreation?: ?DateTimeImmutable, trancheEffectif?: ?string, nombreEtablissements?: int, nombreEtablissementsOuverts?: int, siege?: ?Etablissement, dirigeants?: list<Dirigeant>, etablissementsCorrespondants?: list<Etablissement>} $attributes Constructor argument names of the DTO. */
     public static function entreprise(array $attributes = []): Entreprise
     {
         return new Entreprise(...array_merge([
@@ -53,7 +54,7 @@ final class Factories
         ], $attributes));
     }
 
-    /** @param array<string, mixed> $attributes Constructor argument names of the DTO. */
+    /** @param array{id?: string, label?: string, numero?: ?string, rue?: ?string, nom?: ?string, codePostal?: ?string, codeCommune?: ?string, commune?: ?string, contexte?: ?string, type?: ?string, score?: ?float, coordonnees?: Coordonnees} $attributes Constructor argument names of the DTO. */
     public static function adresse(array $attributes = []): Adresse
     {
         return new Adresse(...array_merge([

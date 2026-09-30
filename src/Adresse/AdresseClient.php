@@ -6,6 +6,7 @@ namespace Kaveraa\ApiGouv\Adresse;
 
 use InvalidArgumentException;
 use Kaveraa\ApiGouv\Http\Requester;
+use Kaveraa\ApiGouv\Support\Payload;
 
 final class AdresseClient implements AdresseApi
 {
@@ -27,10 +28,10 @@ final class AdresseClient implements AdresseApi
             throw new InvalidArgumentException('The coordinates are out of range.');
         }
 
-        $features = $this->http->getJson('reverse', ['lat' => $latitude, 'lon' => $longitude, 'limit' => 1])['features'] ?? [];
-        $first = is_array($features) ? ($features[0] ?? null) : null;
+        $data = $this->http->getJson('reverse', ['lat' => $latitude, 'lon' => $longitude, 'limit' => 1]);
+        $first = Payload::maps($data['features'] ?? null)[0] ?? null;
 
-        return is_array($first) ? Adresse::fromFeature($first) : null;
+        return $first === null ? null : Adresse::fromFeature($first);
     }
 
     /** @return list<Adresse> */
@@ -45,6 +46,6 @@ final class AdresseClient implements AdresseApi
 
         $data = $this->http->getJson('search', ['q' => $query, 'limit' => $limit, 'autocomplete' => (int) $autocomplete]);
 
-        return array_values(array_map(Adresse::fromFeature(...), (array) ($data['features'] ?? [])));
+        return array_map(Adresse::fromFeature(...), Payload::maps($data['features'] ?? null));
     }
 }

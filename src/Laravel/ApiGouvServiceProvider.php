@@ -15,6 +15,7 @@ use Kaveraa\ApiGouv\Entreprises\EntreprisesApi;
 use Kaveraa\ApiGouv\Entreprises\EntreprisesClient;
 use Kaveraa\ApiGouv\Http\Requester;
 use Kaveraa\ApiGouv\Http\Transport;
+use Kaveraa\ApiGouv\Support\Payload;
 
 final class ApiGouvServiceProvider extends ServiceProvider
 {
@@ -23,9 +24,9 @@ final class ApiGouvServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(__DIR__.'/../../config/api-gouv.php', 'api-gouv');
 
         $this->app->singleton(Transport::class, fn () => new LaravelHttpTransport(
-            timeout: (int) config('api-gouv.timeout'),
-            attempts: (int) config('api-gouv.attempts'),
-            retryDelayMs: (int) config('api-gouv.retry_delay_ms'),
+            timeout: Payload::int(config('api-gouv.timeout'), 10),
+            attempts: Payload::int(config('api-gouv.attempts'), 3),
+            retryDelayMs: Payload::int(config('api-gouv.retry_delay_ms'), 300),
         ));
 
         $this->app->singleton(ApiGouvClient::class, fn (Application $app) => new ApiGouvClient(
@@ -52,14 +53,14 @@ final class ApiGouvServiceProvider extends ServiceProvider
     {
         $cache = null;
         if (config('api-gouv.cache.enabled')) {
-            $cache = new ResponseCache(Cache::store(config('api-gouv.cache.store')));
+            $cache = new ResponseCache(Cache::store(Payload::text(config('api-gouv.cache.store'))));
         }
 
         return new Requester(
             $app->make(Transport::class),
-            (string) config("api-gouv.{$api}.base_url"),
+            Payload::string(config("api-gouv.{$api}.base_url")),
             $cache,
-            (int) config("api-gouv.{$api}.cache_ttl"),
+            Payload::int(config("api-gouv.{$api}.cache_ttl"), 3600),
         );
     }
 }

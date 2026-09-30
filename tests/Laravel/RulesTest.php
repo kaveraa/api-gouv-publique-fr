@@ -9,7 +9,7 @@ use Kaveraa\ApiGouv\Laravel\Rules\EntrepriseExiste;
 use Kaveraa\ApiGouv\Laravel\Rules\Siren;
 use Kaveraa\ApiGouv\Laravel\Rules\Siret;
 
-function check(mixed $value, object $rule): \Illuminate\Validation\Validator
+function check(mixed $value, object $rule): Illuminate\Validation\Validator
 {
     return Validator::make(['n' => $value], ['n' => [$rule]]);
 }

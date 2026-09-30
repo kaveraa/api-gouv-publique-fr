@@ -1,0 +1,31 @@
+name: live
+
+on:
+  schedule:
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  live:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          coverage: none
+      - run: composer update --prefer-dist --no-interaction
+      - name: Run live contract tests
+        run: vendor/bin/pest tests/Live
+      - name: Open an issue on failure
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh issue create --repo "${{ github.repository }}" \
+            --title "Live API tests failed" \
+            --body "The weekly live tests failed. An API may have changed. See ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"

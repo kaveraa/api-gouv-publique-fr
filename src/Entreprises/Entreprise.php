@@ -7,6 +7,7 @@ namespace Kaveraa\ApiGouv\Entreprises;
 use DateTimeImmutable;
 use Kaveraa\ApiGouv\Exceptions\InvalidResponseException;
 use Kaveraa\ApiGouv\Support\Dates;
+use Kaveraa\ApiGouv\Support\Payload;
 
 final readonly class Entreprise
 {
@@ -34,31 +35,25 @@ final readonly class Entreprise
     /** @param array<string, mixed> $data */
     public static function fromArray(array $data): self
     {
-        $siren = (string) ($data['siren'] ?? throw new InvalidResponseException('Missing "siren" in a company.'));
+        $siren = Payload::text($data['siren'] ?? null) ?? throw new InvalidResponseException('Missing "siren" in a company.');
+
+        $siege = Payload::map($data['siege'] ?? null);
 
         return new self(
             siren: $siren,
-            nomComplet: (string) ($data['nom_complet'] ?? ''),
-            sigle: self::text($data['sigle'] ?? null),
-            activitePrincipale: self::text($data['activite_principale'] ?? null),
-            categorie: self::text($data['categorie_entreprise'] ?? null),
-            natureJuridique: self::text($data['nature_juridique'] ?? null),
-            etatAdministratif: self::text($data['etat_administratif'] ?? null),
-            dateCreation: Dates::parse(self::text($data['date_creation'] ?? null)),
-            trancheEffectif: self::text($data['tranche_effectif_salarie'] ?? null),
-            nombreEtablissements: (int) ($data['nombre_etablissements'] ?? 0),
-            nombreEtablissementsOuverts: (int) ($data['nombre_etablissements_ouverts'] ?? 0),
-            siege: isset($data['siege']['siret']) ? Etablissement::fromArray($data['siege']) : null,
-            dirigeants: array_values(array_map(Dirigeant::fromArray(...), (array) ($data['dirigeants'] ?? []))),
-            etablissementsCorrespondants: array_values(array_map(
-                Etablissement::fromArray(...),
-                (array) ($data['matching_etablissements'] ?? []),
-            )),
+            nomComplet: Payload::string($data['nom_complet'] ?? null),
+            sigle: Payload::text($data['sigle'] ?? null),
+            activitePrincipale: Payload::text($data['activite_principale'] ?? null),
+            categorie: Payload::text($data['categorie_entreprise'] ?? null),
+            natureJuridique: Payload::text($data['nature_juridique'] ?? null),
+            etatAdministratif: Payload::text($data['etat_administratif'] ?? null),
+            dateCreation: Dates::parse(Payload::text($data['date_creation'] ?? null)),
+            trancheEffectif: Payload::text($data['tranche_effectif_salarie'] ?? null),
+            nombreEtablissements: Payload::int($data['nombre_etablissements'] ?? null),
+            nombreEtablissementsOuverts: Payload::int($data['nombre_etablissements_ouverts'] ?? null),
+            siege: isset($siege['siret']) ? Etablissement::fromArray($siege) : null,
+            dirigeants: array_map(Dirigeant::fromArray(...), Payload::maps($data['dirigeants'] ?? null)),
+            etablissementsCorrespondants: array_map(Etablissement::fromArray(...), Payload::maps($data['matching_etablissements'] ?? null)),
         );
-    }
-
-    private static function text(mixed $value): ?string
-    {
-        return is_scalar($value) && $value !== '' ? (string) $value : null;
     }
 }
