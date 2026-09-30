@@ -27,12 +27,13 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           run_url="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          open=$(gh issue list --repo "${{ github.repository }}" --state open --search "Live API tests failed in:title" --json number --jq 'length')
+          issues=$(gh issue list --repo "${{ github.repository }}" --state open --search "Live API tests failed in:title" --json number,title --jq '[.[] | select(.title == "Live API tests failed")]')
+          open=$(echo "$issues" | jq 'length')
           if [ "$open" = "0" ]; then
             gh issue create --repo "${{ github.repository }}" \
               --title "Live API tests failed" \
               --body "The weekly live tests failed. An API may have changed. See $run_url"
           else
-            number=$(gh issue list --repo "${{ github.repository }}" --state open --search "Live API tests failed in:title" --json number --jq '.[0].number')
+            number=$(echo "$issues" | jq '.[0].number')
             gh issue comment "$number" --repo "${{ github.repository }}" --body "The live tests failed again. See $run_url"
           fi

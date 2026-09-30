@@ -41,6 +41,11 @@ it('derives the default head office from an overridden SIREN', function () {
         ->and($fake->parSiret($second->siege->siret))->toBe($second->siege);
 });
 
+it('keeps an explicit null head office and derives the default otherwise', function () {
+    expect(Factories::entreprise(['siren' => '123456782', 'siege' => null])->siege)->toBeNull()
+        ->and(Factories::entreprise(['siren' => '123456782'])->siege?->siret)->toBe('12345678200040');
+});
+
 it('keeps a given head office untouched', function () {
     $siege = Factories::etablissement(['siret' => '11111111100011']);
 

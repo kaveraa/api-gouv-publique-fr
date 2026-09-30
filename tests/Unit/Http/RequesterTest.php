@@ -66,13 +66,14 @@ it('maps other errors to ApiException and keeps the api message', function () {
 });
 
 it('cuts a long plain error body on a character boundary', function () {
-    $transport = new FakeTransport(FakeTransport::json(str_repeat("\u{E9}", 300), 500));
+    $transport = new FakeTransport(FakeTransport::json('a'.str_repeat("\u{E9}", 300), 500));
 
     try {
         requester($transport)->getJson('x');
         $this->fail('Expected ApiException');
     } catch (ApiException $e) {
-        expect(preg_match('//u', $e->getMessage()))->toBe(1);
+        expect(preg_match('//u', $e->getMessage()))->toBe(1)
+            ->and(mb_strlen(substr($e->getMessage(), strlen('API error 500: '))))->toBeLessThanOrEqual(200);
     }
 });
 

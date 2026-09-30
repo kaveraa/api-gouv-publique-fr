@@ -37,7 +37,7 @@ final class Factories
     public static function entreprise(array $attributes = []): Entreprise
     {
         // A changed SIREN must not keep the default head office of another company.
-        if (isset($attributes['siren']) && ! isset($attributes['siege'])) {
+        if (isset($attributes['siren']) && ! array_key_exists('siege', $attributes)) {
             $attributes['siege'] = self::etablissement(['siren' => $attributes['siren'], 'siret' => $attributes['siren'].'00040']);
         }
 
