@@ -1,0 +1,61 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Kaveraa\ApiGouv\Entreprises;
+
+use InvalidArgumentException;
+use Kaveraa\ApiGouv\Exceptions\NotFoundException;
+use Kaveraa\ApiGouv\Http\Requester;
+use Kaveraa\ApiGouv\Support\Identifiers;
+
+final class EntreprisesClient implements EntreprisesApi
+{
+    public function __construct(private readonly Requester $http) {}
+
+    public function rechercher(SearchQuery|string $query): SearchResult
+    {
+        $query = is_string($query) ? new SearchQuery($query) : $query;
+
+        return SearchResult::fromArray($this->http->getJson('search', $query->toParams()));
+    }
+
+    public function parSiren(string $siren): Entreprise
+    {
+        $siren = $this->digits($siren, 9, 'SIREN');
+
+        // The API has no lookup endpoint and answers 200 with an empty list for unknown numbers.
+        foreach ($this->rechercher(new SearchQuery($siren, perPage: 1))->results as $entreprise) {
+            if ($entreprise->siren === $siren) {
+                return $entreprise;
+            }
+        }
+
+        throw new NotFoundException("No company found for SIREN {$siren}.", 404);
+    }
+
+    public function parSiret(string $siret): Etablissement
+    {
+        $siret = $this->digits($siret, 14, 'SIRET');
+
+        foreach ($this->rechercher(new SearchQuery($siret, perPage: 1))->results as $entreprise) {
+            foreach ([$entreprise->siege, ...$entreprise->etablissementsCorrespondants] as $etablissement) {
+                if ($etablissement?->siret === $siret) {
+                    return $etablissement;
+                }
+            }
+        }
+
+        throw new NotFoundException("No establishment found for SIRET {$siret}.", 404);
+    }
+
+    private function digits(string $value, int $length, string $label): string
+    {
+        $digits = Identifiers::normalize($value);
+        if (! preg_match('/^\d{'.$length.'}$/', $digits)) {
+            throw new InvalidArgumentException("A {$label} must have {$length} digits.");
+        }
+
+        return $digits;
+    }
+}
