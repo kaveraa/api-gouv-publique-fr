@@ -1,0 +1,16 @@
+version: 2
+updates:
+  # Library: widen version ranges instead of pinning, so users keep the widest compatible set.
+  - package-ecosystem: composer
+    directory: /
+    schedule:
+      interval: weekly
+    versioning-strategy: widen
+    groups:
+      dev-dependencies:
+        dependency-type: development
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
