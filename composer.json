@@ -1,0 +1,51 @@
+{
+    "name": "kaveraa/api-gouv-publique-fr",
+    "description": "Typed PHP client for French public APIs (company search and address) with a Laravel bridge. Unofficial.",
+    "type": "library",
+    "license": "MIT",
+    "keywords": ["api-gouv", "siren", "siret", "adresse", "ban", "laravel", "france", "open-data"],
+    "require": {
+        "php": "^8.3",
+        "ext-json": "*",
+        "psr/http-client": "^1.0",
+        "psr/http-factory": "^1.0",
+        "psr/simple-cache": "^2.0 || ^3.0"
+    },
+    "require-dev": {
+        "larastan/larastan": "^3.0",
+        "laravel/pint": "^1.0",
+        "nyholm/psr7": "^1.8",
+        "orchestra/testbench": "^9.0 || ^10.0 || ^11.0",
+        "pestphp/pest": "^3.0 || ^4.0",
+        "pestphp/pest-plugin-laravel": "^3.0 || ^4.0"
+    },
+    "suggest": {
+        "illuminate/support": "Enables the Laravel bridge (facade, config, validation rules, fakes).",
+        "nyholm/psr7": "A PSR-17 factory, needed by Psr18Transport outside Laravel.",
+        "symfony/http-client": "A PSR-18 client for plain PHP or Symfony."
+    },
+    "autoload": {
+        "psr-4": { "Kaveraa\\ApiGouv\\": "src/" }
+    },
+    "autoload-dev": {
+        "psr-4": { "Kaveraa\\ApiGouv\\Tests\\": "tests/" }
+    },
+    "extra": {
+        "laravel": {
+            "providers": ["Kaveraa\\ApiGouv\\Laravel\\ApiGouvServiceProvider"],
+            "aliases": { "ApiGouv": "Kaveraa\\ApiGouv\\Laravel\\ApiGouv" }
+        }
+    },
+    "scripts": {
+        "test": "pest",
+        "analyse": "phpstan analyse --memory-limit=1G",
+        "format": "pint",
+        "lint": "pint --test"
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": { "pestphp/pest-plugin": true }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
