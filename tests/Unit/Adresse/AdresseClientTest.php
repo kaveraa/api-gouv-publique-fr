@@ -50,10 +50,25 @@ it('returns an empty list when nothing matches', function () {
 it('passes text with accents and symbols to the transport untouched', function () {
     $transport = new FakeTransport(FakeTransport::json(loadFixture('adresse_empty.json')));
 
-    adresseClient($transport)->rechercher("rue de l'Eglise & co, Ecully");
+    adresseClient($transport)->rechercher("rue de l'\u{C9}glise & co, \u{C9}cully");
 
-    expect($transport->calls[0][1]['q'])->toBe("rue de l'Eglise & co, Ecully");
+    expect($transport->calls[0][1]['q'])->toBe("rue de l'\u{C9}glise & co, \u{C9}cully");
 });
+
+it('builds an address with null fields from features without properties', function (string $properties) {
+    $body = '{"type":"FeatureCollection","features":[{"type":"Feature",'.$properties.'"geometry":{"type":"Point","coordinates":[2.3,48.8]}}]}';
+
+    $adresse = adresseClient(new FakeTransport(FakeTransport::json($body)))->rechercher('x')[0];
+
+    expect($adresse->commune)->toBeNull()
+        ->and($adresse->rue)->toBeNull()
+        ->and($adresse->score)->toBeNull()
+        ->and($adresse->coordonnees->latitude)->toBe(48.8);
+})->with([
+    'missing properties' => [''],
+    'empty properties' => ['"properties":{},'],
+    'null city' => ['"properties":{"city":null},'],
+]);
 
 it('reverse geocodes a point', function () {
     $transport = new FakeTransport(FakeTransport::json(loadFixture('adresse_reverse.json')));

@@ -5,6 +5,8 @@ declare(strict_types=1);
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
+use Kaveraa\ApiGouv\ApiGouvClient;
+use Kaveraa\ApiGouv\Http\Transport;
 use Kaveraa\ApiGouv\Laravel\Rules\EntrepriseExiste;
 use Kaveraa\ApiGouv\Laravel\Rules\Siren;
 use Kaveraa\ApiGouv\Laravel\Rules\Siret;
@@ -62,6 +64,18 @@ it('rejects a malformed number with EntrepriseExiste without calling the API', f
 
 it('fails with a dedicated message when the API is unavailable', function () {
     Http::fake(['recherche-entreprises.api.gouv.fr/*' => Http::response('{}', 503)]);
+
+    $validator = check('812487973', new EntrepriseExiste);
+
+    expect($validator->fails())->toBeTrue()
+        ->and($validator->errors()->first('n'))->toContain('could not be verified');
+});
+
+it('fails with the unavailable message when the API answers 429', function () {
+    config(['api-gouv.attempts' => 1]);
+    app()->forgetInstance(Transport::class);
+    app()->forgetInstance(ApiGouvClient::class);
+    Http::fake(['recherche-entreprises.api.gouv.fr/*' => Http::response('{}', 429)]);
 
     $validator = check('812487973', new EntrepriseExiste);
 

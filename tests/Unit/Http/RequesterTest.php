@@ -40,20 +40,19 @@ it('maps 429 to RateLimitException with the retry delay', function () {
     }
 });
 
-it('leaves the retry delay null when the header is missing or not a number', function () {
-    $transport = new FakeTransport(
-        FakeTransport::json('{}', 429),
-        FakeTransport::json('{}', 429, ['retry-after' => 'soon']),
-    );
+it('leaves the retry delay null when the header is missing or not a number', function (array $headers) {
+    $transport = new FakeTransport(FakeTransport::json('{}', 429, $headers));
 
-    foreach ([1, 2] as $_) {
-        try {
-            requester($transport)->getJson('x');
-        } catch (RateLimitException $e) {
-            expect($e->retryAfter)->toBeNull();
-        }
+    try {
+        requester($transport)->getJson('x');
+        $this->fail('Expected RateLimitException');
+    } catch (RateLimitException $e) {
+        expect($e->retryAfter)->toBeNull();
     }
-});
+})->with([
+    'missing header' => [[]],
+    'not a number' => [['retry-after' => 'soon']],
+]);
 
 it('maps other errors to ApiException and keeps the api message', function () {
     $transport = new FakeTransport(FakeTransport::json('{"erreur":"per_page invalide"}', 400));

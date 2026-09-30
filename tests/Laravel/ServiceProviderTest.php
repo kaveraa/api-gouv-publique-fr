@@ -3,11 +3,13 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\ServiceProvider;
 use Kaveraa\ApiGouv\Adresse\AdresseApi;
 use Kaveraa\ApiGouv\ApiGouvClient;
 use Kaveraa\ApiGouv\Entreprises\EntreprisesApi;
 use Kaveraa\ApiGouv\Http\Transport;
 use Kaveraa\ApiGouv\Laravel\ApiGouv;
+use Kaveraa\ApiGouv\Laravel\ApiGouvServiceProvider;
 use Kaveraa\ApiGouv\Laravel\LaravelHttpTransport;
 
 it('merges the default config', function () {
@@ -71,4 +73,14 @@ it('caches responses when the cache is enabled', function () {
     ApiGouv::adresse()->rechercher('8 bd du port amiens');
 
     Http::assertSentCount(1);
+});
+
+it('publishes the config file and the translations under their tags', function () {
+    $config = ServiceProvider::pathsToPublish(ApiGouvServiceProvider::class, 'api-gouv-config');
+    $lang = ServiceProvider::pathsToPublish(ApiGouvServiceProvider::class, 'api-gouv-lang');
+
+    expect(array_values($config))->toBe([config_path('api-gouv.php')])
+        ->and(basename((string) array_key_first($config)))->toBe('api-gouv.php')
+        ->and(array_values($lang))->toBe([app()->langPath('vendor/api-gouv')])
+        ->and(basename((string) array_key_first($lang)))->toBe('lang');
 });

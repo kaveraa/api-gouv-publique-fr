@@ -16,6 +16,10 @@ it('accepts valid SIREN values, with or without spaces', function (mixed $value)
     expect(Identifiers::isSiren($value))->toBeTrue();
 })->with(['812487973', '812 487 973', 812487973, "812\u{A0}487\u{A0}973"]);
 
+it('rejects a negative or zero integer as a SIREN', function (int $value) {
+    expect(Identifiers::isSiren($value))->toBeFalse();
+})->with([-812487973, 0]);
+
 it('rejects invalid SIREN values without throwing', function (mixed $value) {
     expect(Identifiers::isSiren($value))->toBeFalse();
 })->with(['', '812487974', '81248797', '8124879731', 'abcdefghi', null, [[]], 1.5, true]);
@@ -39,7 +43,9 @@ it('applies the La Poste rule to SIRET values that start with 356000000', functi
         ->and(Identifiers::isSiret('35600000000010'))->toBeTrue()
         // These fail both rules.
         ->and(Identifiers::isSiret('35600000000000'))->toBeFalse()
-        ->and(Identifiers::isSiret('35600000000002'))->toBeFalse();
+        ->and(Identifiers::isSiret('35600000000002'))->toBeFalse()
+        // This one passes the Luhn sum but not the digit sum rule.
+        ->and(Identifiers::isSiret('35600000000030'))->toBeTrue();
 });
 
 it('removes every kind of whitespace when normalizing', function () {

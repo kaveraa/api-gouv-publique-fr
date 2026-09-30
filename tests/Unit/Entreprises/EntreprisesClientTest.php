@@ -62,6 +62,22 @@ it('finds an establishment by SIRET', function () {
         ->and($transport->calls[0][1]['q'])->toBe('41816609600010');
 });
 
+it('rejects a SIRET that is not 14 digits before calling the API', function (string $siret) {
+    $transport = new FakeTransport;
+
+    try {
+        entreprisesClient($transport)->parSiret($siret);
+        $this->fail('Expected InvalidArgumentException');
+    } catch (InvalidArgumentException) {
+        expect($transport->calls)->toBe([]);
+    }
+})->with(['', '123', 'abcdefghijklmn', '123456789012345']);
+
+it('throws NotFoundException when no establishment has the requested SIRET', function () {
+    // The API can return a fuzzy match. Only an exact SIRET counts.
+    entreprisesClient(new FakeTransport(FakeTransport::json(loadFixture('entreprises_siren.json'))))->parSiret('99999999900019');
+})->throws(NotFoundException::class);
+
 it('throws NotFoundException for an unknown SIRET', function () {
     entreprisesClient(new FakeTransport(FakeTransport::json(loadFixture('entreprises_empty.json'))))->parSiret('00000000000000');
 })->throws(NotFoundException::class);

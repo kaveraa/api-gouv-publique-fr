@@ -41,9 +41,24 @@ it('builds an encoded url, skips null values and lower-cases header names', func
         ->and($response->header('Retry-After'))->toBe('3');
 });
 
+it('encodes accented and reserved characters in the query', function () {
+    $client = stubClient(new PsrResponse(200, [], '{}'));
+
+    (new Psr18Transport($client, new Psr17Factory))->get('https://example.test/search', ['q' => "\u{C9}glise & \u{C9}cully"]);
+
+    expect((string) $client->last->getUri())->toBe('https://example.test/search?q=%C3%89glise%20%26%20%C3%89cully');
+});
+
 it('wraps client exceptions in ApiException', function () {
     $failure = new class('boom') extends RuntimeException implements ClientExceptionInterface {};
     $transport = new Psr18Transport(stubClient($failure), new Psr17Factory);
 
-    $transport->get('https://example.test/x');
-})->throws(ApiException::class, 'boom');
+    try {
+        $transport->get('https://example.test/x');
+        $this->fail('Expected ApiException');
+    } catch (ApiException $e) {
+        expect($e->getMessage())->toContain('boom')
+            ->and($e->getCode())->toBe(0)
+            ->and($e->getPrevious())->toBe($failure);
+    }
+});
