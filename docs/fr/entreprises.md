@@ -128,12 +128,15 @@ Une taille de page hors de 1 à 25 lance `InvalidArgumentException`. Cela évite
 
 ## Cas d'usage : vérifier une entreprise à l'inscription
 
-Un utilisateur donne un SIREN dans votre formulaire d'inscription. Vous voulez vérifier que l'entreprise existe et qu'elle est active, et remplir son nom.
+Un utilisateur donne un SIREN dans votre formulaire d'inscription. Vous voulez vérifier que l'entreprise existe et qu'elle est active, et remplir son nom. Validez d'abord le numéro, pour n'appeler l'API qu'avec un SIREN bien formé.
 
 ```php
 use Kaveraa\ApiGouv\Exceptions\ApiException;
 use Kaveraa\ApiGouv\Exceptions\NotFoundException;
 use Kaveraa\ApiGouv\Laravel\ApiGouv;
+use Kaveraa\ApiGouv\Laravel\Rules\Siren;
+
+$request->validate(['siren' => ['required', new Siren]]);
 
 try {
     $company = ApiGouv::entreprises()->parSiren($request->input('siren'));

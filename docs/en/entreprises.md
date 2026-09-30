@@ -128,12 +128,15 @@ A page size outside 1 to 25 throws `InvalidArgumentException`. This avoids an HT
 
 ## Use case: check a company at sign-up
 
-A user gives a SIREN in your sign-up form. You want to check that the company exists and is active, and fill in the name.
+A user gives a SIREN in your sign-up form. You want to check that the company exists and is active, and fill in the name. Validate the number first, so the API is called only with a well formed SIREN.
 
 ```php
 use Kaveraa\ApiGouv\Exceptions\ApiException;
 use Kaveraa\ApiGouv\Exceptions\NotFoundException;
 use Kaveraa\ApiGouv\Laravel\ApiGouv;
+use Kaveraa\ApiGouv\Laravel\Rules\Siren;
+
+$request->validate(['siren' => ['required', new Siren]]);
 
 try {
     $company = ApiGouv::entreprises()->parSiren($request->input('siren'));

@@ -35,6 +35,9 @@ Comportement des faux :
 - `FakeAdresse::rechercher()` et `autocompleter()` trouvent les adresses dont `label` contient le texte.
 - `FakeAdresse::geocoderInverse()` renvoie l'adresse connue la plus proche, ou `null` s'il n'y en a pas.
 - Les deux faux gardent leurs appels dans `$calls`, sous forme de paires nom de méthode et argument.
+- Les faux ignorent les filtres et la pagination de la recherche. Seul le texte est comparé.
+- `Factories::entreprise()` construit le siège par défaut à partir du `siren` donné, donc `parSiret()` trouve la bonne entreprise. Donnez `siege` pour utiliser le vôtre.
+- `parSiren()` et `parSiret()` refusent un numéro mal formé avec `InvalidArgumentException`, comme le vrai client.
 
 ## Http::fake() (Laravel)
 

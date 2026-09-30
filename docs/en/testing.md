@@ -35,6 +35,9 @@ How the fakes behave:
 - `FakeAdresse::rechercher()` and `autocompleter()` find the addresses whose `label` contains the text.
 - `FakeAdresse::geocoderInverse()` returns the nearest known address, or `null` when there is none.
 - Both fakes record their calls in `$calls`, as pairs of method name and argument.
+- The fakes ignore search filters and paging. Only the text is matched.
+- `Factories::entreprise()` builds the default head office from the `siren` you give, so `parSiret()` finds the right company. Pass `siege` to use your own.
+- `parSiren()` and `parSiret()` reject a malformed number with `InvalidArgumentException`, like the real client.
 
 ## Http::fake() (Laravel)
 

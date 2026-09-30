@@ -64,5 +64,6 @@ The cache saves calls and speeds up your code. It is off by default.
 - Only successful answers are cached. Errors are never stored.
 - The key is built from the URL and the query. The order of the query parameters does not matter.
 - The cache time is set per API: 3600 seconds for companies and 86400 seconds for addresses (Laravel defaults).
+- An empty search result is cached like any successful answer. A company created recently keeps returning "not found" until `cache_ttl` expires. Keep `cache_ttl` short if you look up new companies, or leave the cache off (default).
 
 In Laravel, set `cache.enabled` to `true`. See [Laravel](laravel.md). In plain PHP, pass a `ResponseCache` to `Requester`. See [Plain PHP](plain-php.md).
