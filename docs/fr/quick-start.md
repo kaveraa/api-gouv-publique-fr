@@ -20,7 +20,12 @@ echo $company->nomComplet;            // OCTO
 
 $addresses = ApiGouv::adresse()->rechercher('8 bd du port amiens', 1);
 echo $addresses[0]->label;            // 8 Boulevard du Port 80000 Amiens
+
+$commune = ApiGouv::geo()->commune('80021');
+echo $commune->nom;                   // Amiens
 ```
+
+L'API Geo donne les communes, les départements, les régions et les EPCI. Voir [API Geo](geo.md).
 
 ## Premier appel en PHP simple
 
@@ -52,6 +57,7 @@ Vous recevez des objets typés. Toutes les propriétés sont en lecture seule.
 - `Entreprise` : `siren`, `nomComplet`, `sigle`, `activitePrincipale`, `categorie`, `natureJuridique`, `etatAdministratif`, `dateCreation`, `trancheEffectif`, `nombreEtablissements`, `nombreEtablissementsOuverts`, `siege`, `dirigeants`, `etablissementsCorrespondants`.
 - `Etablissement` : `siret`, `siren`, `estSiege`, `etatAdministratif`, `adresse`, `codePostal`, `commune`, `codeCommune`, `activitePrincipale`, `dateCreation`, `latitude`, `longitude`, `enseignes`.
 - `Adresse` : `id`, `label`, `numero`, `rue`, `nom`, `codePostal`, `codeCommune`, `commune`, `contexte`, `type`, `score`, `coordonnees`.
+- `Commune` : `code`, `nom`, `codesPostaux`, `population`, `codeDepartement`, `codeRegion`, `siren`, `codeEpci`, `centre`, `score`. L'API Geo donne aussi `Departement`, `Region` et `Epci`.
 
 Les tableaux complets sont dans [Recherche d'entreprises](entreprises.md) et [Recherche d'adresses](adresse.md).
 
@@ -59,5 +65,6 @@ Les tableaux complets sont dans [Recherche d'entreprises](entreprises.md) et [Re
 
 - [Recherche d'entreprises](entreprises.md)
 - [Recherche d'adresses](adresse.md)
+- [API Geo](geo.md)
 - [Laravel](laravel.md)
 - [Erreurs, cache et limite de débit](errors-cache-rate-limit.md)

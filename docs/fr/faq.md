@@ -6,7 +6,7 @@ Non. C'est un paquet non officiel. Il n'est pas créé par l'État français et 
 
 ## Quelles API sont incluses ?
 
-La version 1 en a deux : "Recherche d'entreprises" et l'API d'adresses (BAN). L'API Geo et l'API INSEE SIRENE ne sont pas incluses.
+Trois : "Recherche d'entreprises", l'API d'adresses (BAN) et l'API Geo (communes, départements, régions, EPCI). L'API Geo est incluse depuis la version 0.2.0. L'API INSEE SIRENE n'est pas incluse.
 
 ## Pourquoi des noms de méthodes en français ?
 
@@ -22,7 +22,7 @@ Oui. Le paquet de base a seulement besoin d'un client PSR-18 et d'une fabrique P
 
 ## Faut-il une clé d'API ?
 
-Non. Les deux API sont ouvertes. Vous n'avez pas besoin de compte.
+Non. Toutes les API sont ouvertes. Vous n'avez pas besoin de compte.
 
 ## Pourquoi la règle `Siren` n'appelle-t-elle pas l'API ?
 

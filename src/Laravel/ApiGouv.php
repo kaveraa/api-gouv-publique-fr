@@ -8,11 +8,13 @@ use Illuminate\Support\Facades\Facade;
 use Kaveraa\ApiGouv\Adresse\AdresseApi;
 use Kaveraa\ApiGouv\ApiGouvClient;
 use Kaveraa\ApiGouv\Entreprises\EntreprisesApi;
+use Kaveraa\ApiGouv\Geo\GeoApi;
 use Kaveraa\ApiGouv\Testing\FakeApiGouv;
 
 /**
  * @method static EntreprisesApi entreprises()
  * @method static AdresseApi adresse()
+ * @method static GeoApi geo()
  * @method static FakeApiGouv fake()
  *
  * @see ApiGouvClient

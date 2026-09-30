@@ -36,3 +36,12 @@ it('reads maps, lists of maps and lists of strings', function () {
         ->and(Payload::strings(['a', 2, ['x'], null]))->toBe(['a', '2'])
         ->and(Payload::strings('a'))->toBe([]);
 });
+
+it('reads a nullable integer', function () {
+    expect(Payload::intOrNull(136449))->toBe(136449)
+        ->and(Payload::intOrNull('12'))->toBe(12)
+        ->and(Payload::intOrNull(null))->toBeNull()
+        ->and(Payload::intOrNull(''))->toBeNull()
+        ->and(Payload::intOrNull('abc'))->toBeNull()
+        ->and(Payload::intOrNull(true))->toBeNull();
+});

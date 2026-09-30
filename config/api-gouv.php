@@ -25,4 +25,9 @@ return [
         'base_url' => 'https://data.geopf.fr/geocodage',
         'cache_ttl' => 86400,
     ],
+
+    'geo' => [
+        'base_url' => 'https://geo.api.gouv.fr',
+        'cache_ttl' => 86400,
+    ],
 ];

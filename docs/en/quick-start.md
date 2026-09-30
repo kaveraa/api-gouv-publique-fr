@@ -20,7 +20,12 @@ echo $company->nomComplet;            // OCTO
 
 $addresses = ApiGouv::adresse()->rechercher('8 bd du port amiens', 1);
 echo $addresses[0]->label;            // 8 Boulevard du Port 80000 Amiens
+
+$commune = ApiGouv::geo()->commune('80021');
+echo $commune->nom;                   // Amiens
 ```
+
+The Geo API gives communes, departements, regions and EPCI. See [Geo API](geo.md).
 
 ## First call in plain PHP
 
@@ -52,6 +57,7 @@ You get typed objects. All properties are read-only.
 - `Entreprise`: `siren`, `nomComplet`, `sigle`, `activitePrincipale`, `categorie`, `natureJuridique`, `etatAdministratif`, `dateCreation`, `trancheEffectif`, `nombreEtablissements`, `nombreEtablissementsOuverts`, `siege`, `dirigeants`, `etablissementsCorrespondants`.
 - `Etablissement`: `siret`, `siren`, `estSiege`, `etatAdministratif`, `adresse`, `codePostal`, `commune`, `codeCommune`, `activitePrincipale`, `dateCreation`, `latitude`, `longitude`, `enseignes`.
 - `Adresse`: `id`, `label`, `numero`, `rue`, `nom`, `codePostal`, `codeCommune`, `commune`, `contexte`, `type`, `score`, `coordonnees`.
+- `Commune`: `code`, `nom`, `codesPostaux`, `population`, `codeDepartement`, `codeRegion`, `siren`, `codeEpci`, `centre`, `score`. The Geo API also gives `Departement`, `Region` and `Epci`.
 
 See the full tables in [Company search](entreprises.md) and [Address search](adresse.md).
 
@@ -59,5 +65,6 @@ See the full tables in [Company search](entreprises.md) and [Address search](adr
 
 - [Company search](entreprises.md)
 - [Address search](adresse.md)
+- [Geo API](geo.md)
 - [Laravel](laravel.md)
 - [Errors, cache and rate limit](errors-cache-rate-limit.md)

@@ -46,24 +46,26 @@ $requester = new Requester($transport, 'https://recherche-entreprises.api.gouv.f
 
 Le dernier argument est la durée de cache en secondes.
 
-## Brancher les deux clients
+## Brancher les clients
 
 ```php
 use Kaveraa\ApiGouv\Adresse\AdresseClient;
 use Kaveraa\ApiGouv\ApiGouvClient;
 use Kaveraa\ApiGouv\Entreprises\EntreprisesClient;
+use Kaveraa\ApiGouv\Geo\GeoClient;
 use Kaveraa\ApiGouv\Http\Requester;
 
 $api = new ApiGouvClient(
     new EntreprisesClient(new Requester($transport, 'https://recherche-entreprises.api.gouv.fr')),
     new AdresseClient(new Requester($transport, 'https://data.geopf.fr/geocodage')),
+    new GeoClient(new Requester($transport, 'https://geo.api.gouv.fr')),
 );
 
 echo $api->entreprises()->parSiren('812487973')->nomComplet;
 echo $api->adresse()->rechercher('8 bd du port amiens', 1)[0]->label;
 ```
 
-`ApiGouvClient` est un petit conteneur. Vous pouvez aussi utiliser `EntreprisesClient` et `AdresseClient` seuls.
+`ApiGouvClient` est un petit conteneur. Vous pouvez aussi utiliser `EntreprisesClient`, `AdresseClient` et `GeoClient` seuls.
 
 ## Exemple de services Symfony
 
@@ -90,6 +92,12 @@ services:
             - '@Kaveraa\ApiGouv\Http\Psr18Transport'
             - 'https://data.geopf.fr/geocodage'
 
+    app.api_gouv.requester.geo:
+        class: Kaveraa\ApiGouv\Http\Requester
+        arguments:
+            - '@Kaveraa\ApiGouv\Http\Psr18Transport'
+            - 'https://geo.api.gouv.fr'
+
     Kaveraa\ApiGouv\Entreprises\EntreprisesClient:
         arguments: ['@app.api_gouv.requester.entreprises']
 
@@ -101,6 +109,12 @@ services:
 
     Kaveraa\ApiGouv\Adresse\AdresseApi:
         alias: Kaveraa\ApiGouv\Adresse\AdresseClient
+
+    Kaveraa\ApiGouv\Geo\GeoClient:
+        arguments: ['@app.api_gouv.requester.geo']
+
+    Kaveraa\ApiGouv\Geo\GeoApi:
+        alias: Kaveraa\ApiGouv\Geo\GeoClient
 ```
 
-Ensuite, injectez `EntreprisesApi` ou `AdresseApi` dans vos services.
+Ensuite, injectez `EntreprisesApi`, `AdresseApi` ou `GeoApi` dans vos services.
