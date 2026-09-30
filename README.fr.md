@@ -1,15 +1,14 @@
-<p align="center">
-  <img src="art/banner.svg" alt="api-gouv-publique-fr - Client PHP typé pour les API publiques françaises" width="100%">
-</p>
+# API Gouv Publique FR
 
-# api-gouv-publique-fr
+<p align="center"><img src="https://raw.githubusercontent.com/kaveraa/api-gouv-publique-fr/main/art/banner.svg" alt="API Gouv Publique FR" width="100%"></p>
 
-Lire en anglais : [README.md](README.md)
-
-[![Dernière version](https://img.shields.io/packagist/v/kaveraa/api-gouv-publique-fr)](https://packagist.org/packages/kaveraa/api-gouv-publique-fr)
-[![Version de PHP](https://img.shields.io/packagist/php-v/kaveraa/api-gouv-publique-fr)](https://packagist.org/packages/kaveraa/api-gouv-publique-fr)
 [![Tests](https://github.com/kaveraa/api-gouv-publique-fr/actions/workflows/tests.yml/badge.svg)](https://github.com/kaveraa/api-gouv-publique-fr/actions/workflows/tests.yml)
-[![Licence](https://img.shields.io/packagist/l/kaveraa/api-gouv-publique-fr)](LICENSE)
+[![Packagist](https://img.shields.io/packagist/v/kaveraa/api-gouv-publique-fr.svg)](https://packagist.org/packages/kaveraa/api-gouv-publique-fr)
+[![Licence](https://img.shields.io/github/license/kaveraa/api-gouv-publique-fr.svg)](https://github.com/kaveraa/api-gouv-publique-fr/blob/main/LICENSE)
+[![Downloads](https://img.shields.io/packagist/dt/kaveraa/api-gouv-publique-fr.svg)](https://packagist.org/packages/kaveraa/api-gouv-publique-fr)
+[![PHP](https://img.shields.io/packagist/dependency-v/kaveraa/api-gouv-publique-fr/php.svg)](https://packagist.org/packages/kaveraa/api-gouv-publique-fr)
+
+[English](https://github.com/kaveraa/api-gouv-publique-fr/blob/main/README.md) - **Français**
 
 Un client PHP typé pour les API publiques françaises. La version 1 couvre la recherche d'entreprises et la recherche d'adresses (la BAN, servie par la Géoplateforme). Il fonctionne dans tout projet PHP. Il a un pont optionnel pour Laravel.
 
