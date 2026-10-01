@@ -42,8 +42,7 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - { php: '8.3', symfony: '7.2.*' }
-          - { php: '8.3', symfony: '7.*' }
+          - { php: '8.3', symfony: '7.4.*' }
           - { php: '8.4', symfony: '7.*' }
           - { php: '8.4', symfony: '8.*' }
     steps:
@@ -55,9 +54,7 @@ jobs:
       - name: Install dependencies
         run: |
           composer require "symfony/framework-bundle:${{ matrix.symfony }}" "symfony/http-client:${{ matrix.symfony }}" "symfony/validator:${{ matrix.symfony }}" "symfony/cache:${{ matrix.symfony }}" "symfony/translation:${{ matrix.symfony }}" "symfony/yaml:${{ matrix.symfony }}" --dev --no-interaction --no-update
-          # Old Symfony minors (7.2.x) only exist in releases with security advisories, which Composer
-          # blocks by default. This job tests the library floor, not a deployment, so the block is lifted.
-          composer update --prefer-dist --no-interaction --no-security-blocking
+          composer update --prefer-dist --no-interaction
       - name: Run the Symfony tests
         run: vendor/bin/pest tests/Symfony
 

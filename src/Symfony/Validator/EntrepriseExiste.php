@@ -14,11 +14,11 @@ use Symfony\Component\Validator\Constraint;
 #[Attribute(Attribute::TARGET_PROPERTY | Attribute::TARGET_METHOD | Attribute::IS_REPEATABLE)]
 final class EntrepriseExiste extends Constraint
 {
-    public string $message = 'api_gouv.entreprise_existe';
+    public string $message = 'This value does not match any known company.';
 
-    public string $unavailableMessage = 'api_gouv.entreprise_indisponible';
+    public string $unavailableMessage = 'This value could not be verified because the company service is unavailable.';
 
-    public string $formatMessage = 'api_gouv.siren';
+    public string $formatMessage = 'This value must be a valid SIREN number (9 digits).';
 
     /** @param list<string>|null $groups */
     public function __construct(
