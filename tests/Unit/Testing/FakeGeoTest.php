@@ -92,6 +92,13 @@ it('lists departements, regions and EPCI', function () {
         ->and($fake->epcisDuDepartement('2A'))->toBe([]);
 });
 
+it('throws NotFoundException for the EPCI of a departement the fake does not know', function () {
+    $fake = (new FakeGeo)->with(Factories::departement(), Factories::epci());
+
+    expect(fn () => $fake->epcisDuDepartement('99'))->toThrow(NotFoundException::class, 'No departement found for code 99.')
+        ->and($fake->epcisDuDepartement('80'))->toHaveCount(1);
+});
+
 it('groups the geo fake in FakeApiGouv', function () {
     expect((new FakeApiGouv)->geo())->toBeInstanceOf(FakeGeo::class);
 });

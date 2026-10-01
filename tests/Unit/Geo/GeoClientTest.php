@@ -193,8 +193,12 @@ it('throws NotFoundException for the departements of an unknown region', functio
     geoClient(new FakeTransport(FakeTransport::json('Not Found', 404)))->departementsDeLaRegion('99');
 })->throws(NotFoundException::class);
 
-it('finds an EPCI and lists the EPCI of a departement', function () {
-    $transport = new FakeTransport(FakeTransport::json(loadFixture('geo_epci.json')), FakeTransport::json(loadFixture('geo_epcis_dep.json')));
+it('finds an EPCI and lists the EPCI of a departement after checking it exists', function () {
+    $transport = new FakeTransport(
+        FakeTransport::json(loadFixture('geo_epci.json')),
+        FakeTransport::json(loadFixture('geo_departement.json')),
+        FakeTransport::json(loadFixture('geo_epcis_dep.json')),
+    );
     $client = geoClient($transport);
 
     $epci = $client->epci('248000531');
@@ -204,11 +208,18 @@ it('finds an EPCI and lists the EPCI of a departement', function () {
         ->and($epci->population)->toBe(182854)
         ->and($epcis)->toHaveCount(17)
         ->and($transport->calls[0][0])->toBe('https://geo.api.gouv.fr/epcis/248000531')
-        ->and($transport->calls[1])->toBe(['https://geo.api.gouv.fr/epcis', ['codeDepartement' => '80']]);
+        ->and($transport->calls[1][0])->toBe('https://geo.api.gouv.fr/departements/80')
+        ->and($transport->calls[2])->toBe(['https://geo.api.gouv.fr/epcis', ['codeDepartement' => '80']]);
 });
 
-it('returns an empty list for the EPCI of an unknown departement', function () {
-    expect(geoClient(new FakeTransport(FakeTransport::json(loadFixture('geo_empty.json'))))->epcisDuDepartement('99'))->toBe([]);
+it('throws NotFoundException for the EPCI of an unknown departement', function () {
+    geoClient(new FakeTransport(FakeTransport::json('Not Found', 404)))->epcisDuDepartement('99');
+})->throws(NotFoundException::class);
+
+it('returns an empty list when a known departement has no EPCI', function () {
+    $transport = new FakeTransport(FakeTransport::json(loadFixture('geo_departement.json')), FakeTransport::json(loadFixture('geo_empty.json')));
+
+    expect(geoClient($transport)->epcisDuDepartement('80'))->toBe([]);
 });
 
 it('rejects an invalid EPCI code before calling the API', function (string $code) {

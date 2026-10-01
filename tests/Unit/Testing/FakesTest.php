@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Kaveraa\ApiGouv\Coordonnees;
+use Kaveraa\ApiGouv\Entreprises\SearchQuery;
 use Kaveraa\ApiGouv\Exceptions\NotFoundException;
 use Kaveraa\ApiGouv\Testing\Factories;
 use Kaveraa\ApiGouv\Testing\FakeAdresse;
@@ -64,6 +65,28 @@ it('throws NotFoundException for an unknown SIREN or SIRET', function () {
 
     expect(fn () => $fake->parSiren('123456782'))->toThrow(NotFoundException::class)
         ->and(fn () => $fake->parSiret('12345678200010'))->toThrow(NotFoundException::class);
+});
+
+it('rejects an invalid search like the real client', function () {
+    $fake = (new FakeEntreprises)->with(Factories::entreprise(['nomComplet' => 'ACME']));
+
+    expect(fn () => $fake->rechercher(''))->toThrow(InvalidArgumentException::class, 'The search text must not be empty.')
+        ->and(fn () => $fake->rechercher('   '))->toThrow(InvalidArgumentException::class, 'The search text must not be empty.')
+        ->and(fn () => $fake->rechercher(new SearchQuery('acme', perPage: 26)))->toThrow(InvalidArgumentException::class, 'The page size must be between 1 and 25.')
+        ->and($fake->rechercher('acme')->perPage)->toBe(10)
+        ->and($fake->rechercher(new SearchQuery('acme', perPage: 5))->perPage)->toBe(5)
+        ->and($fake->calls)->toBe([['rechercher', 'acme'], ['rechercher', 'acme']]);
+});
+
+it('validates addresses searches like the real client', function () {
+    $fake = (new FakeAdresse)->with(Factories::adresse());
+
+    expect(fn () => $fake->rechercher('   '))->toThrow(InvalidArgumentException::class, 'The search text must not be empty.')
+        ->and(fn () => $fake->autocompleter('x', 0))->toThrow(InvalidArgumentException::class, 'The limit must be between 1 and 50.')
+        ->and(fn () => $fake->rechercher('x', 51))->toThrow(InvalidArgumentException::class, 'The limit must be between 1 and 50.')
+        ->and(fn () => $fake->geocoderInverse(91.0, 0.0))->toThrow(InvalidArgumentException::class, 'The coordinates are out of range.')
+        ->and($fake->rechercher('test'))->toHaveCount(1)
+        ->and($fake->calls)->toBe([['rechercher', 'test']]);
 });
 
 it('filters stored addresses and finds the nearest one', function () {
