@@ -43,7 +43,7 @@ api_gouv:
 | Clé | Défaut | Sens |
 | --- | --- | --- |
 | `cache.enabled` | `false` | Met en cache les réponses réussies. Demande `symfony/cache`. |
-| `cache.pool` | `cache.app` | Id du service du pool de cache PSR-6 à utiliser. |
+| `cache.pool` | `cache.app` | Identifiant du service du pool de cache PSR-6 à utiliser. |
 | `<api>.base_url` | voir le fichier ci-dessus | URL de base de l'API. `<api>` vaut `entreprises`, `adresse` ou `geo`. |
 | `<api>.cache_ttl` | `3600` pour `entreprises`, `86400` pour `adresse` et `geo` | Durée de cache des réponses, en secondes. |
 | `fake` | `false` | Remplace les clients par des faux en mémoire. Prévu pour les tests. |
@@ -124,7 +124,7 @@ api_gouv:
         pool: cache.app
 ```
 
-`pool` est l'id du service de n'importe quel pool de cache PSR-6. Vous pouvez déclarer un pool réservé au paquet :
+`pool` est l'identifiant du service de n'importe quel pool de cache PSR-6. Vous pouvez déclarer un pool réservé au paquet :
 
 ```yaml
 framework:
@@ -148,11 +148,13 @@ Voir [Erreurs, cache et limite de débit](errors-cache-rate-limit.md).
 
 ## Validation
 
-Les contraintes demandent le composant Validator :
+Les contraintes demandent le composant Validator et le traducteur :
 
 ```bash
-composer require symfony/validator
+composer require symfony/validator symfony/translation
 ```
+
+Les messages sont des clés de traduction, donc le traducteur est nécessaire. Sans lui, les utilisateurs voient une clé comme `api_gouv.siren`.
 
 Placez-les sur une propriété d'un DTO ou d'une entité :
 
@@ -239,6 +241,8 @@ api_gouv.entreprise_existe: 'Cette entreprise est inconnue.'
 ```
 
 Les fichiers de votre application passent avant ceux du bundle.
+
+Si votre `default_locale` n'est ni `en` ni `fr`, ajoutez `en` à `framework.translator.fallbacks` pour que les messages s'affichent quand même en anglais.
 
 ## Tests
 

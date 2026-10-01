@@ -1,6 +1,6 @@
 {
     "name": "kaveraa/api-gouv-publique-fr",
-    "description": "Typed PHP client for French public APIs (company search, address and Geo) with a Laravel bridge. Unofficial.",
+    "description": "Typed PHP client for French public APIs (company search, address and Geo) with Laravel and Symfony bridges. Unofficial.",
     "type": "library",
     "license": "MIT",
     "homepage": "https://github.com/kaveraa/api-gouv-publique-fr",
@@ -39,6 +39,7 @@
         "symfony/cache": "Enables the response cache in the Symfony bundle.",
         "symfony/framework-bundle": "Enables the Symfony bundle (configuration, autowired clients, cache, fake mode).",
         "symfony/http-client": "A PSR-18 client for plain PHP, and the HTTP layer of the Symfony bundle.",
+        "symfony/translation": "Translates the Symfony constraint messages (English and French).",
         "symfony/validator": "Enables the Siren, Siret and EntrepriseExiste constraints in Symfony."
     },
     "autoload": {

@@ -148,11 +148,13 @@ See [Errors, cache and rate limit](errors-cache-rate-limit.md).
 
 ## Validation
 
-The constraints need the Validator component:
+The constraints need the Validator component and the translator:
 
 ```bash
-composer require symfony/validator
+composer require symfony/validator symfony/translation
 ```
+
+The messages are translation keys, so the translator is needed. Without it, users see a key such as `api_gouv.siren`.
 
 Put them on a property of a DTO or an entity:
 
@@ -239,6 +241,8 @@ api_gouv.entreprise_existe: 'Cette entreprise est inconnue.'
 ```
 
 The files of your application win over the files of the bundle.
+
+If your `default_locale` is not `en` or `fr`, add `en` to `framework.translator.fallbacks` so the messages still appear in English.
 
 ## Tests
 
