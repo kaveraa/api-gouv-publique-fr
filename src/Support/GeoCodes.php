@@ -6,7 +6,7 @@ namespace Kaveraa\ApiGouv\Support;
 
 use InvalidArgumentException;
 
-/** Checks the codes accepted by the Geo API before any network call. */
+/** @internal Checks the codes accepted by the Geo API before any network call. */
 final class GeoCodes
 {
     public static function insee(string $value): string

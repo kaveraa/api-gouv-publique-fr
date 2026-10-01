@@ -10,19 +10,20 @@ use Kaveraa\ApiGouv\Support\Payload;
 
 final readonly class Adresse
 {
+    /** @internal Build it with Factories in tests; the package builds it from the API payload. */
     public function __construct(
         public string $id,
         public string $label,
-        public ?string $numero,
-        public ?string $rue,
-        public ?string $nom,
-        public ?string $codePostal,
-        public ?string $codeCommune,
-        public ?string $commune,
-        public ?string $contexte,
-        public ?string $type,
-        public ?float $score,
         public Coordonnees $coordonnees,
+        public ?string $numero = null,
+        public ?string $rue = null,
+        public ?string $nom = null,
+        public ?string $codePostal = null,
+        public ?string $codeCommune = null,
+        public ?string $commune = null,
+        public ?string $contexte = null,
+        public ?string $type = null,
+        public ?float $score = null,
     ) {}
 
     /** @param array<string, mixed> $feature A GeoJSON feature from the API. */

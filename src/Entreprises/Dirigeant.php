@@ -8,14 +8,15 @@ use Kaveraa\ApiGouv\Support\Payload;
 
 final readonly class Dirigeant
 {
+    /** @internal Build it with Factories in tests; the package builds it from the API payload. */
     public function __construct(
-        public string $type,
-        public ?string $qualite,
-        public ?string $nom,
-        public ?string $prenoms,
-        public ?string $denomination,
-        public ?string $siren,
-        public ?string $anneeDeNaissance,
+        public string $type = 'inconnu',
+        public ?string $qualite = null,
+        public ?string $nom = null,
+        public ?string $prenoms = null,
+        public ?string $denomination = null,
+        public ?string $siren = null,
+        public ?string $anneeDeNaissance = null,
     ) {}
 
     /** @param array<string, mixed> $data */

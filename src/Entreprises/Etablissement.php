@@ -12,20 +12,24 @@ use Kaveraa\ApiGouv\Support\Payload;
 
 final readonly class Etablissement
 {
-    /** @param list<string> $enseignes */
+    /**
+     * @internal Build it with Factories in tests; the package builds it from the API payload.
+     *
+     * @param  list<string>  $enseignes
+     */
     public function __construct(
         public string $siret,
         public string $siren,
         public bool $estSiege,
-        public ?string $etatAdministratif,
-        public ?string $adresse,
-        public ?string $codePostal,
-        public ?string $commune,
-        public ?string $codeCommune,
-        public ?string $activitePrincipale,
-        public ?DateTimeImmutable $dateCreation,
-        public ?Coordonnees $coordonnees,
-        public array $enseignes,
+        public ?string $etatAdministratif = null,
+        public ?string $adresse = null,
+        public ?string $codePostal = null,
+        public ?string $commune = null,
+        public ?string $codeCommune = null,
+        public ?string $activitePrincipale = null,
+        public ?DateTimeImmutable $dateCreation = null,
+        public ?Coordonnees $coordonnees = null,
+        public array $enseignes = [],
     ) {}
 
     /** @param array<string, mixed> $data */

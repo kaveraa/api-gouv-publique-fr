@@ -12,24 +12,26 @@ use Kaveraa\ApiGouv\Support\Payload;
 final readonly class Entreprise
 {
     /**
+     * @internal Build it with Factories in tests; the package builds it from the API payload.
+     *
      * @param  list<Dirigeant>  $dirigeants
      * @param  list<Etablissement>  $etablissementsCorrespondants  Establishments that matched the search.
      */
     public function __construct(
         public string $siren,
         public string $nomComplet,
-        public ?string $sigle,
-        public ?string $activitePrincipale,
-        public ?string $categorie,
-        public ?string $natureJuridique,
-        public ?string $etatAdministratif,
-        public ?DateTimeImmutable $dateCreation,
-        public ?string $trancheEffectif,
-        public ?int $nombreEtablissements,
-        public ?int $nombreEtablissementsOuverts,
-        public ?Etablissement $siege,
-        public array $dirigeants,
-        public array $etablissementsCorrespondants,
+        public ?string $sigle = null,
+        public ?string $activitePrincipale = null,
+        public ?string $categorie = null,
+        public ?string $natureJuridique = null,
+        public ?string $etatAdministratif = null,
+        public ?DateTimeImmutable $dateCreation = null,
+        public ?string $trancheEffectif = null,
+        public ?int $nombreEtablissements = null,
+        public ?int $nombreEtablissementsOuverts = null,
+        public ?Etablissement $siege = null,
+        public array $dirigeants = [],
+        public array $etablissementsCorrespondants = [],
     ) {}
 
     /** @param array<string, mixed> $data */

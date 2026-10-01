@@ -8,7 +8,11 @@ use Kaveraa\ApiGouv\Support\Payload;
 
 final readonly class SearchResult
 {
-    /** @param list<Entreprise> $results */
+    /**
+     * @internal Build it with Factories in tests; the package builds it from the API payload.
+     *
+     * @param  list<Entreprise>  $results
+     */
     public function __construct(
         public array $results,
         public int $total,
