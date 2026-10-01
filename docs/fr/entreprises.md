@@ -29,8 +29,9 @@ Le SIRET doit avoir 14 chiffres. Un SIRET inconnu lance `NotFoundException`.
 ```php
 $result = ApiGouv::entreprises()->rechercher('octo technology');
 
-echo $result->total;                       // nombre de résultats
-foreach ($result->results as $company) {
+echo $result->total;                       // nombre de résultats, toutes pages
+echo count($result);                       // entreprises de cette page
+foreach ($result as $company) {
     echo $company->siren.' '.$company->nomComplet.PHP_EOL;
 }
 ```
@@ -124,6 +125,8 @@ Une taille de page hors de 1 à 25 lance `InvalidArgumentException`. Cela évite
 | `page` | int | Page actuelle. |
 | `perPage` | int | Taille de page. |
 | `totalPages` | int | Nombre de pages. |
+
+`SearchResult` est itérable et comptable : `foreach ($result as $company)` et `count($result)` portent sur les entreprises de la page. `total` compte les résultats de toutes les pages.
 
 ## Cas d'usage : vérifier une entreprise à l'inscription
 
