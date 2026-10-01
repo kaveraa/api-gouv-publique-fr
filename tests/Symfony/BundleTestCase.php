@@ -30,9 +30,14 @@ abstract class BundleTestCase extends TestCase
      * @param  class-string<ApiGouvBundle>|null  $bundleClass
      * @return ContainerInterface the test container, which can read private services
      */
-    protected function boot(array $config = [], bool $mockHttp = true, ?string $bundleClass = null): ContainerInterface
-    {
-        $this->kernel = new TestKernel($config, $mockHttp, $bundleClass ?? ApiGouvBundle::class);
+    protected function boot(
+        array $config = [],
+        bool $mockHttp = true,
+        ?string $bundleClass = null,
+        bool $exposeServices = true,
+        bool $autowiredConsumer = false,
+    ): ContainerInterface {
+        $this->kernel = new TestKernel($config, $mockHttp, $bundleClass ?? ApiGouvBundle::class, $exposeServices, $autowiredConsumer);
         $this->kernel->boot();
 
         $container = $this->kernel->getContainer()->get('test.service_container');

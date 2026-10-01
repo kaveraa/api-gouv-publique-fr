@@ -11,6 +11,7 @@ use Kaveraa\ApiGouv\Geo\GeoApi;
 use Kaveraa\ApiGouv\Geo\GeoClient;
 use Kaveraa\ApiGouv\Http\Psr18Transport;
 use Kaveraa\ApiGouv\Http\Transport;
+use Kaveraa\ApiGouv\Tests\Symfony\AutowiredConsumer;
 use Kaveraa\ApiGouv\Tests\Symfony\MockResponses;
 use Kaveraa\ApiGouv\Tests\Symfony\NoHttpClientBundle;
 use Symfony\Component\Cache\Psr16Cache;
@@ -33,6 +34,19 @@ it('wires the clients with the defaults', function () {
         ->and($container->getParameter('api_gouv.cache.enabled'))->toBeFalse()
         ->and($container->getParameter('api_gouv.fake'))->toBeFalse()
         ->and($container->has('api_gouv.cache'))->toBeFalse();
+});
+
+it('autowires the clients into an application service', function () {
+    $this->boot(exposeServices: false, autowiredConsumer: true);
+
+    $consumer = $this->kernel->getContainer()->get(AutowiredConsumer::class);
+    assert($consumer instanceof AutowiredConsumer);
+
+    expect($consumer->entreprises)->toBeInstanceOf(EntreprisesClient::class)
+        ->and($consumer->adresse)->toBeInstanceOf(AdresseClient::class)
+        ->and($consumer->geo)->toBeInstanceOf(GeoClient::class)
+        ->and($consumer->client)->toBeInstanceOf(ApiGouvClient::class)
+        ->and($consumer->client->geo())->toBe($consumer->geo);
 });
 
 it('calls the API through the application http client', function () {

@@ -29,11 +29,13 @@ it('replaces the clients with the fakes', function () {
 });
 
 it('is public from the real container', function () {
-    $this->boot(['fake' => true], mockHttp: false);
+    $this->boot(['fake' => true], mockHttp: false, exposeServices: false);
+    $container = $this->kernel->getContainer();
 
-    $fake = $this->kernel->getContainer()->get(FakeApiGouv::class);
+    $fake = $container->get(FakeApiGouv::class);
 
-    expect($fake)->toBeInstanceOf(FakeApiGouv::class);
+    expect($fake)->toBeInstanceOf(FakeApiGouv::class)
+        ->and($container->get(ApiGouvClient::class))->toBe($fake);
 });
 
 it('serves the prepared objects and records the calls', function () {

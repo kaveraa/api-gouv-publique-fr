@@ -23,11 +23,15 @@ final class TestKernel extends Kernel
     /**
      * @param  array<string, mixed>  $apiGouv  the api_gouv configuration
      * @param  class-string<ApiGouvBundle>  $bundleClass  a subclass can simulate a missing package
+     * @param  bool  $exposeServices  false keeps the real visibility, to test what an application can read
+     * @param  bool  $autowiredConsumer  registers AutowiredConsumer as a public autowired service
      */
     public function __construct(
         private readonly array $apiGouv = [],
         private readonly bool $mockHttp = true,
         private readonly string $bundleClass = ApiGouvBundle::class,
+        private readonly bool $exposeServices = true,
+        private readonly bool $autowiredConsumer = false,
     ) {
         $this->dir = sys_get_temp_dir().'/api-gouv-bundle-'.bin2hex(random_bytes(4));
 
@@ -59,6 +63,11 @@ final class TestKernel extends Kernel
     {
         // Unused private services are removed at compile time, so the tests could not read them.
         // Making the bundle services public keeps them in the test container.
+        // It also hides the real visibility, so a test can turn it off to check that visibility.
+        if (! $this->exposeServices) {
+            return;
+        }
+
         $container->addCompilerPass(new class implements CompilerPassInterface
         {
             public function process(ContainerBuilder $container): void
@@ -99,5 +108,8 @@ final class TestKernel extends Kernel
         $container->extension('framework', $framework);
         $container->extension('api_gouv', $this->apiGouv);
         $container->services()->set(MockResponses::class);
+        if ($this->autowiredConsumer) {
+            $container->services()->set(AutowiredConsumer::class)->autowire()->public();
+        }
     }
 }
