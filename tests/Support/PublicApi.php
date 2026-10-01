@@ -92,7 +92,7 @@ final class PublicApi
                 continue;
             }
             $properties[$property->getName()] = [
-                'type' => (string) $property->getType(),
+                'type' => self::typeName($property->getType(), $class->getName()),
                 'readonly' => $property->isReadOnly(),
                 'static' => $property->isStatic(),
             ];
@@ -104,8 +104,11 @@ final class PublicApi
             }
             $methods[$method->getName()] = [
                 'static' => $method->isStatic(),
-                'returns' => (string) $method->getReturnType(),
-                'parameters' => array_map(self::describeParameter(...), $method->getParameters()),
+                'returns' => self::typeName($method->getReturnType(), $class->getName()),
+                'parameters' => array_map(
+                    static fn (ReflectionParameter $parameter) => self::describeParameter($parameter, $class->getName()),
+                    $method->getParameters(),
+                ),
             ];
         }
         ksort($constants);
@@ -129,18 +132,26 @@ final class PublicApi
     }
 
     /** @return array<string, mixed> */
-    private static function describeParameter(ReflectionParameter $parameter): array
+    private static function describeParameter(ReflectionParameter $parameter, string $class): array
     {
         $type = $parameter->getType();
 
         return [
             'name' => $parameter->getName(),
-            'type' => (string) $type,
+            'type' => self::typeName($type, $class),
             'nullable' => $type === null || $type->allowsNull(),
             'default' => $parameter->isDefaultValueAvailable() ? var_export($parameter->getDefaultValue(), true) : null,
             'variadic' => $parameter->isVariadic(),
             'byReference' => $parameter->isPassedByReference(),
         ];
+    }
+
+    /** PHP 8.5 prints "self" as the class name, older versions print "self": normalise so the snapshot is stable. */
+    private static function typeName(?\ReflectionType $type, string $class): string
+    {
+        $name = (string) $type;
+
+        return (string) preg_replace('/\b(self|static)\b/', str_replace('\\', '\\\\', $class), $name);
     }
 
     private static function isInternal(string|false $docComment): bool
