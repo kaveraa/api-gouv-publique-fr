@@ -55,7 +55,9 @@ jobs:
       - name: Install dependencies
         run: |
           composer require "symfony/framework-bundle:${{ matrix.symfony }}" "symfony/http-client:${{ matrix.symfony }}" "symfony/validator:${{ matrix.symfony }}" "symfony/cache:${{ matrix.symfony }}" "symfony/translation:${{ matrix.symfony }}" "symfony/yaml:${{ matrix.symfony }}" --dev --no-interaction --no-update
-          composer update --prefer-dist --no-interaction
+          # Old Symfony minors (7.2.x) only exist in releases with security advisories, which Composer
+          # blocks by default. This job tests the library floor, not a deployment, so the block is lifted.
+          composer update --prefer-dist --no-interaction --no-security-blocking
       - name: Run the Symfony tests
         run: vendor/bin/pest tests/Symfony
 
