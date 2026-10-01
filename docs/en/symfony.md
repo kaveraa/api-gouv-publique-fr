@@ -250,7 +250,7 @@ when@test:
         fake: true
 ```
 
-The clients are then `FakeEntreprises`, `FakeAdresse` and `FakeGeo`. No HTTP client is registered, so a test cannot call the real APIs. `FakeApiGouv` holds the three fakes. Read it from the test container, fill it with `Factories`, then check the calls in `$calls`:
+The clients are then `FakeEntreprises`, `FakeAdresse` and `FakeGeo`. The bundle registers no HTTP client, so a test cannot call the real APIs. `FakeApiGouv` holds the three fakes. Read it from the test container, fill it with `Factories`, then check the calls in `$calls`:
 
 ```php
 namespace App\Tests\Controller;
@@ -281,7 +281,7 @@ final class CompanyControllerTest extends WebTestCase
 
 This test supposes a route `/company/{siren}` that returns the result of `CompanyController::show()` as JSON. Fill the fakes after `createClient()` and before the request. The client boots a new kernel between two requests, which empties the fakes. Call `$client->disableReboot()` if one test sends several requests.
 
-The fake mode is a configuration value, not a switch at runtime, because the Symfony container is compiled: the fakes replace the clients when the container is built, and the test container has no HTTP service at all.
+The fake mode is a configuration value, not a switch at runtime, because the Symfony container is compiled: the fakes replace the clients when the container is built, and the bundle registers no HTTP service for the APIs.
 
 The `Factories` defaults and the matching rules of the fakes are in [Testing](testing.md).
 

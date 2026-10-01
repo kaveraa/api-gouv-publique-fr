@@ -250,7 +250,7 @@ when@test:
         fake: true
 ```
 
-Les clients sont alors `FakeEntreprises`, `FakeAdresse` et `FakeGeo`. Aucun client HTTP n'est enregistré, donc un test ne peut pas appeler les vraies API. `FakeApiGouv` contient les trois faux. Lisez-le dans le conteneur de test, remplissez-le avec `Factories`, puis vérifiez les appels dans `$calls` :
+Les clients sont alors `FakeEntreprises`, `FakeAdresse` et `FakeGeo`. Le bundle n'enregistre aucun client HTTP, donc un test ne peut pas appeler les vraies API. `FakeApiGouv` contient les trois faux. Lisez-le dans le conteneur de test, remplissez-le avec `Factories`, puis vérifiez les appels dans `$calls` :
 
 ```php
 namespace App\Tests\Controller;
@@ -281,7 +281,7 @@ final class CompanyControllerTest extends WebTestCase
 
 Ce test suppose une route `/company/{siren}` qui renvoie le résultat de `CompanyController::show()` en JSON. Remplissez les faux après `createClient()` et avant la requête. Le client démarre un nouveau noyau entre deux requêtes, ce qui vide les faux. Appelez `$client->disableReboot()` si un test envoie plusieurs requêtes.
 
-Le mode factice est une valeur de configuration, pas un interrupteur à l'exécution, car le conteneur Symfony est compilé : les faux remplacent les clients quand le conteneur est construit, et le conteneur de test n'a aucun service HTTP.
+Le mode factice est une valeur de configuration, pas un interrupteur à l'exécution, car le conteneur Symfony est compilé : les faux remplacent les clients quand le conteneur est construit, et le bundle n'enregistre aucun service HTTP pour les API.
 
 Les valeurs par défaut de `Factories` et les règles de correspondance des faux sont dans [Tests](testing.md).
 
