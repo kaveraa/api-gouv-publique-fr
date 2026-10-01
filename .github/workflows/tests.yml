@@ -35,6 +35,29 @@ jobs:
       - name: Run tests
         run: vendor/bin/pest
 
+  symfony:
+    name: PHP ${{ matrix.php }} / Symfony ${{ matrix.symfony }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { php: '8.3', symfony: '7.*' }
+          - { php: '8.4', symfony: '7.*' }
+          - { php: '8.4', symfony: '8.*' }
+    steps:
+      - uses: actions/checkout@v7
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: none
+      - name: Install dependencies
+        run: |
+          composer require "symfony/framework-bundle:${{ matrix.symfony }}" "symfony/http-client:${{ matrix.symfony }}" "symfony/validator:${{ matrix.symfony }}" "symfony/cache:${{ matrix.symfony }}" "symfony/translation:${{ matrix.symfony }}" "symfony/yaml:${{ matrix.symfony }}" --dev --no-interaction --no-update
+          composer update --prefer-dist --no-interaction
+      - name: Run the Symfony tests
+        run: vendor/bin/pest tests/Symfony
+
   core-only:
     name: Core without Laravel
     runs-on: ubuntu-latest
@@ -46,10 +69,12 @@ jobs:
           coverage: none
       - name: Install without Laravel
         run: |
-          composer remove --dev orchestra/testbench pestphp/pest-plugin-laravel larastan/larastan --no-interaction --no-update
+          composer remove --dev orchestra/testbench pestphp/pest-plugin-laravel larastan/larastan symfony/framework-bundle symfony/http-client symfony/validator symfony/cache symfony/translation symfony/yaml --no-interaction --no-update
           composer update --prefer-dist --no-interaction
       - name: Check Laravel is absent
         run: test ! -d vendor/laravel/framework
+      - name: Check Symfony is absent
+        run: test ! -d vendor/symfony/framework-bundle
       - name: Run core tests
         run: vendor/bin/pest tests/Unit
 
@@ -82,7 +107,7 @@ jobs:
   all-checks:
     name: All checks
     runs-on: ubuntu-latest
-    needs: [tests, core-only, quality, coverage]
+    needs: [tests, symfony, core-only, quality, coverage]
     if: always()
     steps:
       - name: Fail when any job failed or was cancelled
