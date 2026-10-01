@@ -20,6 +20,10 @@ La BAN est maintenant servie par la Géoplateforme à l'adresse `https://data.ge
 
 Oui. Le paquet de base a seulement besoin d'un client PSR-18 et d'une fabrique PSR-17. Voir [PHP simple](plain-php.md).
 
+## Est-ce que cela marche avec Symfony ?
+
+Oui, depuis la version 0.3.0, avec le bundle `ApiGouvBundle`. Il donne des clients en autowiring, un cache, des contraintes de validation et un mode factice pour les tests. Voir [Symfony](symfony.md).
+
 ## Faut-il une clé d'API ?
 
 Non. Toutes les API sont ouvertes. Vous n'avez pas besoin de compte.
@@ -34,7 +38,7 @@ Elle échoue en mode fermé. La valeur est refusée avec un message spécial, po
 
 ## Pourquoi une règle n'arrête-t-elle pas une valeur vide ?
 
-Les objets de règle Laravel sont ignorés quand la valeur est vide. Ajoutez `required` au champ s'il est obligatoire.
+Les objets de règle Laravel sont ignorés quand la valeur est vide. Ajoutez `required` au champ s'il est obligatoire. Les contraintes Symfony acceptent aussi une valeur vide : ajoutez `NotBlank`.
 
 ## Le cache est-il actif ?
 

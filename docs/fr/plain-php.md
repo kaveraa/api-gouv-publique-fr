@@ -67,54 +67,8 @@ echo $api->adresse()->rechercher('8 bd du port amiens', 1)[0]->label;
 
 `ApiGouvClient` est un petit conteneur. Vous pouvez aussi utiliser `EntreprisesClient`, `AdresseClient` et `GeoClient` seuls.
 
-## Exemple de services Symfony
+## Symfony
 
-Quand `symfony/http-client` est installé, Symfony enregistre un client PSR-18 sous le nom `Psr\Http\Client\ClientInterface`. Dans `config/services.yaml` :
+Dans une application Symfony, le bundle fait ce branchement pour vous. Voir [Symfony](symfony.md).
 
-```yaml
-services:
-    Nyholm\Psr7\Factory\Psr17Factory: ~
-
-    Kaveraa\ApiGouv\Http\Psr18Transport:
-        arguments:
-            - '@Psr\Http\Client\ClientInterface'
-            - '@Nyholm\Psr7\Factory\Psr17Factory'
-
-    app.api_gouv.requester.entreprises:
-        class: Kaveraa\ApiGouv\Http\Requester
-        arguments:
-            - '@Kaveraa\ApiGouv\Http\Psr18Transport'
-            - 'https://recherche-entreprises.api.gouv.fr'
-
-    app.api_gouv.requester.adresse:
-        class: Kaveraa\ApiGouv\Http\Requester
-        arguments:
-            - '@Kaveraa\ApiGouv\Http\Psr18Transport'
-            - 'https://data.geopf.fr/geocodage'
-
-    app.api_gouv.requester.geo:
-        class: Kaveraa\ApiGouv\Http\Requester
-        arguments:
-            - '@Kaveraa\ApiGouv\Http\Psr18Transport'
-            - 'https://geo.api.gouv.fr'
-
-    Kaveraa\ApiGouv\Entreprises\EntreprisesClient:
-        arguments: ['@app.api_gouv.requester.entreprises']
-
-    Kaveraa\ApiGouv\Entreprises\EntreprisesApi:
-        alias: Kaveraa\ApiGouv\Entreprises\EntreprisesClient
-
-    Kaveraa\ApiGouv\Adresse\AdresseClient:
-        arguments: ['@app.api_gouv.requester.adresse']
-
-    Kaveraa\ApiGouv\Adresse\AdresseApi:
-        alias: Kaveraa\ApiGouv\Adresse\AdresseClient
-
-    Kaveraa\ApiGouv\Geo\GeoClient:
-        arguments: ['@app.api_gouv.requester.geo']
-
-    Kaveraa\ApiGouv\Geo\GeoApi:
-        alias: Kaveraa\ApiGouv\Geo\GeoClient
-```
-
-Ensuite, injectez `EntreprisesApi`, `AdresseApi` ou `GeoApi` dans vos services.
+Si vous préférez déclarer les services vous-même, branchez les mêmes classes que ci-dessus : `Psr18Transport`, un `Requester` par API, puis `EntreprisesClient`, `AdresseClient` et `GeoClient`, avec les alias `EntreprisesApi`, `AdresseApi` et `GeoApi`.

@@ -94,6 +94,18 @@ expect(ApiGouv::entreprises()->parSiren('812487973')->nomComplet)->toBe('OCTO');
 
 A good source of real answers is the folder `tests/fixtures` of this repository.
 
+## In Symfony
+
+Turn the fake mode of the bundle on for the test environment, in `config/packages/api_gouv.yaml`:
+
+```yaml
+when@test:
+    api_gouv:
+        fake: true
+```
+
+The clients are then the fakes of this page. Read `FakeApiGouv` from the test container and fill it with `Factories`. See the Tests section of [Symfony](symfony.md#tests).
+
 ## Fakes in plain PHP
 
 `FakeEntreprises`, `FakeAdresse` and `FakeGeo` do not need Laravel. They implement `EntreprisesApi`, `AdresseApi` and `GeoApi`. Give them to the code you test.
