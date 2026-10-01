@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Kaveraa\ApiGouv\Adresse;
 
-use InvalidArgumentException;
 use Kaveraa\ApiGouv\Http\Requester;
+use Kaveraa\ApiGouv\Support\GeoCodes;
 use Kaveraa\ApiGouv\Support\Payload;
 
 final class AdresseClient implements AdresseApi
@@ -24,9 +24,7 @@ final class AdresseClient implements AdresseApi
 
     public function geocoderInverse(float $latitude, float $longitude): ?Adresse
     {
-        if (! is_finite($latitude) || ! is_finite($longitude) || abs($latitude) > 90 || abs($longitude) > 180) {
-            throw new InvalidArgumentException('The coordinates are out of range.');
-        }
+        GeoCodes::coordinates($latitude, $longitude);
 
         $data = $this->http->getJson('reverse', ['lat' => $latitude, 'lon' => $longitude, 'limit' => 1]);
         $first = Payload::maps($data['features'] ?? null)[0] ?? null;
@@ -37,12 +35,8 @@ final class AdresseClient implements AdresseApi
     /** @return list<Adresse> */
     private function search(string $query, int $limit, bool $autocomplete): array
     {
-        if (trim($query) === '') {
-            throw new InvalidArgumentException('The search text must not be empty.');
-        }
-        if ($limit < 1 || $limit > 50) {
-            throw new InvalidArgumentException('The limit must be between 1 and 50.');
-        }
+        GeoCodes::text($query);
+        GeoCodes::limit($limit);
 
         $data = $this->http->getJson('search', ['q' => $query, 'limit' => $limit, 'autocomplete' => (int) $autocomplete]);
 
