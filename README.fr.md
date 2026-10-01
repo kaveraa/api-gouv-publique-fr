@@ -10,7 +10,7 @@
 
 [English](https://github.com/kaveraa/api-gouv-publique-fr/blob/main/README.md) - **Français**
 
-Un client PHP typé pour les API publiques françaises. La version 0.1 couvre la recherche d'entreprises et la recherche d'adresses (la BAN, servie par la Géoplateforme). La version 0.2 ajoute l'API Geo (communes, départements, régions, EPCI). La version 0.3 ajoute un bundle Symfony. Il fonctionne dans tout projet PHP. Il a des ponts optionnels pour Laravel et Symfony. La version 0.4 prépare la 1.0 et vient avec une promesse de compatibilité.
+Un client PHP typé pour les API publiques françaises. La version 0.1 couvre la recherche d'entreprises et la recherche d'adresses (la BAN, servie par la Géoplateforme). La version 0.2 ajoute l'API Geo (communes, départements, régions, EPCI). La version 0.3 ajoute un bundle Symfony. Il fonctionne dans tout projet PHP. Il a des ponts optionnels pour Laravel et Symfony. La version 1.0 est stable : voir la promesse de [compatibilité](docs/fr/compatibilite.md).
 
 Ce projet est non officiel. Il n'est pas affilié à l'État français.
 
