@@ -167,6 +167,7 @@ final class FakeGeo implements GeoApi
     {
         $code = GeoCodes::departement($code);
         $this->calls[] = ['epcisDuDepartement', $code];
+        $this->findDepartement($code);
 
         return array_values(array_filter($this->epcis, static fn (Epci $e) => in_array($code, $e->codesDepartements, true)));
     }

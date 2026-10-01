@@ -32,7 +32,7 @@ it('validates SIREN and SIRET values', function () {
         ->and($validator->validate(null, new Siret))->toHaveCount(0);
 });
 
-it('translates the messages in English and French', function () {
+it('uses the English sentence as the default message and translates it in French', function () {
     $container = $this->boot();
     $validator = $container->get(ValidatorInterface::class);
 
@@ -40,8 +40,14 @@ it('translates the messages in English and French', function () {
     $container->get(TranslatorInterface::class)->setLocale('fr');
     $french = (string) $validator->validate('123', new Siret)->get(0)->getMessage();
 
-    expect($english)->toBe('This value must be a valid SIREN number (9 digits).')
-        ->and($french)->toBe('Cette valeur doit être un numéro SIRET valide (14 chiffres).');
+    expect((new Siren)->message)->toBe('This value must be a valid SIREN number (9 digits).')
+        ->and((new Siret)->message)->toBe('This value must be a valid SIRET number (14 digits).')
+        ->and((new EntrepriseExiste)->message)->toBe('This value does not match any known company.')
+        ->and((new EntrepriseExiste)->unavailableMessage)->toBe('This value could not be verified because the company service is unavailable.')
+        ->and((new EntrepriseExiste)->formatMessage)->toBe('This value must be a valid SIREN number (9 digits).')
+        ->and($english)->toBe('This value must be a valid SIREN number (9 digits).')
+        ->and($french)->toBe('Cette valeur doit être un numéro SIRET valide (14 chiffres).')
+        ->and(file_exists(dirname(__DIR__, 2).'/src/Symfony/translations/validators.en.php'))->toBeFalse();
 });
 
 it('accepts a custom message', function () {

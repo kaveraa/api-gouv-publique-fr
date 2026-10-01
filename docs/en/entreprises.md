@@ -80,8 +80,8 @@ A page size outside 1 to 25 throws `InvalidArgumentException`. This avoids an HT
 | `etatAdministratif` | ?string | Status. "A" means active. |
 | `dateCreation` | ?DateTimeImmutable | Creation date. |
 | `trancheEffectif` | ?string | Staff size code. |
-| `nombreEtablissements` | int | Number of establishments. |
-| `nombreEtablissementsOuverts` | int | Number of open establishments. |
+| `nombreEtablissements` | ?int | Number of establishments, or `null` when unknown. |
+| `nombreEtablissementsOuverts` | ?int | Number of open establishments, or `null` when unknown. |
 | `siege` | ?Etablissement | The head office. |
 | `dirigeants` | list of Dirigeant | The managers. |
 | `etablissementsCorrespondants` | list of Etablissement | Establishments that matched the search. |
@@ -100,8 +100,7 @@ A page size outside 1 to 25 throws `InvalidArgumentException`. This avoids an HT
 | `codeCommune` | ?string | Town code (INSEE). |
 | `activitePrincipale` | ?string | Main activity code. |
 | `dateCreation` | ?DateTimeImmutable | Creation date. |
-| `latitude` | ?float | Latitude. |
-| `longitude` | ?float | Longitude. |
+| `coordonnees` | ?Coordonnees | The position (`latitude`, `longitude`), or `null`. |
 | `enseignes` | list of string | Trade names. |
 
 ### Dirigeant

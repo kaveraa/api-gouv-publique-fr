@@ -9,6 +9,7 @@ use Kaveraa\ApiGouv\Support\Payload;
 
 final readonly class Region
 {
+    /** @internal Build it with Factories in tests; the package builds it from the API payload. */
     public function __construct(
         public string $code,
         public string $nom,

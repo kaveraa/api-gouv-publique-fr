@@ -12,7 +12,7 @@ use Kaveraa\ApiGouv\Entreprises\SearchResult;
 use Kaveraa\ApiGouv\Exceptions\NotFoundException;
 use Kaveraa\ApiGouv\Support\Identifiers;
 
-/** Search filters and paging are ignored; only the text is matched. */
+/** Search filters and paging are ignored; only the text is matched. Input is checked like the real client. */
 final class FakeEntreprises implements EntreprisesApi
 {
     /** @var list<array{0: string, 1: string}> */
@@ -30,15 +30,16 @@ final class FakeEntreprises implements EntreprisesApi
 
     public function rechercher(SearchQuery|string $query): SearchResult
     {
-        $text = is_string($query) ? $query : $query->q;
-        $this->calls[] = ['rechercher', $text];
+        // The real client builds a SearchQuery from a string, so the same input rules apply here.
+        $query = is_string($query) ? new SearchQuery($query) : $query;
+        $this->calls[] = ['rechercher', $query->q];
 
         $found = array_values(array_filter(
             $this->entreprises,
-            static fn (Entreprise $e) => stripos($e->nomComplet, $text) !== false,
+            static fn (Entreprise $e) => stripos($e->nomComplet, $query->q) !== false,
         ));
 
-        return new SearchResult($found, count($found), 1, is_string($query) ? 10 : $query->perPage, $found === [] ? 0 : 1);
+        return new SearchResult($found, count($found), 1, $query->perPage, $found === [] ? 0 : 1);
     }
 
     public function parSiren(string $siren): Entreprise

@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Kaveraa\ApiGouv\Adresse;
+namespace Kaveraa\ApiGouv;
 
+/** A WGS84 point. Shared by addresses, communes and establishments. */
 final readonly class Coordonnees
 {
     public function __construct(

@@ -40,6 +40,10 @@ It fails closed. The value is refused with a special message, so you know the co
 
 Laravel rule objects are skipped on empty values. Add `required` to the field if it is mandatory. The Symfony constraints also accept an empty value: add `NotBlank`.
 
+## What does 1.0 guarantee?
+
+Semantic versioning on the public surface: calling the classes and reading the data objects keeps working in every 1.x. Implementing the API interfaces and using `@internal` code is not covered. See [Backward compatibility](backward-compatibility.md) and [Upgrade from 0.3 to 0.4](upgrade-0.4.md).
+
 ## Is the cache on?
 
 No. It is off by default. Turn it on in the config (`cache.enabled`) or pass a `ResponseCache` in plain PHP.

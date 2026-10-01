@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Kaveraa\ApiGouv\Support;
 
-/** Reads loosely typed decoded JSON (or config) values into precise types. */
+/** @internal Reads loosely typed decoded JSON (or config) values into precise types. */
 final class Payload
 {
     /** Empty strings and booleans count as missing. */

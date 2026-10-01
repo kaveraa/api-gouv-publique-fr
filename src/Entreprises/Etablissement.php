@@ -5,33 +5,39 @@ declare(strict_types=1);
 namespace Kaveraa\ApiGouv\Entreprises;
 
 use DateTimeImmutable;
+use Kaveraa\ApiGouv\Coordonnees;
 use Kaveraa\ApiGouv\Exceptions\InvalidResponseException;
 use Kaveraa\ApiGouv\Support\Dates;
 use Kaveraa\ApiGouv\Support\Payload;
 
 final readonly class Etablissement
 {
-    /** @param list<string> $enseignes */
+    /**
+     * @internal Build it with Factories in tests; the package builds it from the API payload.
+     *
+     * @param  list<string>  $enseignes
+     */
     public function __construct(
         public string $siret,
         public string $siren,
         public bool $estSiege,
-        public ?string $etatAdministratif,
-        public ?string $adresse,
-        public ?string $codePostal,
-        public ?string $commune,
-        public ?string $codeCommune,
-        public ?string $activitePrincipale,
-        public ?DateTimeImmutable $dateCreation,
-        public ?float $latitude,
-        public ?float $longitude,
-        public array $enseignes,
+        public ?string $etatAdministratif = null,
+        public ?string $adresse = null,
+        public ?string $codePostal = null,
+        public ?string $commune = null,
+        public ?string $codeCommune = null,
+        public ?string $activitePrincipale = null,
+        public ?DateTimeImmutable $dateCreation = null,
+        public ?Coordonnees $coordonnees = null,
+        public array $enseignes = [],
     ) {}
 
     /** @param array<string, mixed> $data */
     public static function fromArray(array $data): self
     {
         $siret = Payload::text($data['siret'] ?? null) ?? throw new InvalidResponseException('Missing "siret" in an establishment.');
+        $latitude = Payload::float($data['latitude'] ?? null);
+        $longitude = Payload::float($data['longitude'] ?? null);
 
         return new self(
             siret: $siret,
@@ -44,8 +50,8 @@ final readonly class Etablissement
             codeCommune: Payload::text($data['commune'] ?? null),
             activitePrincipale: Payload::text($data['activite_principale'] ?? null),
             dateCreation: Dates::parse(Payload::text($data['date_creation'] ?? null)),
-            latitude: Payload::float($data['latitude'] ?? null),
-            longitude: Payload::float($data['longitude'] ?? null),
+            // A point needs both values; the API sometimes gives only one.
+            coordonnees: $latitude === null || $longitude === null ? null : new Coordonnees(latitude: $latitude, longitude: $longitude),
             enseignes: Payload::strings($data['liste_enseignes'] ?? null),
         );
     }

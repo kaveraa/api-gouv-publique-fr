@@ -6,6 +6,7 @@ namespace Kaveraa\ApiGouv\Support;
 
 use InvalidArgumentException;
 
+/** @internal Helper of the package, outside the backward compatibility promise. */
 final class Identifiers
 {
     // La Poste SIRET values do not follow Luhn; their digit sum must be a multiple of 5.

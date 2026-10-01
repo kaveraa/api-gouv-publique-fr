@@ -59,6 +59,8 @@ echo $address?->commune;   // Amiens
 
 ### Coordonnees
 
+La classe est `Kaveraa\ApiGouv\Coordonnees`. Les adresses, les communes et les établissements la partagent.
+
 | Champ | Type | Sens |
 | --- | --- | --- |
 | `latitude` | float | Latitude. |

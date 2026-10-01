@@ -26,12 +26,12 @@
         "orchestra/testbench": "^10.0 || ^11.0",
         "pestphp/pest": "^3.0 || ^4.0",
         "pestphp/pest-plugin-laravel": "^3.0 || ^4.0",
-        "symfony/cache": "^7.2 || ^8.0",
-        "symfony/framework-bundle": "^7.2 || ^8.0",
-        "symfony/http-client": "^7.2 || ^8.0",
-        "symfony/translation": "^7.2 || ^8.0",
-        "symfony/validator": "^7.2 || ^8.0",
-        "symfony/yaml": "^7.2 || ^8.0"
+        "symfony/cache": "^7.4 || ^8.0",
+        "symfony/framework-bundle": "^7.4 || ^8.0",
+        "symfony/http-client": "^7.4 || ^8.0",
+        "symfony/translation": "^7.4 || ^8.0",
+        "symfony/validator": "^7.4 || ^8.0",
+        "symfony/yaml": "^7.4 || ^8.0"
     },
     "suggest": {
         "illuminate/support": "Enables the Laravel bridge (facade, config, validation rules, fakes).",
@@ -39,7 +39,7 @@
         "symfony/cache": "Enables the response cache in the Symfony bundle.",
         "symfony/framework-bundle": "Enables the Symfony bundle (configuration, autowired clients, cache, fake mode).",
         "symfony/http-client": "A PSR-18 client for plain PHP, and the HTTP layer of the Symfony bundle.",
-        "symfony/translation": "Translates the Symfony constraint messages (English and French).",
+        "symfony/translation": "Translates the Symfony constraint messages into French (English is built in).",
         "symfony/validator": "Enables the Siren, Siret and EntrepriseExiste constraints in Symfony."
     },
     "autoload": {

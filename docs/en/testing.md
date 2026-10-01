@@ -22,7 +22,7 @@ it('shows the company name', function () {
 });
 ```
 
-`Factories` has seven methods: `Factories::entreprise()`, `Factories::etablissement()`, `Factories::adresse()`, `Factories::commune()`, `Factories::departement()`, `Factories::region()` and `Factories::epci()`. Each takes an array of the fields you want to change. The names are the constructor names of the object.
+`Factories` has ten methods: `Factories::entreprise()`, `Factories::etablissement()`, `Factories::dirigeant()`, `Factories::searchResult()`, `Factories::adresse()`, `Factories::coordonnees()`, `Factories::commune()`, `Factories::departement()`, `Factories::region()` and `Factories::epci()`. Each takes an array of the fields you want to change. The names are the constructor names of the object. Build objects through `Factories`, not with `new`: the constructors are internal.
 
 ```php
 $fake->adresse()->with(Factories::adresse(['label' => '8 Boulevard du Port 80000 Amiens']));
@@ -37,7 +37,7 @@ $fake->geo()->with(Factories::commune());
 echo ApiGouv::geo()->commune('80021')->nom;   // Amiens
 ```
 
-`with()` takes one or more objects: a `Commune`, a `Departement`, a `Region` or an `Epci`. The four factories have these defaults:
+`with()` takes one or more objects: a `Commune`, a `Departement`, a `Region` or an `Epci`. These factories have the following defaults:
 
 | Factory | Defaults |
 | --- | --- |
@@ -45,6 +45,9 @@ echo ApiGouv::geo()->commune('80021')->nom;   // Amiens
 | `Factories::departement()` | Somme, code `80`, region `32`. |
 | `Factories::region()` | Hauts-de-France, code `32`. |
 | `Factories::epci()` | CA Amiens Métropole, code `248000531`, departement `80`, region `32`. |
+| `Factories::coordonnees()` | Paris, latitude `48.86`, longitude `2.34`. |
+| `Factories::dirigeant()` | BRUNO HIDIER, "Président", "personne physique". |
+| `Factories::searchResult()` | One default company, page 1 of 1. |
 
 How `FakeGeo` matches:
 
@@ -52,8 +55,8 @@ How `FakeGeo` matches:
 - `communesParCodePostal()` matches the postal codes of the stored communes.
 - `rechercherCommunes()` matches the commune names that contain the text (not case sensitive). The `limit` only cuts the list.
 - `communeParCoordonnees()` returns the stored commune with the nearest `centre`, or `null` when there is none.
-- `communesDuDepartement()` and `departementsDeLaRegion()` need the departement or the region to be stored too. Otherwise they throw `NotFoundException`.
-- `epcisDuDepartement()` matches `codesDepartements`.
+- `communesDuDepartement()`, `departementsDeLaRegion()` and `epcisDuDepartement()` need the departement or the region to be stored too. Otherwise they throw `NotFoundException`.
+- `epcisDuDepartement()` then matches `codesDepartements`.
 - Codes and limits are checked like in the real client.
 
 How the fakes behave:
@@ -66,6 +69,8 @@ How the fakes behave:
 - The fakes ignore search filters and paging. Only the text is matched.
 - `Factories::entreprise()` builds the default head office from the `siren` you give, so `parSiret()` finds the right company. Pass `siege` to use your own.
 - `parSiren()` and `parSiret()` reject a malformed number with `InvalidArgumentException`, like the real client.
+
+The fakes check their input like the real clients: an empty text or a limit outside the range throws `InvalidArgumentException`.
 
 ## Http::fake() (Laravel)
 

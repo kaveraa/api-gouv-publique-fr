@@ -6,7 +6,7 @@ namespace Kaveraa\ApiGouv\Support;
 
 use InvalidArgumentException;
 
-/** Checks the codes accepted by the Geo API before any network call. */
+/** @internal Checks the codes accepted by the Geo API before any network call. */
 final class GeoCodes
 {
     public static function insee(string $value): string
@@ -36,12 +36,23 @@ final class GeoCodes
 
     public static function nom(string $value): string
     {
-        $nom = trim($value);
-        if ($nom === '') {
-            throw new InvalidArgumentException('The name must not be empty.');
+        return self::notEmpty($value, 'The name must not be empty.');
+    }
+
+    /** A free search text, as the address API takes it. */
+    public static function text(string $value): string
+    {
+        return self::notEmpty($value, 'The search text must not be empty.');
+    }
+
+    private static function notEmpty(string $value, string $message): string
+    {
+        $text = trim($value);
+        if ($text === '') {
+            throw new InvalidArgumentException($message);
         }
 
-        return $nom;
+        return $text;
     }
 
     public static function limit(int $value): int

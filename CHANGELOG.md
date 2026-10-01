@@ -6,6 +6,32 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). The
 
 ## [Unreleased]
 
+### Added
+
+- `Factories::dirigeant()`, `Factories::searchResult()` and `Factories::coordonnees()`.
+- A backward compatibility promise (`docs/en/backward-compatibility.md`) and the upgrade guide from 0.3 (`docs/en/upgrade-0.4.md`), in English and French.
+- A snapshot test of the public API (`tests/fixtures/public-api.json`).
+- `GeoCodes::text()` (internal), shared by the address client and the fakes.
+
+### Changed
+
+- `Etablissement` carries `?Coordonnees $coordonnees` instead of `latitude` and `longitude`.
+- `Entreprise::$nombreEtablissements` and `$nombreEtablissementsOuverts` are `?int`; unknown is `null`.
+- `ApiGouvClient` requires the Geo client; `geo()` no longer throws.
+- `epcisDuDepartement` throws `NotFoundException` for an unknown departement, like `communesDuDepartement`.
+- The fakes check their input like the real clients (`FakeEntreprises::rechercher`, `FakeAdresse`, `FakeGeo::epcisDuDepartement`).
+- Symfony constraint messages are English sentences, used as translation keys (Symfony convention); the French file is keyed on them.
+- The data object constructors and the `Support` classes are `@internal`; optional constructor fields have defaults.
+- Supported matrix: PHP 8.3+, Laravel 12 and 13, Symfony 7.4 and 8.
+
+### Removed
+
+- `Kaveraa\ApiGouv\Adresse\Coordonnees` (now `Kaveraa\ApiGouv\Coordonnees`).
+- Symfony 7.2 and 7.3 support.
+- `src/Symfony/translations/validators.en.php` (English is built in).
+
+1.0.0 will be published on this code without change.
+
 ## [0.3.0] - 2026-10-01
 
 ### Added

@@ -39,7 +39,7 @@ $here = ApiGouv::geo()->communeParCoordonnees(49.897442, 2.290084); // Amiens, o
 | `centre` | ?Coordonnees | Le point central, avec `latitude` et `longitude`. |
 | `score` | ?float | Score de correspondance d'une recherche par nom. |
 
-`centre` est un `Kaveraa\ApiGouv\Adresse\Coordonnees`, la même classe que celle du client d'adresses (avec `latitude` et `longitude`).
+`centre` est un `Kaveraa\ApiGouv\Coordonnees`, la même classe que celle du client d'adresses et d'`Etablissement` (avec `latitude` et `longitude`).
 
 `score` est rempli seulement par `rechercherCommunes`. Il vaut `null` pour toutes les autres méthodes.
 
@@ -111,8 +111,9 @@ Les espaces sont retirés et `2a` devient `2A`. Un code collé comme " 2a004 " f
 
 ## Quand rien n'est trouvé
 
-- Une méthode de détail lance `NotFoundException`. Ce sont `commune`, `departement`, `region`, `epci`, `communesDuDepartement` et `departementsDeLaRegion`.
-- Une méthode de liste renvoie une liste vide. Ce sont `communesParCodePostal`, `rechercherCommunes` et `epcisDuDepartement`.
+- Une méthode de détail lance `NotFoundException`. Ce sont `commune`, `departement`, `region` et `epci`.
+- Une sous-liste d'un parent inconnu lance aussi `NotFoundException` : `communesDuDepartement`, `departementsDeLaRegion`, `epcisDuDepartement`. Un parent connu sans éléments donne une liste vide.
+- Une méthode de liste renvoie une liste vide. Ce sont `communesParCodePostal` et `rechercherCommunes`.
 - `communeParCoordonnees` renvoie `null`, par exemple pour un point en mer.
 
 ```php

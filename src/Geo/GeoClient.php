@@ -91,7 +91,8 @@ final class GeoClient implements GeoApi
 
     public function epcisDuDepartement(string $code): array
     {
-        $code = GeoCodes::departement($code);
+        // The EPCI list answers [] for an unknown code; the detail call gives the 404 the rule promises.
+        $code = $this->departement($code)->code;
 
         return array_map(Epci::fromArray(...), Payload::maps($this->http->getJson('epcis', ['codeDepartement' => $code])));
     }

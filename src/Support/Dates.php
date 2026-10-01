@@ -7,6 +7,7 @@ namespace Kaveraa\ApiGouv\Support;
 use DateTimeImmutable;
 use Exception;
 
+/** @internal Helper of the package, outside the backward compatibility promise. */
 final class Dates
 {
     public static function parse(?string $value): ?DateTimeImmutable

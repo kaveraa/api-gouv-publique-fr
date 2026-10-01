@@ -6,6 +6,7 @@ namespace Kaveraa\ApiGouv\Testing;
 
 use Kaveraa\ApiGouv\Adresse\Adresse;
 use Kaveraa\ApiGouv\Adresse\AdresseApi;
+use Kaveraa\ApiGouv\Support\GeoCodes;
 
 final class FakeAdresse implements AdresseApi
 {
@@ -24,6 +25,8 @@ final class FakeAdresse implements AdresseApi
 
     public function rechercher(string $query, int $limit = 5): array
     {
+        GeoCodes::text($query);
+        GeoCodes::limit($limit);
         $this->calls[] = ['rechercher', $query];
 
         return $this->matching($query, $limit);
@@ -31,6 +34,8 @@ final class FakeAdresse implements AdresseApi
 
     public function autocompleter(string $query, int $limit = 5): array
     {
+        GeoCodes::text($query);
+        GeoCodes::limit($limit);
         $this->calls[] = ['autocompleter', $query];
 
         return $this->matching($query, $limit);
@@ -38,6 +43,7 @@ final class FakeAdresse implements AdresseApi
 
     public function geocoderInverse(float $latitude, float $longitude): ?Adresse
     {
+        GeoCodes::coordinates($latitude, $longitude);
         $this->calls[] = ['geocoderInverse', $latitude.','.$longitude];
 
         $nearest = null;

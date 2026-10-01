@@ -23,6 +23,8 @@ it('accepts and normalizes valid codes', function (string $method, string $input
     ['region', '01', '01'],
     ['epci', '248000531', '248000531'],
     ['nom', '  Amiens ', 'Amiens'],
+    ['text', '  8 bd du port ', '8 bd du port'],
+    ['text', "rue de l'\u{C9}glise", "rue de l'\u{C9}glise"],
 ]);
 
 it('rejects invalid codes', function (string $method, string $input) {
@@ -56,3 +58,7 @@ it('checks the limit and the coordinates', function () {
     expect(fn () => GeoCodes::coordinates(91.0, 0.0))->toThrow(InvalidArgumentException::class);
     expect(fn () => GeoCodes::coordinates(0.0, -181.0))->toThrow(InvalidArgumentException::class);
 });
+
+it('rejects an empty search text', function (string $value) {
+    GeoCodes::text($value);
+})->with(['', ' ', "\t"])->throws(InvalidArgumentException::class, 'The search text must not be empty.');

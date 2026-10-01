@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Kaveraa\ApiGouv\Support;
 
+/** @internal Helper of the package, outside the backward compatibility promise. */
 final class Luhn
 {
     public static function isValid(string $digits): bool

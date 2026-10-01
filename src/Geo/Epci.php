@@ -10,15 +10,17 @@ use Kaveraa\ApiGouv\Support\Payload;
 final readonly class Epci
 {
     /**
+     * @internal Build it with Factories in tests; the package builds it from the API payload.
+     *
      * @param  list<string>  $codesDepartements
      * @param  list<string>  $codesRegions
      */
     public function __construct(
         public string $code,
         public string $nom,
-        public ?int $population,
-        public array $codesDepartements,
-        public array $codesRegions,
+        public ?int $population = null,
+        public array $codesDepartements = [],
+        public array $codesRegions = [],
     ) {}
 
     /** @param array<string, mixed> $data */

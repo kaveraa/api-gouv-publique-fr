@@ -4,24 +4,28 @@ declare(strict_types=1);
 
 namespace Kaveraa\ApiGouv\Geo;
 
-use Kaveraa\ApiGouv\Adresse\Coordonnees;
+use Kaveraa\ApiGouv\Coordonnees;
 use Kaveraa\ApiGouv\Exceptions\InvalidResponseException;
 use Kaveraa\ApiGouv\Support\Payload;
 
 final readonly class Commune
 {
-    /** @param list<string> $codesPostaux */
+    /**
+     * @internal Build it with Factories in tests; the package builds it from the API payload.
+     *
+     * @param  list<string>  $codesPostaux
+     */
     public function __construct(
         public string $code,
         public string $nom,
-        public array $codesPostaux,
-        public ?int $population,
-        public ?string $codeDepartement,
-        public ?string $codeRegion,
-        public ?string $siren,
-        public ?string $codeEpci,
-        public ?Coordonnees $centre,
-        public ?float $score,
+        public array $codesPostaux = [],
+        public ?int $population = null,
+        public ?string $codeDepartement = null,
+        public ?string $codeRegion = null,
+        public ?string $siren = null,
+        public ?string $codeEpci = null,
+        public ?Coordonnees $centre = null,
+        public ?float $score = null,
     ) {}
 
     /** @param array<string, mixed> $data */

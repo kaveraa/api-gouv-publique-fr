@@ -6,7 +6,7 @@
 composer require kaveraa/api-gouv-publique-fr
 ```
 
-You need PHP 8.3 or newer. Laravel 12 or 13 is optional. Symfony 7.2 or 8 is optional. You do not need an API key.
+You need PHP 8.3 or newer. Laravel 12 or 13 is optional. Symfony 7.4 or 8 is optional. You do not need an API key.
 
 ## First call in Laravel
 
@@ -79,7 +79,7 @@ echo $client->parSiren('812487973')->nomComplet;
 You get typed objects. All properties are read-only.
 
 - `Entreprise`: `siren`, `nomComplet`, `sigle`, `activitePrincipale`, `categorie`, `natureJuridique`, `etatAdministratif`, `dateCreation`, `trancheEffectif`, `nombreEtablissements`, `nombreEtablissementsOuverts`, `siege`, `dirigeants`, `etablissementsCorrespondants`.
-- `Etablissement`: `siret`, `siren`, `estSiege`, `etatAdministratif`, `adresse`, `codePostal`, `commune`, `codeCommune`, `activitePrincipale`, `dateCreation`, `latitude`, `longitude`, `enseignes`.
+- `Etablissement`: `siret`, `siren`, `estSiege`, `etatAdministratif`, `adresse`, `codePostal`, `commune`, `codeCommune`, `activitePrincipale`, `dateCreation`, `coordonnees`, `enseignes`.
 - `Adresse`: `id`, `label`, `numero`, `rue`, `nom`, `codePostal`, `codeCommune`, `commune`, `contexte`, `type`, `score`, `coordonnees`.
 - `Commune`: `code`, `nom`, `codesPostaux`, `population`, `codeDepartement`, `codeRegion`, `siren`, `codeEpci`, `centre`, `score`. The Geo API also gives `Departement`, `Region` and `Epci`.
 
