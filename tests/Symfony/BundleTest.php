@@ -13,6 +13,7 @@ use Kaveraa\ApiGouv\Http\Psr18Transport;
 use Kaveraa\ApiGouv\Http\Transport;
 use Kaveraa\ApiGouv\Tests\Symfony\AutowiredConsumer;
 use Kaveraa\ApiGouv\Tests\Symfony\MockResponses;
+use Kaveraa\ApiGouv\Tests\Symfony\NoCacheBundle;
 use Kaveraa\ApiGouv\Tests\Symfony\NoHttpClientBundle;
 use Symfony\Component\Cache\Psr16Cache;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
@@ -97,3 +98,7 @@ it('wraps the configured cache pool', function () {
 it('explains what to install when the http client is missing', function () {
     $this->boot(bundleClass: NoHttpClientBundle::class);
 })->throws(LogicException::class, 'symfony/http-client');
+
+it('explains what to install when the cache is enabled without symfony/cache', function () {
+    $this->boot(['cache' => ['enabled' => true]], bundleClass: NoCacheBundle::class);
+})->throws(LogicException::class, 'symfony/cache');
