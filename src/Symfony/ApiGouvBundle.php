@@ -16,6 +16,9 @@ use Kaveraa\ApiGouv\Geo\GeoClient;
 use Kaveraa\ApiGouv\Http\Psr18Transport;
 use Kaveraa\ApiGouv\Http\Requester;
 use Kaveraa\ApiGouv\Http\Transport;
+use Kaveraa\ApiGouv\Symfony\Validator\EntrepriseExisteValidator;
+use Kaveraa\ApiGouv\Symfony\Validator\SirenValidator;
+use Kaveraa\ApiGouv\Symfony\Validator\SiretValidator;
 use Kaveraa\ApiGouv\Testing\FakeAdresse;
 use Kaveraa\ApiGouv\Testing\FakeApiGouv;
 use Kaveraa\ApiGouv\Testing\FakeEntreprises;
@@ -61,6 +64,12 @@ class ApiGouvBundle extends AbstractBundle
         'adresse' => ['https://data.geopf.fr/geocodage', 86400, AdresseClient::class, AdresseApi::class],
         'geo' => ['https://geo.api.gouv.fr', 86400, GeoClient::class, GeoApi::class],
     ];
+
+    /** AbstractBundle looks one folder up, so point it at this folder to find the translations. */
+    public function getPath(): string
+    {
+        return __DIR__;
+    }
 
     public function configure(DefinitionConfigurator $definition): void
     {
@@ -128,6 +137,8 @@ class ApiGouvBundle extends AbstractBundle
         }
 
         $services = $container->services();
+
+        $this->registerConstraints($services);
 
         if ($config['fake']) {
             $this->registerFakes($services);
@@ -203,6 +214,20 @@ class ApiGouvBundle extends AbstractBundle
 
         $services->set(ApiGouvClient::class)
             ->args([service(EntreprisesApi::class), service(AdresseApi::class), service(GeoApi::class)]);
+    }
+
+    /** The constraint validators, only when the Validator component is installed. */
+    private function registerConstraints(ServicesConfigurator $services): void
+    {
+        if (! $this->validatorAvailable()) {
+            return;
+        }
+
+        $services->set(SirenValidator::class)->tag('validator.constraint_validator');
+        $services->set(SiretValidator::class)->tag('validator.constraint_validator');
+        $services->set(EntrepriseExisteValidator::class)
+            ->args([service(EntreprisesApi::class)])
+            ->tag('validator.constraint_validator');
     }
 
     /** No transport and no HTTP client: a test cannot reach the network by accident. */
