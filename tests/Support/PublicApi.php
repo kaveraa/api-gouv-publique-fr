@@ -111,6 +111,9 @@ final class PublicApi
         ksort($constants);
         ksort($properties);
         ksort($methods);
+        // The engine does not promise an order for interface names, so sort them.
+        $interfaces = $class->getInterfaceNames();
+        sort($interfaces);
 
         return [
             'kind' => $class->isInterface() ? 'interface' : ($class->isEnum() ? 'enum' : 'class'),
@@ -118,7 +121,7 @@ final class PublicApi
             'readonly' => $class->isReadOnly(),
             'abstract' => $class->isAbstract() && ! $class->isInterface(),
             'parent' => $class->getParentClass() !== false ? $class->getParentClass()->getName() : null,
-            'interfaces' => array_values($class->getInterfaceNames()),
+            'interfaces' => $interfaces,
             'constants' => $constants,
             'properties' => $properties,
             'methods' => $methods,

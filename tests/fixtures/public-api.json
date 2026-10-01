@@ -974,8 +974,8 @@
         "abstract": false,
         "parent": "Kaveraa\\ApiGouv\\Exceptions\\ApiException",
         "interfaces": [
-            "Throwable",
-            "Stringable"
+            "Stringable",
+            "Throwable"
         ],
         "constants": [],
         "properties": [],
@@ -988,8 +988,8 @@
         "abstract": false,
         "parent": "Kaveraa\\ApiGouv\\Exceptions\\ApiException",
         "interfaces": [
-            "Throwable",
-            "Stringable"
+            "Stringable",
+            "Throwable"
         ],
         "constants": [],
         "properties": [],
@@ -1002,8 +1002,8 @@
         "abstract": false,
         "parent": "Kaveraa\\ApiGouv\\Exceptions\\ApiException",
         "interfaces": [
-            "Throwable",
-            "Stringable"
+            "Stringable",
+            "Throwable"
         ],
         "constants": [],
         "properties": {
