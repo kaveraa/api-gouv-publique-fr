@@ -16,6 +16,10 @@ use Kaveraa\ApiGouv\Geo\GeoClient;
 use Kaveraa\ApiGouv\Http\Psr18Transport;
 use Kaveraa\ApiGouv\Http\Requester;
 use Kaveraa\ApiGouv\Http\Transport;
+use Kaveraa\ApiGouv\Testing\FakeAdresse;
+use Kaveraa\ApiGouv\Testing\FakeApiGouv;
+use Kaveraa\ApiGouv\Testing\FakeEntreprises;
+use Kaveraa\ApiGouv\Testing\FakeGeo;
 use LogicException;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Symfony\Component\Cache\Psr16Cache;
@@ -201,8 +205,20 @@ class ApiGouvBundle extends AbstractBundle
             ->args([service(EntreprisesApi::class), service(AdresseApi::class), service(GeoApi::class)]);
     }
 
+    /** No transport and no HTTP client: a test cannot reach the network by accident. */
     private function registerFakes(ServicesConfigurator $services): void
     {
-        throw new LogicException('api_gouv: fake mode is not available yet.');
+        $services->set(FakeEntreprises::class);
+        $services->set(FakeAdresse::class);
+        $services->set(FakeGeo::class);
+        $services->alias(EntreprisesApi::class, FakeEntreprises::class);
+        $services->alias(AdresseApi::class, FakeAdresse::class);
+        $services->alias(GeoApi::class, FakeGeo::class);
+
+        $services->set(FakeApiGouv::class)
+            ->args([service(FakeEntreprises::class), service(FakeAdresse::class), service(FakeGeo::class)])
+            ->public();
+        $services->alias(ApiGouvClient::class, FakeApiGouv::class)
+            ->public();
     }
 }
