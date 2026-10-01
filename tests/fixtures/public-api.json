@@ -1,0 +1,2434 @@
+{
+    "Kaveraa\\ApiGouv\\Adresse\\Adresse": {
+        "kind": "class",
+        "final": true,
+        "readonly": true,
+        "abstract": false,
+        "parent": null,
+        "interfaces": [],
+        "constants": [],
+        "properties": {
+            "codeCommune": {
+                "type": "?string",
+                "readonly": true,
+                "static": false
+            },
+            "codePostal": {
+                "type": "?string",
+                "readonly": true,
+                "static": false
+            },
+            "commune": {
+                "type": "?string",
+                "readonly": true,
+                "static": false
+            },
+            "contexte": {
+                "type": "?string",
+                "readonly": true,
+                "static": false
+            },
+            "coordonnees": {
+                "type": "Kaveraa\\ApiGouv\\Coordonnees",
+                "readonly": true,
+                "static": false
+            },
+            "id": {
+                "type": "string",
+                "readonly": true,
+                "static": false
+            },
+            "label": {
+                "type": "string",
+                "readonly": true,
+                "static": false
+            },
+            "nom": {
+                "type": "?string",
+                "readonly": true,
+                "static": false
+            },
+            "numero": {
+                "type": "?string",
+                "readonly": true,
+                "static": false
+            },
+            "rue": {
+                "type": "?string",
+                "readonly": true,
+                "static": false
+            },
+            "score": {
+                "type": "?float",
+                "readonly": true,
+                "static": false
+            },
+            "type": {
+                "type": "?string",
+                "readonly": true,
+                "static": false
+            }
+        },
+        "methods": {
+            "fromFeature": {
+                "static": true,
+                "returns": "Kaveraa\\ApiGouv\\Adresse\\Adresse",
+                "parameters": [
+                    {
+                        "name": "feature",
+                        "type": "array",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            }
+        }
+    },
+    "Kaveraa\\ApiGouv\\Adresse\\AdresseApi": {
+        "kind": "interface",
+        "final": false,
+        "readonly": false,
+        "abstract": false,
+        "parent": null,
+        "interfaces": [],
+        "constants": [],
+        "properties": [],
+        "methods": {
+            "autocompleter": {
+                "static": false,
+                "returns": "array",
+                "parameters": [
+                    {
+                        "name": "query",
+                        "type": "string",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    },
+                    {
+                        "name": "limit",
+                        "type": "int",
+                        "nullable": false,
+                        "default": "5",
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            },
+            "geocoderInverse": {
+                "static": false,
+                "returns": "?Kaveraa\\ApiGouv\\Adresse\\Adresse",
+                "parameters": [
+                    {
+                        "name": "latitude",
+                        "type": "float",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    },
+                    {
+                        "name": "longitude",
+                        "type": "float",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            },
+            "rechercher": {
+                "static": false,
+                "returns": "array",
+                "parameters": [
+                    {
+                        "name": "query",
+                        "type": "string",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    },
+                    {
+                        "name": "limit",
+                        "type": "int",
+                        "nullable": false,
+                        "default": "5",
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            }
+        }
+    },
+    "Kaveraa\\ApiGouv\\Adresse\\AdresseClient": {
+        "kind": "class",
+        "final": true,
+        "readonly": false,
+        "abstract": false,
+        "parent": null,
+        "interfaces": [
+            "Kaveraa\\ApiGouv\\Adresse\\AdresseApi"
+        ],
+        "constants": [],
+        "properties": [],
+        "methods": {
+            "__construct": {
+                "static": false,
+                "returns": "",
+                "parameters": [
+                    {
+                        "name": "http",
+                        "type": "Kaveraa\\ApiGouv\\Http\\Requester",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            },
+            "autocompleter": {
+                "static": false,
+                "returns": "array",
+                "parameters": [
+                    {
+                        "name": "query",
+                        "type": "string",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    },
+                    {
+                        "name": "limit",
+                        "type": "int",
+                        "nullable": false,
+                        "default": "5",
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            },
+            "geocoderInverse": {
+                "static": false,
+                "returns": "?Kaveraa\\ApiGouv\\Adresse\\Adresse",
+                "parameters": [
+                    {
+                        "name": "latitude",
+                        "type": "float",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    },
+                    {
+                        "name": "longitude",
+                        "type": "float",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            },
+            "rechercher": {
+                "static": false,
+                "returns": "array",
+                "parameters": [
+                    {
+                        "name": "query",
+                        "type": "string",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    },
+                    {
+                        "name": "limit",
+                        "type": "int",
+                        "nullable": false,
+                        "default": "5",
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            }
+        }
+    },
+    "Kaveraa\\ApiGouv\\ApiGouvClient": {
+        "kind": "class",
+        "final": false,
+        "readonly": false,
+        "abstract": false,
+        "parent": null,
+        "interfaces": [],
+        "constants": [],
+        "properties": [],
+        "methods": {
+            "__construct": {
+                "static": false,
+                "returns": "",
+                "parameters": [
+                    {
+                        "name": "entreprises",
+                        "type": "Kaveraa\\ApiGouv\\Entreprises\\EntreprisesApi",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    },
+                    {
+                        "name": "adresse",
+                        "type": "Kaveraa\\ApiGouv\\Adresse\\AdresseApi",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    },
+                    {
+                        "name": "geo",
+                        "type": "Kaveraa\\ApiGouv\\Geo\\GeoApi",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            },
+            "adresse": {
+                "static": false,
+                "returns": "Kaveraa\\ApiGouv\\Adresse\\AdresseApi",
+                "parameters": []
+            },
+            "entreprises": {
+                "static": false,
+                "returns": "Kaveraa\\ApiGouv\\Entreprises\\EntreprisesApi",
+                "parameters": []
+            },
+            "geo": {
+                "static": false,
+                "returns": "Kaveraa\\ApiGouv\\Geo\\GeoApi",
+                "parameters": []
+            }
+        }
+    },
+    "Kaveraa\\ApiGouv\\Cache\\ResponseCache": {
+        "kind": "class",
+        "final": true,
+        "readonly": false,
+        "abstract": false,
+        "parent": null,
+        "interfaces": [],
+        "constants": [],
+        "properties": [],
+        "methods": {
+            "__construct": {
+                "static": false,
+                "returns": "",
+                "parameters": [
+                    {
+                        "name": "cache",
+                        "type": "Psr\\SimpleCache\\CacheInterface",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            },
+            "remember": {
+                "static": false,
+                "returns": "array",
+                "parameters": [
+                    {
+                        "name": "key",
+                        "type": "string",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    },
+                    {
+                        "name": "fetch",
+                        "type": "callable",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    },
+                    {
+                        "name": "ttl",
+                        "type": "int",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            }
+        }
+    },
+    "Kaveraa\\ApiGouv\\Coordonnees": {
+        "kind": "class",
+        "final": true,
+        "readonly": true,
+        "abstract": false,
+        "parent": null,
+        "interfaces": [],
+        "constants": [],
+        "properties": {
+            "latitude": {
+                "type": "float",
+                "readonly": true,
+                "static": false
+            },
+            "longitude": {
+                "type": "float",
+                "readonly": true,
+                "static": false
+            }
+        },
+        "methods": {
+            "__construct": {
+                "static": false,
+                "returns": "",
+                "parameters": [
+                    {
+                        "name": "latitude",
+                        "type": "float",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    },
+                    {
+                        "name": "longitude",
+                        "type": "float",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            }
+        }
+    },
+    "Kaveraa\\ApiGouv\\Entreprises\\Dirigeant": {
+        "kind": "class",
+        "final": true,
+        "readonly": true,
+        "abstract": false,
+        "parent": null,
+        "interfaces": [],
+        "constants": [],
+        "properties": {
+            "anneeDeNaissance": {
+                "type": "?string",
+                "readonly": true,
+                "static": false
+            },
+            "denomination": {
+                "type": "?string",
+                "readonly": true,
+                "static": false
+            },
+            "nom": {
+                "type": "?string",
+                "readonly": true,
+                "static": false
+            },
+            "prenoms": {
+                "type": "?string",
+                "readonly": true,
+                "static": false
+            },
+            "qualite": {
+                "type": "?string",
+                "readonly": true,
+                "static": false
+            },
+            "siren": {
+                "type": "?string",
+                "readonly": true,
+                "static": false
+            },
+            "type": {
+                "type": "string",
+                "readonly": true,
+                "static": false
+            }
+        },
+        "methods": {
+            "fromArray": {
+                "static": true,
+                "returns": "Kaveraa\\ApiGouv\\Entreprises\\Dirigeant",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "type": "array",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            }
+        }
+    },
+    "Kaveraa\\ApiGouv\\Entreprises\\Entreprise": {
+        "kind": "class",
+        "final": true,
+        "readonly": true,
+        "abstract": false,
+        "parent": null,
+        "interfaces": [],
+        "constants": [],
+        "properties": {
+            "activitePrincipale": {
+                "type": "?string",
+                "readonly": true,
+                "static": false
+            },
+            "categorie": {
+                "type": "?string",
+                "readonly": true,
+                "static": false
+            },
+            "dateCreation": {
+                "type": "?DateTimeImmutable",
+                "readonly": true,
+                "static": false
+            },
+            "dirigeants": {
+                "type": "array",
+                "readonly": true,
+                "static": false
+            },
+            "etablissementsCorrespondants": {
+                "type": "array",
+                "readonly": true,
+                "static": false
+            },
+            "etatAdministratif": {
+                "type": "?string",
+                "readonly": true,
+                "static": false
+            },
+            "natureJuridique": {
+                "type": "?string",
+                "readonly": true,
+                "static": false
+            },
+            "nomComplet": {
+                "type": "string",
+                "readonly": true,
+                "static": false
+            },
+            "nombreEtablissements": {
+                "type": "?int",
+                "readonly": true,
+                "static": false
+            },
+            "nombreEtablissementsOuverts": {
+                "type": "?int",
+                "readonly": true,
+                "static": false
+            },
+            "siege": {
+                "type": "?Kaveraa\\ApiGouv\\Entreprises\\Etablissement",
+                "readonly": true,
+                "static": false
+            },
+            "sigle": {
+                "type": "?string",
+                "readonly": true,
+                "static": false
+            },
+            "siren": {
+                "type": "string",
+                "readonly": true,
+                "static": false
+            },
+            "trancheEffectif": {
+                "type": "?string",
+                "readonly": true,
+                "static": false
+            }
+        },
+        "methods": {
+            "fromArray": {
+                "static": true,
+                "returns": "Kaveraa\\ApiGouv\\Entreprises\\Entreprise",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "type": "array",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            }
+        }
+    },
+    "Kaveraa\\ApiGouv\\Entreprises\\EntreprisesApi": {
+        "kind": "interface",
+        "final": false,
+        "readonly": false,
+        "abstract": false,
+        "parent": null,
+        "interfaces": [],
+        "constants": [],
+        "properties": [],
+        "methods": {
+            "parSiren": {
+                "static": false,
+                "returns": "Kaveraa\\ApiGouv\\Entreprises\\Entreprise",
+                "parameters": [
+                    {
+                        "name": "siren",
+                        "type": "string",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            },
+            "parSiret": {
+                "static": false,
+                "returns": "Kaveraa\\ApiGouv\\Entreprises\\Etablissement",
+                "parameters": [
+                    {
+                        "name": "siret",
+                        "type": "string",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            },
+            "rechercher": {
+                "static": false,
+                "returns": "Kaveraa\\ApiGouv\\Entreprises\\SearchResult",
+                "parameters": [
+                    {
+                        "name": "query",
+                        "type": "Kaveraa\\ApiGouv\\Entreprises\\SearchQuery|string",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            }
+        }
+    },
+    "Kaveraa\\ApiGouv\\Entreprises\\EntreprisesClient": {
+        "kind": "class",
+        "final": true,
+        "readonly": false,
+        "abstract": false,
+        "parent": null,
+        "interfaces": [
+            "Kaveraa\\ApiGouv\\Entreprises\\EntreprisesApi"
+        ],
+        "constants": [],
+        "properties": [],
+        "methods": {
+            "__construct": {
+                "static": false,
+                "returns": "",
+                "parameters": [
+                    {
+                        "name": "http",
+                        "type": "Kaveraa\\ApiGouv\\Http\\Requester",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            },
+            "parSiren": {
+                "static": false,
+                "returns": "Kaveraa\\ApiGouv\\Entreprises\\Entreprise",
+                "parameters": [
+                    {
+                        "name": "siren",
+                        "type": "string",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            },
+            "parSiret": {
+                "static": false,
+                "returns": "Kaveraa\\ApiGouv\\Entreprises\\Etablissement",
+                "parameters": [
+                    {
+                        "name": "siret",
+                        "type": "string",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            },
+            "rechercher": {
+                "static": false,
+                "returns": "Kaveraa\\ApiGouv\\Entreprises\\SearchResult",
+                "parameters": [
+                    {
+                        "name": "query",
+                        "type": "Kaveraa\\ApiGouv\\Entreprises\\SearchQuery|string",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            }
+        }
+    },
+    "Kaveraa\\ApiGouv\\Entreprises\\Etablissement": {
+        "kind": "class",
+        "final": true,
+        "readonly": true,
+        "abstract": false,
+        "parent": null,
+        "interfaces": [],
+        "constants": [],
+        "properties": {
+            "activitePrincipale": {
+                "type": "?string",
+                "readonly": true,
+                "static": false
+            },
+            "adresse": {
+                "type": "?string",
+                "readonly": true,
+                "static": false
+            },
+            "codeCommune": {
+                "type": "?string",
+                "readonly": true,
+                "static": false
+            },
+            "codePostal": {
+                "type": "?string",
+                "readonly": true,
+                "static": false
+            },
+            "commune": {
+                "type": "?string",
+                "readonly": true,
+                "static": false
+            },
+            "coordonnees": {
+                "type": "?Kaveraa\\ApiGouv\\Coordonnees",
+                "readonly": true,
+                "static": false
+            },
+            "dateCreation": {
+                "type": "?DateTimeImmutable",
+                "readonly": true,
+                "static": false
+            },
+            "enseignes": {
+                "type": "array",
+                "readonly": true,
+                "static": false
+            },
+            "estSiege": {
+                "type": "bool",
+                "readonly": true,
+                "static": false
+            },
+            "etatAdministratif": {
+                "type": "?string",
+                "readonly": true,
+                "static": false
+            },
+            "siren": {
+                "type": "string",
+                "readonly": true,
+                "static": false
+            },
+            "siret": {
+                "type": "string",
+                "readonly": true,
+                "static": false
+            }
+        },
+        "methods": {
+            "fromArray": {
+                "static": true,
+                "returns": "Kaveraa\\ApiGouv\\Entreprises\\Etablissement",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "type": "array",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            }
+        }
+    },
+    "Kaveraa\\ApiGouv\\Entreprises\\SearchQuery": {
+        "kind": "class",
+        "final": true,
+        "readonly": true,
+        "abstract": false,
+        "parent": null,
+        "interfaces": [],
+        "constants": [],
+        "properties": {
+            "activitePrincipale": {
+                "type": "?string",
+                "readonly": true,
+                "static": false
+            },
+            "codePostal": {
+                "type": "?string",
+                "readonly": true,
+                "static": false
+            },
+            "departement": {
+                "type": "?string",
+                "readonly": true,
+                "static": false
+            },
+            "etatAdministratif": {
+                "type": "?string",
+                "readonly": true,
+                "static": false
+            },
+            "page": {
+                "type": "int",
+                "readonly": true,
+                "static": false
+            },
+            "perPage": {
+                "type": "int",
+                "readonly": true,
+                "static": false
+            },
+            "q": {
+                "type": "string",
+                "readonly": true,
+                "static": false
+            }
+        },
+        "methods": {
+            "__construct": {
+                "static": false,
+                "returns": "",
+                "parameters": [
+                    {
+                        "name": "q",
+                        "type": "string",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    },
+                    {
+                        "name": "page",
+                        "type": "int",
+                        "nullable": false,
+                        "default": "1",
+                        "variadic": false,
+                        "byReference": false
+                    },
+                    {
+                        "name": "perPage",
+                        "type": "int",
+                        "nullable": false,
+                        "default": "10",
+                        "variadic": false,
+                        "byReference": false
+                    },
+                    {
+                        "name": "codePostal",
+                        "type": "?string",
+                        "nullable": true,
+                        "default": "NULL",
+                        "variadic": false,
+                        "byReference": false
+                    },
+                    {
+                        "name": "departement",
+                        "type": "?string",
+                        "nullable": true,
+                        "default": "NULL",
+                        "variadic": false,
+                        "byReference": false
+                    },
+                    {
+                        "name": "activitePrincipale",
+                        "type": "?string",
+                        "nullable": true,
+                        "default": "NULL",
+                        "variadic": false,
+                        "byReference": false
+                    },
+                    {
+                        "name": "etatAdministratif",
+                        "type": "?string",
+                        "nullable": true,
+                        "default": "NULL",
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            },
+            "toParams": {
+                "static": false,
+                "returns": "array",
+                "parameters": []
+            }
+        }
+    },
+    "Kaveraa\\ApiGouv\\Entreprises\\SearchResult": {
+        "kind": "class",
+        "final": true,
+        "readonly": true,
+        "abstract": false,
+        "parent": null,
+        "interfaces": [],
+        "constants": [],
+        "properties": {
+            "page": {
+                "type": "int",
+                "readonly": true,
+                "static": false
+            },
+            "perPage": {
+                "type": "int",
+                "readonly": true,
+                "static": false
+            },
+            "results": {
+                "type": "array",
+                "readonly": true,
+                "static": false
+            },
+            "total": {
+                "type": "int",
+                "readonly": true,
+                "static": false
+            },
+            "totalPages": {
+                "type": "int",
+                "readonly": true,
+                "static": false
+            }
+        },
+        "methods": {
+            "fromArray": {
+                "static": true,
+                "returns": "Kaveraa\\ApiGouv\\Entreprises\\SearchResult",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "type": "array",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            }
+        }
+    },
+    "Kaveraa\\ApiGouv\\Exceptions\\ApiException": {
+        "kind": "class",
+        "final": false,
+        "readonly": false,
+        "abstract": false,
+        "parent": "RuntimeException",
+        "interfaces": [
+            "Stringable",
+            "Throwable"
+        ],
+        "constants": [],
+        "properties": [],
+        "methods": []
+    },
+    "Kaveraa\\ApiGouv\\Exceptions\\InvalidResponseException": {
+        "kind": "class",
+        "final": true,
+        "readonly": false,
+        "abstract": false,
+        "parent": "Kaveraa\\ApiGouv\\Exceptions\\ApiException",
+        "interfaces": [
+            "Throwable",
+            "Stringable"
+        ],
+        "constants": [],
+        "properties": [],
+        "methods": []
+    },
+    "Kaveraa\\ApiGouv\\Exceptions\\NotFoundException": {
+        "kind": "class",
+        "final": true,
+        "readonly": false,
+        "abstract": false,
+        "parent": "Kaveraa\\ApiGouv\\Exceptions\\ApiException",
+        "interfaces": [
+            "Throwable",
+            "Stringable"
+        ],
+        "constants": [],
+        "properties": [],
+        "methods": []
+    },
+    "Kaveraa\\ApiGouv\\Exceptions\\RateLimitException": {
+        "kind": "class",
+        "final": true,
+        "readonly": false,
+        "abstract": false,
+        "parent": "Kaveraa\\ApiGouv\\Exceptions\\ApiException",
+        "interfaces": [
+            "Throwable",
+            "Stringable"
+        ],
+        "constants": [],
+        "properties": {
+            "retryAfter": {
+                "type": "?int",
+                "readonly": true,
+                "static": false
+            }
+        },
+        "methods": {
+            "__construct": {
+                "static": false,
+                "returns": "",
+                "parameters": [
+                    {
+                        "name": "retryAfter",
+                        "type": "?int",
+                        "nullable": true,
+                        "default": "NULL",
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            }
+        }
+    },
+    "Kaveraa\\ApiGouv\\Geo\\Commune": {
+        "kind": "class",
+        "final": true,
+        "readonly": true,
+        "abstract": false,
+        "parent": null,
+        "interfaces": [],
+        "constants": [],
+        "properties": {
+            "centre": {
+                "type": "?Kaveraa\\ApiGouv\\Coordonnees",
+                "readonly": true,
+                "static": false
+            },
+            "code": {
+                "type": "string",
+                "readonly": true,
+                "static": false
+            },
+            "codeDepartement": {
+                "type": "?string",
+                "readonly": true,
+                "static": false
+            },
+            "codeEpci": {
+                "type": "?string",
+                "readonly": true,
+                "static": false
+            },
+            "codeRegion": {
+                "type": "?string",
+                "readonly": true,
+                "static": false
+            },
+            "codesPostaux": {
+                "type": "array",
+                "readonly": true,
+                "static": false
+            },
+            "nom": {
+                "type": "string",
+                "readonly": true,
+                "static": false
+            },
+            "population": {
+                "type": "?int",
+                "readonly": true,
+                "static": false
+            },
+            "score": {
+                "type": "?float",
+                "readonly": true,
+                "static": false
+            },
+            "siren": {
+                "type": "?string",
+                "readonly": true,
+                "static": false
+            }
+        },
+        "methods": {
+            "fromArray": {
+                "static": true,
+                "returns": "Kaveraa\\ApiGouv\\Geo\\Commune",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "type": "array",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            }
+        }
+    },
+    "Kaveraa\\ApiGouv\\Geo\\Departement": {
+        "kind": "class",
+        "final": true,
+        "readonly": true,
+        "abstract": false,
+        "parent": null,
+        "interfaces": [],
+        "constants": [],
+        "properties": {
+            "code": {
+                "type": "string",
+                "readonly": true,
+                "static": false
+            },
+            "codeRegion": {
+                "type": "?string",
+                "readonly": true,
+                "static": false
+            },
+            "nom": {
+                "type": "string",
+                "readonly": true,
+                "static": false
+            }
+        },
+        "methods": {
+            "fromArray": {
+                "static": true,
+                "returns": "Kaveraa\\ApiGouv\\Geo\\Departement",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "type": "array",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            }
+        }
+    },
+    "Kaveraa\\ApiGouv\\Geo\\Epci": {
+        "kind": "class",
+        "final": true,
+        "readonly": true,
+        "abstract": false,
+        "parent": null,
+        "interfaces": [],
+        "constants": [],
+        "properties": {
+            "code": {
+                "type": "string",
+                "readonly": true,
+                "static": false
+            },
+            "codesDepartements": {
+                "type": "array",
+                "readonly": true,
+                "static": false
+            },
+            "codesRegions": {
+                "type": "array",
+                "readonly": true,
+                "static": false
+            },
+            "nom": {
+                "type": "string",
+                "readonly": true,
+                "static": false
+            },
+            "population": {
+                "type": "?int",
+                "readonly": true,
+                "static": false
+            }
+        },
+        "methods": {
+            "fromArray": {
+                "static": true,
+                "returns": "Kaveraa\\ApiGouv\\Geo\\Epci",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "type": "array",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            }
+        }
+    },
+    "Kaveraa\\ApiGouv\\Geo\\GeoApi": {
+        "kind": "interface",
+        "final": false,
+        "readonly": false,
+        "abstract": false,
+        "parent": null,
+        "interfaces": [],
+        "constants": [],
+        "properties": [],
+        "methods": {
+            "commune": {
+                "static": false,
+                "returns": "Kaveraa\\ApiGouv\\Geo\\Commune",
+                "parameters": [
+                    {
+                        "name": "codeInsee",
+                        "type": "string",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            },
+            "communeParCoordonnees": {
+                "static": false,
+                "returns": "?Kaveraa\\ApiGouv\\Geo\\Commune",
+                "parameters": [
+                    {
+                        "name": "latitude",
+                        "type": "float",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    },
+                    {
+                        "name": "longitude",
+                        "type": "float",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            },
+            "communesDuDepartement": {
+                "static": false,
+                "returns": "array",
+                "parameters": [
+                    {
+                        "name": "code",
+                        "type": "string",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            },
+            "communesParCodePostal": {
+                "static": false,
+                "returns": "array",
+                "parameters": [
+                    {
+                        "name": "codePostal",
+                        "type": "string",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            },
+            "departement": {
+                "static": false,
+                "returns": "Kaveraa\\ApiGouv\\Geo\\Departement",
+                "parameters": [
+                    {
+                        "name": "code",
+                        "type": "string",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            },
+            "departements": {
+                "static": false,
+                "returns": "array",
+                "parameters": []
+            },
+            "departementsDeLaRegion": {
+                "static": false,
+                "returns": "array",
+                "parameters": [
+                    {
+                        "name": "code",
+                        "type": "string",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            },
+            "epci": {
+                "static": false,
+                "returns": "Kaveraa\\ApiGouv\\Geo\\Epci",
+                "parameters": [
+                    {
+                        "name": "code",
+                        "type": "string",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            },
+            "epcisDuDepartement": {
+                "static": false,
+                "returns": "array",
+                "parameters": [
+                    {
+                        "name": "code",
+                        "type": "string",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            },
+            "rechercherCommunes": {
+                "static": false,
+                "returns": "array",
+                "parameters": [
+                    {
+                        "name": "nom",
+                        "type": "string",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    },
+                    {
+                        "name": "limit",
+                        "type": "int",
+                        "nullable": false,
+                        "default": "10",
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            },
+            "region": {
+                "static": false,
+                "returns": "Kaveraa\\ApiGouv\\Geo\\Region",
+                "parameters": [
+                    {
+                        "name": "code",
+                        "type": "string",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            },
+            "regions": {
+                "static": false,
+                "returns": "array",
+                "parameters": []
+            }
+        }
+    },
+    "Kaveraa\\ApiGouv\\Geo\\GeoClient": {
+        "kind": "class",
+        "final": true,
+        "readonly": false,
+        "abstract": false,
+        "parent": null,
+        "interfaces": [
+            "Kaveraa\\ApiGouv\\Geo\\GeoApi"
+        ],
+        "constants": [],
+        "properties": [],
+        "methods": {
+            "__construct": {
+                "static": false,
+                "returns": "",
+                "parameters": [
+                    {
+                        "name": "http",
+                        "type": "Kaveraa\\ApiGouv\\Http\\Requester",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            },
+            "commune": {
+                "static": false,
+                "returns": "Kaveraa\\ApiGouv\\Geo\\Commune",
+                "parameters": [
+                    {
+                        "name": "codeInsee",
+                        "type": "string",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            },
+            "communeParCoordonnees": {
+                "static": false,
+                "returns": "?Kaveraa\\ApiGouv\\Geo\\Commune",
+                "parameters": [
+                    {
+                        "name": "latitude",
+                        "type": "float",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    },
+                    {
+                        "name": "longitude",
+                        "type": "float",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            },
+            "communesDuDepartement": {
+                "static": false,
+                "returns": "array",
+                "parameters": [
+                    {
+                        "name": "code",
+                        "type": "string",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            },
+            "communesParCodePostal": {
+                "static": false,
+                "returns": "array",
+                "parameters": [
+                    {
+                        "name": "codePostal",
+                        "type": "string",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            },
+            "departement": {
+                "static": false,
+                "returns": "Kaveraa\\ApiGouv\\Geo\\Departement",
+                "parameters": [
+                    {
+                        "name": "code",
+                        "type": "string",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            },
+            "departements": {
+                "static": false,
+                "returns": "array",
+                "parameters": []
+            },
+            "departementsDeLaRegion": {
+                "static": false,
+                "returns": "array",
+                "parameters": [
+                    {
+                        "name": "code",
+                        "type": "string",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            },
+            "epci": {
+                "static": false,
+                "returns": "Kaveraa\\ApiGouv\\Geo\\Epci",
+                "parameters": [
+                    {
+                        "name": "code",
+                        "type": "string",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            },
+            "epcisDuDepartement": {
+                "static": false,
+                "returns": "array",
+                "parameters": [
+                    {
+                        "name": "code",
+                        "type": "string",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            },
+            "rechercherCommunes": {
+                "static": false,
+                "returns": "array",
+                "parameters": [
+                    {
+                        "name": "nom",
+                        "type": "string",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    },
+                    {
+                        "name": "limit",
+                        "type": "int",
+                        "nullable": false,
+                        "default": "10",
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            },
+            "region": {
+                "static": false,
+                "returns": "Kaveraa\\ApiGouv\\Geo\\Region",
+                "parameters": [
+                    {
+                        "name": "code",
+                        "type": "string",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            },
+            "regions": {
+                "static": false,
+                "returns": "array",
+                "parameters": []
+            }
+        }
+    },
+    "Kaveraa\\ApiGouv\\Geo\\Region": {
+        "kind": "class",
+        "final": true,
+        "readonly": true,
+        "abstract": false,
+        "parent": null,
+        "interfaces": [],
+        "constants": [],
+        "properties": {
+            "code": {
+                "type": "string",
+                "readonly": true,
+                "static": false
+            },
+            "nom": {
+                "type": "string",
+                "readonly": true,
+                "static": false
+            }
+        },
+        "methods": {
+            "fromArray": {
+                "static": true,
+                "returns": "Kaveraa\\ApiGouv\\Geo\\Region",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "type": "array",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            }
+        }
+    },
+    "Kaveraa\\ApiGouv\\Http\\Psr18Transport": {
+        "kind": "class",
+        "final": true,
+        "readonly": false,
+        "abstract": false,
+        "parent": null,
+        "interfaces": [
+            "Kaveraa\\ApiGouv\\Http\\Transport"
+        ],
+        "constants": [],
+        "properties": [],
+        "methods": {
+            "__construct": {
+                "static": false,
+                "returns": "",
+                "parameters": [
+                    {
+                        "name": "client",
+                        "type": "Psr\\Http\\Client\\ClientInterface",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    },
+                    {
+                        "name": "requests",
+                        "type": "Psr\\Http\\Message\\RequestFactoryInterface",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            },
+            "get": {
+                "static": false,
+                "returns": "Kaveraa\\ApiGouv\\Http\\Response",
+                "parameters": [
+                    {
+                        "name": "url",
+                        "type": "string",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    },
+                    {
+                        "name": "query",
+                        "type": "array",
+                        "nullable": false,
+                        "default": "array (\n)",
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            }
+        }
+    },
+    "Kaveraa\\ApiGouv\\Http\\Requester": {
+        "kind": "class",
+        "final": true,
+        "readonly": false,
+        "abstract": false,
+        "parent": null,
+        "interfaces": [],
+        "constants": [],
+        "properties": [],
+        "methods": {
+            "__construct": {
+                "static": false,
+                "returns": "",
+                "parameters": [
+                    {
+                        "name": "transport",
+                        "type": "Kaveraa\\ApiGouv\\Http\\Transport",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    },
+                    {
+                        "name": "baseUrl",
+                        "type": "string",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    },
+                    {
+                        "name": "cache",
+                        "type": "?Kaveraa\\ApiGouv\\Cache\\ResponseCache",
+                        "nullable": true,
+                        "default": "NULL",
+                        "variadic": false,
+                        "byReference": false
+                    },
+                    {
+                        "name": "ttl",
+                        "type": "int",
+                        "nullable": false,
+                        "default": "3600",
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            },
+            "getJson": {
+                "static": false,
+                "returns": "array",
+                "parameters": [
+                    {
+                        "name": "path",
+                        "type": "string",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    },
+                    {
+                        "name": "query",
+                        "type": "array",
+                        "nullable": false,
+                        "default": "array (\n)",
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            }
+        }
+    },
+    "Kaveraa\\ApiGouv\\Http\\Response": {
+        "kind": "class",
+        "final": true,
+        "readonly": true,
+        "abstract": false,
+        "parent": null,
+        "interfaces": [],
+        "constants": [],
+        "properties": {
+            "body": {
+                "type": "string",
+                "readonly": true,
+                "static": false
+            },
+            "headers": {
+                "type": "array",
+                "readonly": true,
+                "static": false
+            },
+            "status": {
+                "type": "int",
+                "readonly": true,
+                "static": false
+            }
+        },
+        "methods": {
+            "__construct": {
+                "static": false,
+                "returns": "",
+                "parameters": [
+                    {
+                        "name": "status",
+                        "type": "int",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    },
+                    {
+                        "name": "body",
+                        "type": "string",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    },
+                    {
+                        "name": "headers",
+                        "type": "array",
+                        "nullable": false,
+                        "default": "array (\n)",
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            },
+            "header": {
+                "static": false,
+                "returns": "?string",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "type": "string",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            }
+        }
+    },
+    "Kaveraa\\ApiGouv\\Http\\Transport": {
+        "kind": "interface",
+        "final": false,
+        "readonly": false,
+        "abstract": false,
+        "parent": null,
+        "interfaces": [],
+        "constants": [],
+        "properties": [],
+        "methods": {
+            "get": {
+                "static": false,
+                "returns": "Kaveraa\\ApiGouv\\Http\\Response",
+                "parameters": [
+                    {
+                        "name": "url",
+                        "type": "string",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    },
+                    {
+                        "name": "query",
+                        "type": "array",
+                        "nullable": false,
+                        "default": "array (\n)",
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            }
+        }
+    },
+    "Kaveraa\\ApiGouv\\Testing\\Factories": {
+        "kind": "class",
+        "final": true,
+        "readonly": false,
+        "abstract": false,
+        "parent": null,
+        "interfaces": [],
+        "constants": [],
+        "properties": [],
+        "methods": {
+            "adresse": {
+                "static": true,
+                "returns": "Kaveraa\\ApiGouv\\Adresse\\Adresse",
+                "parameters": [
+                    {
+                        "name": "attributes",
+                        "type": "array",
+                        "nullable": false,
+                        "default": "array (\n)",
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            },
+            "commune": {
+                "static": true,
+                "returns": "Kaveraa\\ApiGouv\\Geo\\Commune",
+                "parameters": [
+                    {
+                        "name": "attributes",
+                        "type": "array",
+                        "nullable": false,
+                        "default": "array (\n)",
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            },
+            "coordonnees": {
+                "static": true,
+                "returns": "Kaveraa\\ApiGouv\\Coordonnees",
+                "parameters": [
+                    {
+                        "name": "attributes",
+                        "type": "array",
+                        "nullable": false,
+                        "default": "array (\n)",
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            },
+            "departement": {
+                "static": true,
+                "returns": "Kaveraa\\ApiGouv\\Geo\\Departement",
+                "parameters": [
+                    {
+                        "name": "attributes",
+                        "type": "array",
+                        "nullable": false,
+                        "default": "array (\n)",
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            },
+            "dirigeant": {
+                "static": true,
+                "returns": "Kaveraa\\ApiGouv\\Entreprises\\Dirigeant",
+                "parameters": [
+                    {
+                        "name": "attributes",
+                        "type": "array",
+                        "nullable": false,
+                        "default": "array (\n)",
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            },
+            "entreprise": {
+                "static": true,
+                "returns": "Kaveraa\\ApiGouv\\Entreprises\\Entreprise",
+                "parameters": [
+                    {
+                        "name": "attributes",
+                        "type": "array",
+                        "nullable": false,
+                        "default": "array (\n)",
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            },
+            "epci": {
+                "static": true,
+                "returns": "Kaveraa\\ApiGouv\\Geo\\Epci",
+                "parameters": [
+                    {
+                        "name": "attributes",
+                        "type": "array",
+                        "nullable": false,
+                        "default": "array (\n)",
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            },
+            "etablissement": {
+                "static": true,
+                "returns": "Kaveraa\\ApiGouv\\Entreprises\\Etablissement",
+                "parameters": [
+                    {
+                        "name": "attributes",
+                        "type": "array",
+                        "nullable": false,
+                        "default": "array (\n)",
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            },
+            "region": {
+                "static": true,
+                "returns": "Kaveraa\\ApiGouv\\Geo\\Region",
+                "parameters": [
+                    {
+                        "name": "attributes",
+                        "type": "array",
+                        "nullable": false,
+                        "default": "array (\n)",
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            },
+            "searchResult": {
+                "static": true,
+                "returns": "Kaveraa\\ApiGouv\\Entreprises\\SearchResult",
+                "parameters": [
+                    {
+                        "name": "attributes",
+                        "type": "array",
+                        "nullable": false,
+                        "default": "array (\n)",
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            }
+        }
+    },
+    "Kaveraa\\ApiGouv\\Testing\\FakeAdresse": {
+        "kind": "class",
+        "final": true,
+        "readonly": false,
+        "abstract": false,
+        "parent": null,
+        "interfaces": [
+            "Kaveraa\\ApiGouv\\Adresse\\AdresseApi"
+        ],
+        "constants": [],
+        "properties": {
+            "calls": {
+                "type": "array",
+                "readonly": false,
+                "static": false
+            }
+        },
+        "methods": {
+            "autocompleter": {
+                "static": false,
+                "returns": "array",
+                "parameters": [
+                    {
+                        "name": "query",
+                        "type": "string",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    },
+                    {
+                        "name": "limit",
+                        "type": "int",
+                        "nullable": false,
+                        "default": "5",
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            },
+            "geocoderInverse": {
+                "static": false,
+                "returns": "?Kaveraa\\ApiGouv\\Adresse\\Adresse",
+                "parameters": [
+                    {
+                        "name": "latitude",
+                        "type": "float",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    },
+                    {
+                        "name": "longitude",
+                        "type": "float",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            },
+            "rechercher": {
+                "static": false,
+                "returns": "array",
+                "parameters": [
+                    {
+                        "name": "query",
+                        "type": "string",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    },
+                    {
+                        "name": "limit",
+                        "type": "int",
+                        "nullable": false,
+                        "default": "5",
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            },
+            "with": {
+                "static": false,
+                "returns": "Kaveraa\\ApiGouv\\Testing\\FakeAdresse",
+                "parameters": [
+                    {
+                        "name": "adresses",
+                        "type": "Kaveraa\\ApiGouv\\Adresse\\Adresse",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": true,
+                        "byReference": false
+                    }
+                ]
+            }
+        }
+    },
+    "Kaveraa\\ApiGouv\\Testing\\FakeApiGouv": {
+        "kind": "class",
+        "final": true,
+        "readonly": false,
+        "abstract": false,
+        "parent": "Kaveraa\\ApiGouv\\ApiGouvClient",
+        "interfaces": [],
+        "constants": [],
+        "properties": [],
+        "methods": {
+            "__construct": {
+                "static": false,
+                "returns": "",
+                "parameters": [
+                    {
+                        "name": "entreprises",
+                        "type": "?Kaveraa\\ApiGouv\\Testing\\FakeEntreprises",
+                        "nullable": true,
+                        "default": "NULL",
+                        "variadic": false,
+                        "byReference": false
+                    },
+                    {
+                        "name": "adresse",
+                        "type": "?Kaveraa\\ApiGouv\\Testing\\FakeAdresse",
+                        "nullable": true,
+                        "default": "NULL",
+                        "variadic": false,
+                        "byReference": false
+                    },
+                    {
+                        "name": "geo",
+                        "type": "?Kaveraa\\ApiGouv\\Testing\\FakeGeo",
+                        "nullable": true,
+                        "default": "NULL",
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            },
+            "adresse": {
+                "static": false,
+                "returns": "Kaveraa\\ApiGouv\\Testing\\FakeAdresse",
+                "parameters": []
+            },
+            "entreprises": {
+                "static": false,
+                "returns": "Kaveraa\\ApiGouv\\Testing\\FakeEntreprises",
+                "parameters": []
+            },
+            "geo": {
+                "static": false,
+                "returns": "Kaveraa\\ApiGouv\\Testing\\FakeGeo",
+                "parameters": []
+            }
+        }
+    },
+    "Kaveraa\\ApiGouv\\Testing\\FakeEntreprises": {
+        "kind": "class",
+        "final": true,
+        "readonly": false,
+        "abstract": false,
+        "parent": null,
+        "interfaces": [
+            "Kaveraa\\ApiGouv\\Entreprises\\EntreprisesApi"
+        ],
+        "constants": [],
+        "properties": {
+            "calls": {
+                "type": "array",
+                "readonly": false,
+                "static": false
+            }
+        },
+        "methods": {
+            "parSiren": {
+                "static": false,
+                "returns": "Kaveraa\\ApiGouv\\Entreprises\\Entreprise",
+                "parameters": [
+                    {
+                        "name": "siren",
+                        "type": "string",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            },
+            "parSiret": {
+                "static": false,
+                "returns": "Kaveraa\\ApiGouv\\Entreprises\\Etablissement",
+                "parameters": [
+                    {
+                        "name": "siret",
+                        "type": "string",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            },
+            "rechercher": {
+                "static": false,
+                "returns": "Kaveraa\\ApiGouv\\Entreprises\\SearchResult",
+                "parameters": [
+                    {
+                        "name": "query",
+                        "type": "Kaveraa\\ApiGouv\\Entreprises\\SearchQuery|string",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            },
+            "with": {
+                "static": false,
+                "returns": "Kaveraa\\ApiGouv\\Testing\\FakeEntreprises",
+                "parameters": [
+                    {
+                        "name": "entreprises",
+                        "type": "Kaveraa\\ApiGouv\\Entreprises\\Entreprise",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": true,
+                        "byReference": false
+                    }
+                ]
+            }
+        }
+    },
+    "Kaveraa\\ApiGouv\\Testing\\FakeGeo": {
+        "kind": "class",
+        "final": true,
+        "readonly": false,
+        "abstract": false,
+        "parent": null,
+        "interfaces": [
+            "Kaveraa\\ApiGouv\\Geo\\GeoApi"
+        ],
+        "constants": [],
+        "properties": {
+            "calls": {
+                "type": "array",
+                "readonly": false,
+                "static": false
+            }
+        },
+        "methods": {
+            "commune": {
+                "static": false,
+                "returns": "Kaveraa\\ApiGouv\\Geo\\Commune",
+                "parameters": [
+                    {
+                        "name": "codeInsee",
+                        "type": "string",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            },
+            "communeParCoordonnees": {
+                "static": false,
+                "returns": "?Kaveraa\\ApiGouv\\Geo\\Commune",
+                "parameters": [
+                    {
+                        "name": "latitude",
+                        "type": "float",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    },
+                    {
+                        "name": "longitude",
+                        "type": "float",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            },
+            "communesDuDepartement": {
+                "static": false,
+                "returns": "array",
+                "parameters": [
+                    {
+                        "name": "code",
+                        "type": "string",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            },
+            "communesParCodePostal": {
+                "static": false,
+                "returns": "array",
+                "parameters": [
+                    {
+                        "name": "codePostal",
+                        "type": "string",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            },
+            "departement": {
+                "static": false,
+                "returns": "Kaveraa\\ApiGouv\\Geo\\Departement",
+                "parameters": [
+                    {
+                        "name": "code",
+                        "type": "string",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            },
+            "departements": {
+                "static": false,
+                "returns": "array",
+                "parameters": []
+            },
+            "departementsDeLaRegion": {
+                "static": false,
+                "returns": "array",
+                "parameters": [
+                    {
+                        "name": "code",
+                        "type": "string",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            },
+            "epci": {
+                "static": false,
+                "returns": "Kaveraa\\ApiGouv\\Geo\\Epci",
+                "parameters": [
+                    {
+                        "name": "code",
+                        "type": "string",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            },
+            "epcisDuDepartement": {
+                "static": false,
+                "returns": "array",
+                "parameters": [
+                    {
+                        "name": "code",
+                        "type": "string",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            },
+            "rechercherCommunes": {
+                "static": false,
+                "returns": "array",
+                "parameters": [
+                    {
+                        "name": "nom",
+                        "type": "string",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    },
+                    {
+                        "name": "limit",
+                        "type": "int",
+                        "nullable": false,
+                        "default": "10",
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            },
+            "region": {
+                "static": false,
+                "returns": "Kaveraa\\ApiGouv\\Geo\\Region",
+                "parameters": [
+                    {
+                        "name": "code",
+                        "type": "string",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": false,
+                        "byReference": false
+                    }
+                ]
+            },
+            "regions": {
+                "static": false,
+                "returns": "array",
+                "parameters": []
+            },
+            "with": {
+                "static": false,
+                "returns": "Kaveraa\\ApiGouv\\Testing\\FakeGeo",
+                "parameters": [
+                    {
+                        "name": "items",
+                        "type": "Kaveraa\\ApiGouv\\Geo\\Commune|Kaveraa\\ApiGouv\\Geo\\Departement|Kaveraa\\ApiGouv\\Geo\\Region|Kaveraa\\ApiGouv\\Geo\\Epci",
+                        "nullable": false,
+                        "default": null,
+                        "variadic": true,
+                        "byReference": false
+                    }
+                ]
+            }
+        }
+    }
+}
