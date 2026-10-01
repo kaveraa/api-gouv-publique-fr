@@ -6,7 +6,7 @@
 composer require kaveraa/api-gouv-publique-fr
 ```
 
-Il faut PHP 8.3 ou plus récent. Laravel 12 ou 13 est optionnel. Symfony 7.2 ou 8 est optionnel. Il n'y a pas besoin de clé d'API.
+Il faut PHP 8.3 ou plus récent. Laravel 12 ou 13 est optionnel. Symfony 7.4 ou 8 est optionnel. Il n'y a pas besoin de clé d'API.
 
 ## Premier appel avec Laravel
 

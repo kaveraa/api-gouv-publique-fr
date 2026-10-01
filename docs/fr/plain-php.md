@@ -65,7 +65,7 @@ echo $api->entreprises()->parSiren('812487973')->nomComplet;
 echo $api->adresse()->rechercher('8 bd du port amiens', 1)[0]->label;
 ```
 
-`ApiGouvClient` est un petit conteneur. Vous pouvez aussi utiliser `EntreprisesClient`, `AdresseClient` et `GeoClient` seuls.
+`ApiGouvClient` est un petit conteneur. Vous pouvez aussi utiliser `EntreprisesClient`, `AdresseClient` et `GeoClient` seuls. Les trois clients sont obligatoires depuis la 0.4.0.
 
 ## Symfony
 

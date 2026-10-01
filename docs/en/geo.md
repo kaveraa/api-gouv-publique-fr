@@ -39,7 +39,7 @@ $here = ApiGouv::geo()->communeParCoordonnees(49.897442, 2.290084); // Amiens, o
 | `centre` | ?Coordonnees | The centre point, with `latitude` and `longitude`. |
 | `score` | ?float | Match score of a search by name. |
 
-`centre` is a `Kaveraa\ApiGouv\Adresse\Coordonnees`, the same class the address client uses (with `latitude` and `longitude`).
+`centre` is a `Kaveraa\ApiGouv\Coordonnees`, the same class the address client and `Etablissement` use (with `latitude` and `longitude`).
 
 `score` is only set by `rechercherCommunes`. It is `null` for all other methods.
 
@@ -111,8 +111,8 @@ Spaces are removed and `2a` becomes `2A`. So a pasted code like " 2a004 " works.
 
 ## When nothing is found
 
-- A detail method throws `NotFoundException`. These are `commune`, `departement`, `region`, `epci`, `communesDuDepartement` and `departementsDeLaRegion`.
-- A list method returns an empty list. These are `communesParCodePostal`, `rechercherCommunes` and `epcisDuDepartement`.
+- A detail method throws `NotFoundException`. These are `commune`, `departement`, `region`, `epci`, `communesDuDepartement`, `departementsDeLaRegion` and `epcisDuDepartement`. A known departement without EPCI gives an empty list.
+- A list method returns an empty list. These are `communesParCodePostal` and `rechercherCommunes`.
 - `communeParCoordonnees` returns `null`, for example for a point at sea.
 
 ```php

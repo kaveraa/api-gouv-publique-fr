@@ -40,6 +40,10 @@ Elle échoue en mode fermé. La valeur est refusée avec un message spécial, po
 
 Les objets de règle Laravel sont ignorés quand la valeur est vide. Ajoutez `required` au champ s'il est obligatoire. Les contraintes Symfony acceptent aussi une valeur vide : ajoutez `NotBlank`.
 
+## Que garantit la 1.0 ?
+
+Le versionnage sémantique sur la surface publique : appeler les classes et lire les objets de données continue de marcher dans toute la 1.x. Implémenter les interfaces des API et utiliser du code `@internal` n'est pas couvert. Voir [Compatibilité](compatibilite.md) et [Migrer de 0.3 vers 0.4](migration-0.4.md).
+
 ## Le cache est-il actif ?
 
 Non. Il est désactivé par défaut. Activez-le dans la config (`cache.enabled`) ou donnez un `ResponseCache` en PHP simple.

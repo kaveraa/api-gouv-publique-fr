@@ -80,8 +80,8 @@ Une taille de page hors de 1 à 25 lance `InvalidArgumentException`. Cela évite
 | `etatAdministratif` | ?string | État. "A" veut dire actif. |
 | `dateCreation` | ?DateTimeImmutable | Date de création. |
 | `trancheEffectif` | ?string | Code de la tranche d'effectif. |
-| `nombreEtablissements` | int | Nombre d'établissements. |
-| `nombreEtablissementsOuverts` | int | Nombre d'établissements ouverts. |
+| `nombreEtablissements` | ?int | Nombre d'établissements, ou `null` s'il est inconnu. |
+| `nombreEtablissementsOuverts` | ?int | Nombre d'établissements ouverts, ou `null` s'il est inconnu. |
 | `siege` | ?Etablissement | Le siège. |
 | `dirigeants` | liste de Dirigeant | Les dirigeants. |
 | `etablissementsCorrespondants` | liste d'Etablissement | Les établissements qui correspondent à la recherche. |
@@ -100,8 +100,7 @@ Une taille de page hors de 1 à 25 lance `InvalidArgumentException`. Cela évite
 | `codeCommune` | ?string | Code de la commune (INSEE). |
 | `activitePrincipale` | ?string | Code d'activité principale. |
 | `dateCreation` | ?DateTimeImmutable | Date de création. |
-| `latitude` | ?float | Latitude. |
-| `longitude` | ?float | Longitude. |
+| `coordonnees` | ?Coordonnees | La position (`latitude`, `longitude`), ou `null`. |
 | `enseignes` | liste de string | Enseignes. |
 
 ### Dirigeant

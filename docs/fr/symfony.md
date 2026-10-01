@@ -1,6 +1,6 @@
 # Symfony
 
-Le bundle `ApiGouvBundle` enregistre les trois clients d'API comme services. Il donne aussi un cache des réponses sur un pool de cache Symfony, trois contraintes de validation et un mode factice pour les tests. Il envoie les requêtes avec le `http_client` de votre application. Il faut PHP 8.3+ et Symfony 7.2 ou 8. Symfony 8 demande PHP 8.4.
+Le bundle `ApiGouvBundle` enregistre les trois clients d'API comme services. Il donne aussi un cache des réponses sur un pool de cache Symfony, trois contraintes de validation et un mode factice pour les tests. Il envoie les requêtes avec le `http_client` de votre application. Il faut PHP 8.3+ et Symfony 7.4 ou 8. Symfony 8 demande PHP 8.4.
 
 ## Installation
 
@@ -148,15 +148,15 @@ Voir [Erreurs, cache et limite de débit](errors-cache-rate-limit.md).
 
 ## Validation
 
-Les contraintes demandent le composant Validator et le traducteur :
+Installez le composant Validator et le traducteur :
 
 ```bash
 composer require symfony/validator symfony/translation
 ```
 
-Les messages sont des clés de traduction, donc le traducteur est nécessaire. Sans lui, les utilisateurs voient une clé comme `api_gouv.siren`.
+`symfony/translation` est nécessaire pour les messages en français. Les messages en anglais sont intégrés.
 
-Placez-les sur une propriété d'un DTO ou d'une entité :
+Placez les contraintes sur une propriété d'un DTO ou d'une entité :
 
 ```php
 use Kaveraa\ApiGouv\Symfony\Validator\Siren;
@@ -224,20 +224,20 @@ Elles acceptent aussi `groups` et `payload`, comme toute contrainte Symfony. Par
 
 ### Traductions
 
-Les messages existent en anglais et en français, dans le domaine de traduction `validators`. Les clés sont :
+Les messages par défaut sont des phrases en anglais, utilisées comme clés de traduction comme pour les contraintes de Symfony, dans le domaine `validators`. Les traductions françaises sont livrées avec le bundle.
 
-| Clé | Texte français |
-| --- | --- |
-| `api_gouv.siren` | Cette valeur doit être un numéro SIREN valide (9 chiffres). |
-| `api_gouv.siret` | Cette valeur doit être un numéro SIRET valide (14 chiffres). |
-| `api_gouv.entreprise_existe` | Cette valeur ne correspond à aucune entreprise connue. |
-| `api_gouv.entreprise_indisponible` | Cette valeur n'a pas pu être vérifiée car le service des entreprises est indisponible. |
+| Message |
+| --- |
+| Cette valeur doit être un numéro SIREN valide (9 chiffres). |
+| Cette valeur doit être un numéro SIRET valide (14 chiffres). |
+| Cette valeur ne correspond à aucune entreprise connue. |
+| Cette valeur n'a pas pu être vérifiée car le service des entreprises est indisponible. |
 
-Pour changer un texte, ajoutez la clé aux traductions de votre application, par exemple dans `translations/validators.fr.yaml` :
+Pour changer un texte, utilisez la phrase comme clé de votre traduction, par exemple dans `translations/validators.fr.yaml` :
 
 ```yaml
-api_gouv.siren: 'Ce numéro SIREN est invalide.'
-api_gouv.entreprise_existe: 'Cette entreprise est inconnue.'
+# translations/validators.fr.yaml
+'This value must be a valid SIREN number (9 digits).': 'Ce numéro SIREN est invalide.'
 ```
 
 Les fichiers de votre application passent avant ceux du bundle.

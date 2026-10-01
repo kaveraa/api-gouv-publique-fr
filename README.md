@@ -10,7 +10,7 @@
 
 **English** - [Français](https://github.com/kaveraa/api-gouv-publique-fr/blob/main/README.fr.md)
 
-A typed PHP client for French public APIs. Version 0.1 covers company search ("Recherche d'entreprises") and address search (the BAN, served by the Geoplateforme). Version 0.2 adds the Geo API (communes, departements, regions, EPCI). Version 0.3 adds a Symfony bundle. It works in any PHP project. It has optional bridges for Laravel and Symfony.
+A typed PHP client for French public APIs. Version 0.1 covers company search ("Recherche d'entreprises") and address search (the BAN, served by the Geoplateforme). Version 0.2 adds the Geo API (communes, departements, regions, EPCI). Version 0.3 adds a Symfony bundle. It works in any PHP project. It has optional bridges for Laravel and Symfony. Version 0.4 prepares the 1.0 and comes with a compatibility promise.
 
 This is an unofficial project. It is not affiliated with the French State.
 
@@ -18,7 +18,7 @@ This is an unofficial project. It is not affiliated with the French State.
 
 - PHP 8.3 or newer
 - Laravel 12 or 13 (optional)
-- Symfony 7.2 or 8 (optional)
+- Symfony 7.4 or 8 (optional)
 
 ## Install
 
@@ -70,6 +70,8 @@ echo $client->parSiren('812487973')->nomComplet;
 - [Plain PHP](docs/en/plain-php.md)
 - [Errors, cache and rate limit](docs/en/errors-cache-rate-limit.md)
 - [Testing](docs/en/testing.md)
+- [Backward compatibility](docs/en/backward-compatibility.md)
+- [Upgrade from 0.3 to 0.4](docs/en/upgrade-0.4.md)
 - [FAQ](docs/en/faq.md)
 
 ## Features
