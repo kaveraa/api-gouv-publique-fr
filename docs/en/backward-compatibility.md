@@ -10,9 +10,11 @@ You can upgrade from any 1.x to any later 1.x without changing your code, as lon
 
 - Calling every public class, interface and method that is not marked `@internal`, and reading the public properties of the data objects (`Entreprise`, `Etablissement`, `Dirigeant`, `SearchResult`, `Adresse`, `Coordonnees`, `Commune`, `Departement`, `Region`, `Epci`).
 - The public constructors of `Coordonnees` and `SearchQuery`.
+- Constructing `ApiGouvClient` with its three clients. A new API may add an optional nullable parameter at the end in a minor release; existing calls keep working.
 - `fromArray()` and `fromFeature()` accepting the documented API payloads. A field the API adds is ignored, a field it removes becomes `null` or an empty list, except the key fields (`siren`, `siret`, `code`, `nom`, and the geometry of an address), whose absence throws `InvalidResponseException`.
 - The Laravel bridge: config keys of `config/api-gouv.php`, the `ApiGouv` facade methods, the rule classes `Siren`, `Siret` and `EntrepriseExiste`, the translation keys `api-gouv::validation.*`.
 - The Symfony bundle: configuration keys, container parameters, service ids and aliases, the constraint classes and their arguments, and the English sentences used as message keys.
+- The public classes of the bridges (`LaravelHttpTransport`, `ApiGouvServiceProvider`, the Symfony constraint validators) as the frameworks use them. Constructing or extending them yourself is not covered.
 - The exception classes and their HTTP codes.
 - The cache key prefix `api-gouv.`.
 - The `Testing` fakes and `Factories`: method names, the `calls` arrays and the attribute names the factories accept.

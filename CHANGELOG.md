@@ -6,6 +6,10 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). The
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-10-01
+
+Same code as 0.4.0. From this version the package follows the [backward compatibility](docs/en/backward-compatibility.md) promise: no break in 1.x.
+
 ## [0.4.0] - 2026-10-01
 
 ### Added
@@ -75,7 +79,8 @@ First release.
 - Test fakes and factories: `FakeApiGouv`, `FakeEntreprises`, `FakeAdresse` and `Factories`.
 - Documentation in English and French.
 
-[Unreleased]: https://github.com/kaveraa/api-gouv-publique-fr/compare/v0.4.0...HEAD
+[Unreleased]: https://github.com/kaveraa/api-gouv-publique-fr/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/kaveraa/api-gouv-publique-fr/compare/v0.4.0...v1.0.0
 [0.4.0]: https://github.com/kaveraa/api-gouv-publique-fr/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/kaveraa/api-gouv-publique-fr/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/kaveraa/api-gouv-publique-fr/compare/v0.1.0...v0.2.0

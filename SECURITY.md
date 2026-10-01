@@ -14,7 +14,7 @@ Describe the problem, the version you use, and the steps to reproduce it. You wi
 
 ## Supported versions
 
-Only the latest release receives security fixes. While the package is in version 0.x, please update to the latest version before you report a problem.
+Only the latest release receives security fixes. Please update to the latest version before you report a problem.
 
 | Version | Supported |
 | ------- | --------- |

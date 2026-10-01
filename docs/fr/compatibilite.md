@@ -10,9 +10,11 @@ Vous pouvez passer de toute 1.x à toute 1.x plus récente sans changer votre co
 
 - Appeler chaque classe, interface et méthode publique qui n'est pas marquée `@internal`, et lire les propriétés publiques des objets de données (`Entreprise`, `Etablissement`, `Dirigeant`, `SearchResult`, `Adresse`, `Coordonnees`, `Commune`, `Departement`, `Region`, `Epci`).
 - Les constructeurs publics de `Coordonnees` et `SearchQuery`.
+- Construire `ApiGouvClient` avec ses trois clients. Une nouvelle API pourra ajouter un paramètre optionnel nullable en fin de liste dans une version mineure ; les appels existants continuent de fonctionner.
 - `fromArray()` et `fromFeature()` acceptent les réponses documentées des API. Un champ ajouté par l'API est ignoré, un champ retiré devient `null` ou une liste vide, sauf les champs clés (`siren`, `siret`, `code`, `nom`, et la géométrie d'une adresse), dont l'absence lance `InvalidResponseException`.
 - Le pont Laravel : les clés de configuration de `config/api-gouv.php`, les méthodes de la façade `ApiGouv`, les classes de règles `Siren`, `Siret` et `EntrepriseExiste`, les clés de traduction `api-gouv::validation.*`.
 - Le bundle Symfony : les clés de configuration, les paramètres du conteneur, les identifiants et alias de services, les classes de contraintes et leurs arguments, et les phrases anglaises utilisées comme clés des messages.
+- Les classes publiques des ponts (`LaravelHttpTransport`, `ApiGouvServiceProvider`, les validateurs de contraintes Symfony) telles que les frameworks les utilisent. Les construire ou les étendre vous-même n'est pas couvert.
 - Les classes d'exception et leurs codes HTTP.
 - Le préfixe des clés de cache `api-gouv.`.
 - Les faux de `Testing` et `Factories` : les noms des méthodes, les tableaux `calls` et les noms d'attributs acceptés par les fabriques.
