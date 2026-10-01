@@ -24,7 +24,8 @@ it('builds an Entreprise from the recorded response', function () {
         ->and($entreprise->siege->estSiege)->toBeTrue()
         ->and($entreprise->siege->codePostal)->toBe('33300')
         ->and($entreprise->siege->commune)->toBe('BORDEAUX')
-        ->and($entreprise->siege->latitude)->toBe(44.870115287)
+        ->and($entreprise->siege->coordonnees?->latitude)->toBe(44.870115287)
+        ->and($entreprise->siege->coordonnees?->longitude)->toBe(-0.554810177)
         ->and($entreprise->siege->enseignes)->toBe(['SUPMODE'])
         ->and($entreprise->dirigeants)->toHaveCount(3)
         ->and($entreprise->dirigeants[0])->toBeInstanceOf(Dirigeant::class)
@@ -40,16 +41,36 @@ it('builds an Entreprise from minimal data', function () {
         ->and($entreprise->dirigeants)->toBe([])
         ->and($entreprise->etablissementsCorrespondants)->toBe([])
         ->and($entreprise->dateCreation)->toBeNull()
-        ->and($entreprise->nombreEtablissements)->toBe(0);
+        ->and($entreprise->nombreEtablissements)->toBeNull();
 });
 
 it('handles null coordinates and enseignes in an Etablissement', function () {
     $etablissement = Etablissement::fromArray(['siret' => '81248797300040', 'latitude' => null, 'longitude' => null, 'liste_enseignes' => null]);
 
-    expect($etablissement->latitude)->toBeNull()
-        ->and($etablissement->longitude)->toBeNull()
+    expect($etablissement->coordonnees)->toBeNull()
         ->and($etablissement->enseignes)->toBe([])
         ->and($etablissement->estSiege)->toBeFalse();
+});
+
+it('builds coordinates only when both values are numeric', function (array $data, ?float $latitude) {
+    $etablissement = Etablissement::fromArray(['siret' => '81248797300040'] + $data);
+
+    expect($etablissement->coordonnees?->latitude)->toBe($latitude);
+})->with([
+    'both as strings' => [['latitude' => '44.87', 'longitude' => '-0.55'], 44.87],
+    'latitude only' => [['latitude' => '44.87'], null],
+    'longitude only' => [['longitude' => '-0.55'], null],
+    'non numeric' => [['latitude' => 'n/a', 'longitude' => '-0.55'], null],
+]);
+
+it('reads counters as nullable integers', function () {
+    $full = Entreprise::fromArray(['siren' => '123456789', 'nom_complet' => 'ACME', 'nombre_etablissements' => '6', 'nombre_etablissements_ouverts' => 3]);
+    $minimal = Entreprise::fromArray(['siren' => '123456789', 'nom_complet' => 'ACME']);
+
+    expect($full->nombreEtablissements)->toBe(6)
+        ->and($full->nombreEtablissementsOuverts)->toBe(3)
+        ->and($minimal->nombreEtablissements)->toBeNull()
+        ->and($minimal->nombreEtablissementsOuverts)->toBeNull();
 });
 
 it('raises InvalidResponseException when a key field is missing', function (string $class, array $data) {

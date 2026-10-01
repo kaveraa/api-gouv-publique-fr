@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Kaveraa\ApiGouv\Adresse;
 
+use Kaveraa\ApiGouv\Coordonnees;
 use Kaveraa\ApiGouv\Exceptions\InvalidResponseException;
 use Kaveraa\ApiGouv\Support\Payload;
 

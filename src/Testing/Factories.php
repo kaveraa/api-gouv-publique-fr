@@ -6,7 +6,7 @@ namespace Kaveraa\ApiGouv\Testing;
 
 use DateTimeImmutable;
 use Kaveraa\ApiGouv\Adresse\Adresse;
-use Kaveraa\ApiGouv\Adresse\Coordonnees;
+use Kaveraa\ApiGouv\Coordonnees;
 use Kaveraa\ApiGouv\Entreprises\Dirigeant;
 use Kaveraa\ApiGouv\Entreprises\Entreprise;
 use Kaveraa\ApiGouv\Entreprises\Etablissement;
@@ -17,7 +17,7 @@ use Kaveraa\ApiGouv\Geo\Region;
 
 final class Factories
 {
-    /** @param array{siret?: string, siren?: string, estSiege?: bool, etatAdministratif?: ?string, adresse?: ?string, codePostal?: ?string, commune?: ?string, codeCommune?: ?string, activitePrincipale?: ?string, dateCreation?: ?DateTimeImmutable, latitude?: ?float, longitude?: ?float, enseignes?: list<string>} $attributes Constructor argument names of the DTO. */
+    /** @param array{siret?: string, siren?: string, estSiege?: bool, etatAdministratif?: ?string, adresse?: ?string, codePostal?: ?string, commune?: ?string, codeCommune?: ?string, activitePrincipale?: ?string, dateCreation?: ?DateTimeImmutable, coordonnees?: ?Coordonnees, enseignes?: list<string>} $attributes Constructor argument names of the DTO. */
     public static function etablissement(array $attributes = []): Etablissement
     {
         return new Etablissement(...array_merge([
@@ -31,13 +31,12 @@ final class Factories
             'codeCommune' => '75101',
             'activitePrincipale' => '62.01Z',
             'dateCreation' => new DateTimeImmutable('2015-06-30'),
-            'latitude' => 48.86,
-            'longitude' => 2.34,
+            'coordonnees' => new Coordonnees(latitude: 48.86, longitude: 2.34),
             'enseignes' => [],
         ], $attributes));
     }
 
-    /** @param array{siren?: string, nomComplet?: string, sigle?: ?string, activitePrincipale?: ?string, categorie?: ?string, natureJuridique?: ?string, etatAdministratif?: ?string, dateCreation?: ?DateTimeImmutable, trancheEffectif?: ?string, nombreEtablissements?: int, nombreEtablissementsOuverts?: int, siege?: ?Etablissement, dirigeants?: list<Dirigeant>, etablissementsCorrespondants?: list<Etablissement>} $attributes Constructor argument names of the DTO. */
+    /** @param array{siren?: string, nomComplet?: string, sigle?: ?string, activitePrincipale?: ?string, categorie?: ?string, natureJuridique?: ?string, etatAdministratif?: ?string, dateCreation?: ?DateTimeImmutable, trancheEffectif?: ?string, nombreEtablissements?: ?int, nombreEtablissementsOuverts?: ?int, siege?: ?Etablissement, dirigeants?: list<Dirigeant>, etablissementsCorrespondants?: list<Etablissement>} $attributes Constructor argument names of the DTO. */
     public static function entreprise(array $attributes = []): Entreprise
     {
         // A changed SIREN must not keep the default head office of another company.

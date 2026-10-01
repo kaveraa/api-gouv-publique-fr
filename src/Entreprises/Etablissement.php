@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Kaveraa\ApiGouv\Entreprises;
 
 use DateTimeImmutable;
+use Kaveraa\ApiGouv\Coordonnees;
 use Kaveraa\ApiGouv\Exceptions\InvalidResponseException;
 use Kaveraa\ApiGouv\Support\Dates;
 use Kaveraa\ApiGouv\Support\Payload;
@@ -23,8 +24,7 @@ final readonly class Etablissement
         public ?string $codeCommune,
         public ?string $activitePrincipale,
         public ?DateTimeImmutable $dateCreation,
-        public ?float $latitude,
-        public ?float $longitude,
+        public ?Coordonnees $coordonnees,
         public array $enseignes,
     ) {}
 
@@ -32,6 +32,8 @@ final readonly class Etablissement
     public static function fromArray(array $data): self
     {
         $siret = Payload::text($data['siret'] ?? null) ?? throw new InvalidResponseException('Missing "siret" in an establishment.');
+        $latitude = Payload::float($data['latitude'] ?? null);
+        $longitude = Payload::float($data['longitude'] ?? null);
 
         return new self(
             siret: $siret,
@@ -44,8 +46,8 @@ final readonly class Etablissement
             codeCommune: Payload::text($data['commune'] ?? null),
             activitePrincipale: Payload::text($data['activite_principale'] ?? null),
             dateCreation: Dates::parse(Payload::text($data['date_creation'] ?? null)),
-            latitude: Payload::float($data['latitude'] ?? null),
-            longitude: Payload::float($data['longitude'] ?? null),
+            // A point needs both values; the API sometimes gives only one.
+            coordonnees: $latitude === null || $longitude === null ? null : new Coordonnees(latitude: $latitude, longitude: $longitude),
             enseignes: Payload::strings($data['liste_enseignes'] ?? null),
         );
     }
