@@ -57,6 +57,10 @@ Si le dernier essai donne encore 429, `RateLimitException` est lancée.
 
 Le transport PHP simple ne réessaie pas. Attrapez `RateLimitException` et réessayez vous-même, ou utilisez un client PSR-18 qui sait réessayer.
 
+### Nouvel essai dans Symfony
+
+Dans Symfony, le nouvel essai se règle avec `framework.http_client.retry_failed`. Voir [Symfony](symfony.md).
+
 ## Cache
 
 Le cache économise des appels et accélère votre code. Il est désactivé par défaut.
@@ -66,4 +70,4 @@ Le cache économise des appels et accélère votre code. Il est désactivé par 
 - La durée de cache est réglée par API : 3600 secondes pour les entreprises, 86400 secondes pour les adresses et 86400 secondes pour l'API Geo (défauts Laravel).
 - Un résultat de recherche vide est mis en cache comme toute réponse réussie. Une entreprise créée récemment continue de renvoyer "introuvable" jusqu'à la fin de `cache_ttl`. Gardez `cache_ttl` court si vous cherchez de nouvelles entreprises, ou laissez le cache désactivé (par défaut).
 
-Dans Laravel, mettez `cache.enabled` à `true`. Voir [Laravel](laravel.md). En PHP simple, donnez un `ResponseCache` à `Requester`. Voir [PHP simple](plain-php.md).
+Dans Laravel, mettez `cache.enabled` à `true`. Voir [Laravel](laravel.md). Dans Symfony, le cache se règle avec `api_gouv.cache`. Voir [Symfony](symfony.md). En PHP simple, donnez un `ResponseCache` à `Requester`. Voir [PHP simple](plain-php.md).

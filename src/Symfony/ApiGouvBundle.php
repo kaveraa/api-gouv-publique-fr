@@ -149,20 +149,20 @@ class ApiGouvBundle extends AbstractBundle
         $this->registerClients($services, $config);
     }
 
-    /** Overridden in tests to simulate a project without symfony/http-client. */
+    /** @internal Overridden in tests to simulate a project without symfony/http-client. */
     protected function httpClientAvailable(): bool
     {
         return class_exists(Psr18Client::class)
             && (class_exists(Psr17Factory::class) || class_exists(Psr17FactoryDiscovery::class));
     }
 
-    /** Overridden in tests to simulate a project without symfony/cache. */
+    /** @internal Overridden in tests to simulate a project without symfony/cache. */
     protected function cacheAvailable(): bool
     {
         return class_exists(Psr16Cache::class);
     }
 
-    /** Overridden in tests to simulate a project without symfony/validator. */
+    /** @internal Overridden in tests to simulate a project without symfony/validator. */
     protected function validatorAvailable(): bool
     {
         return class_exists(Constraint::class);
