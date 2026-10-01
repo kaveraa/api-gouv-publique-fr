@@ -19,7 +19,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). The
 - `Entreprise::$nombreEtablissements` and `$nombreEtablissementsOuverts` are `?int`; unknown is `null`.
 - `ApiGouvClient` requires the Geo client; `geo()` no longer throws.
 - `epcisDuDepartement` throws `NotFoundException` for an unknown departement, like `communesDuDepartement`.
-- The fakes check their input like the real clients (`FakeEntreprises::rechercher`, `FakeAdresse`).
+- The fakes check their input like the real clients (`FakeEntreprises::rechercher`, `FakeAdresse`, `FakeGeo::epcisDuDepartement`).
 - Symfony constraint messages are English sentences, used as translation keys (Symfony convention); the French file is keyed on them.
 - The data object constructors and the `Support` classes are `@internal`; optional constructor fields have defaults.
 - Supported matrix: PHP 8.3+, Laravel 12 and 13, Symfony 7.4 and 8.

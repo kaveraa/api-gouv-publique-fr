@@ -4,8 +4,12 @@ Version 0.4.0 makes the changes needed before 1.0. Each one is listed with what 
 
 ## 1. `Coordonnees` moved to the root namespace
 
-Before: `use Kaveraa\ApiGouv\Adresse\Coordonnees;`
-After: `use Kaveraa\ApiGouv\Coordonnees;`
+```php
+// Before
+use Kaveraa\ApiGouv\Adresse\Coordonnees;
+// After
+use Kaveraa\ApiGouv\Coordonnees;
+```
 
 ## 2. `Etablissement` has `coordonnees` instead of `latitude` and `longitude`
 
@@ -41,11 +45,13 @@ $api = new ApiGouvClient(
 
 ## 5. `epcisDuDepartement` throws for an unknown departement
 
-Like `communesDuDepartement`, it throws `NotFoundException` when the departement code does not exist. A known departement without EPCI still gives an empty list. See the unknown or empty rule in [Backward compatibility](backward-compatibility.md).
+Like `communesDuDepartement`, it throws `NotFoundException` when the departement code does not exist. A known departement without EPCI still gives an empty list. See the "Unknown or empty" rule in [Backward compatibility](backward-compatibility.md).
 
 ## 6. The fakes check their input
 
-`FakeEntreprises::rechercher('')`, `FakeAdresse::rechercher(' ')`, a limit outside 1..50 or coordinates out of range throw `InvalidArgumentException`, like the real clients. Fix the tests that passed such values.
+`FakeEntreprises::rechercher('')`, `FakeAdresse::rechercher(' ')`, a limit outside 1..50 or coordinates out of range throw `InvalidArgumentException`, like the real clients. `FakeEntreprises::rechercher()` also rejects a `perPage` outside 1..25, like `SearchQuery`. Fix the tests that passed such values.
+
+`FakeGeo::epcisDuDepartement()` throws `NotFoundException` unless the departement is stored too: add `Factories::departement()` to `with()`.
 
 ## 7. Symfony 7.4 or 8
 
@@ -64,11 +70,18 @@ The constraints follow the Symfony convention: the default message is the Englis
 
 ## 9. `@internal` marks
 
-The constructors of the data objects and the `Support` classes are `@internal`. They still work, but they are outside the compatibility promise. Build objects with `Factories` in your tests.
+The constructors of the data objects and the `Support` classes are `@internal`. They still work, but they are outside the compatibility promise. Two of them changed shape as well: `new Adresse(...)` now takes `coordonnees` as its third argument, and `new Etablissement(...)` takes one `coordonnees` instead of `latitude` and `longitude`. A positional call written for 0.3 breaks: use `Factories` or named arguments. Build objects with `Factories` in your tests.
 
 ## Nothing to do if
 
-You only call the clients through Laravel or Symfony, read the data objects, and build test data with `Factories` without `latitude`/`longitude`. Then 0.4.0 changes nothing for you.
+You have nothing to do if all of these are true:
+
+- your code does not import `Coordonnees`;
+- it does not read `latitude` or `longitude` on an establishment, nor the two company counters without a `?? 0`;
+- it does not build `ApiGouvClient` or a data object with `new` (it uses the bridges and `Factories`);
+- it does not rely on an empty list from `epcisDuDepartement` for an unknown departement;
+- its tests do not feed the fakes with invalid input, and store a departement before listing its EPCI;
+- it runs Symfony 7.4 or 8, and does not override the `api_gouv.*` translation keys.
 
 ## And 1.0?
 

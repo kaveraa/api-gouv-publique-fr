@@ -224,7 +224,7 @@ Elles acceptent aussi `groups` et `payload`, comme toute contrainte Symfony. Par
 
 ### Traductions
 
-Les messages par défaut sont des phrases en anglais, utilisées comme clés de traduction comme pour les contraintes de Symfony, dans le domaine `validators`. Les traductions françaises sont livrées avec le bundle.
+Les messages par défaut sont des phrases en anglais, utilisées comme clés de traduction, à la manière des contraintes de Symfony, dans le domaine `validators`. Les traductions françaises sont livrées avec le bundle.
 
 | Message |
 | --- |
@@ -242,7 +242,7 @@ Pour changer un texte, utilisez la phrase comme clé de votre traduction, par ex
 
 Les fichiers de votre application passent avant ceux du bundle.
 
-Si votre `default_locale` n'est ni `en` ni `fr`, ajoutez `en` à `framework.translator.fallbacks` pour que les messages s'affichent quand même en anglais.
+Les autres locales affichent les messages en anglais, sauf si elles se replient sur `fr`.
 
 ## Tests
 

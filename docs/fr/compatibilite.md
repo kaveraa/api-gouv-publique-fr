@@ -10,7 +10,7 @@ Vous pouvez passer de toute 1.x à toute 1.x plus récente sans changer votre co
 
 - Appeler chaque classe, interface et méthode publique qui n'est pas marquée `@internal`, et lire les propriétés publiques des objets de données (`Entreprise`, `Etablissement`, `Dirigeant`, `SearchResult`, `Adresse`, `Coordonnees`, `Commune`, `Departement`, `Region`, `Epci`).
 - Les constructeurs publics de `Coordonnees` et `SearchQuery`.
-- `fromArray()` et `fromFeature()` acceptent les réponses documentées des API. Un champ ajouté par l'API est ignoré, un champ retiré devient `null` ou une liste vide.
+- `fromArray()` et `fromFeature()` acceptent les réponses documentées des API. Un champ ajouté par l'API est ignoré, un champ retiré devient `null` ou une liste vide, sauf les champs clés (`siren`, `siret`, `code`, `nom`, et la géométrie d'une adresse), dont l'absence lance `InvalidResponseException`.
 - Le pont Laravel : les clés de configuration de `config/api-gouv.php`, les méthodes de la façade `ApiGouv`, les classes de règles `Siren`, `Siret` et `EntrepriseExiste`, les clés de traduction `api-gouv::validation.*`.
 - Le bundle Symfony : les clés de configuration, les paramètres du conteneur, les identifiants et alias de services, les classes de contraintes et leurs arguments, et les phrases anglaises utilisées comme clés des messages.
 - Les classes d'exception et leurs codes HTTP.

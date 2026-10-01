@@ -111,7 +111,8 @@ Les espaces sont retirés et `2a` devient `2A`. Un code collé comme " 2a004 " f
 
 ## Quand rien n'est trouvé
 
-- Une méthode de détail lance `NotFoundException`. Ce sont `commune`, `departement`, `region`, `epci`, `communesDuDepartement`, `departementsDeLaRegion` et `epcisDuDepartement`. Un département connu sans EPCI donne une liste vide.
+- Une méthode de détail lance `NotFoundException`. Ce sont `commune`, `departement`, `region` et `epci`.
+- Une sous-liste d'un parent inconnu lance aussi `NotFoundException` : `communesDuDepartement`, `departementsDeLaRegion`, `epcisDuDepartement`. Un parent connu sans éléments donne une liste vide.
 - Une méthode de liste renvoie une liste vide. Ce sont `communesParCodePostal` et `rechercherCommunes`.
 - `communeParCoordonnees` renvoie `null`, par exemple pour un point en mer.
 

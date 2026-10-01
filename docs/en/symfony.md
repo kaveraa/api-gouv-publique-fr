@@ -242,7 +242,7 @@ To change a text, key your translation on the sentence, for example in `translat
 
 The files of your application win over the files of the bundle.
 
-If your `default_locale` is not `en` or `fr`, add `en` to `framework.translator.fallbacks` so the messages still appear in English.
+Other locales show the English messages, unless they fall back to `fr`.
 
 ## Tests
 

@@ -4,8 +4,12 @@ La version 0.4.0 fait les changements nécessaires avant la 1.0. Chacun est list
 
 ## 1. `Coordonnees` passe dans l'espace de noms racine
 
-Avant : `use Kaveraa\ApiGouv\Adresse\Coordonnees;`
-Après : `use Kaveraa\ApiGouv\Coordonnees;`
+```php
+// Avant
+use Kaveraa\ApiGouv\Adresse\Coordonnees;
+// Après
+use Kaveraa\ApiGouv\Coordonnees;
+```
 
 ## 2. `Etablissement` a `coordonnees` au lieu de `latitude` et `longitude`
 
@@ -41,11 +45,13 @@ $api = new ApiGouvClient(
 
 ## 5. `epcisDuDepartement` lance une exception pour un département inconnu
 
-Comme `communesDuDepartement`, elle lance `NotFoundException` quand le code de département n'existe pas. Un département connu sans EPCI donne toujours une liste vide. Voir la règle inconnu ou vide dans [Compatibilité](compatibilite.md).
+Comme `communesDuDepartement`, elle lance `NotFoundException` quand le code de département n'existe pas. Un département connu sans EPCI donne toujours une liste vide. Voir la règle "Inconnu ou vide" dans [Compatibilité](compatibilite.md).
 
 ## 6. Les faux vérifient leurs entrées
 
-`FakeEntreprises::rechercher('')`, `FakeAdresse::rechercher(' ')`, une limite hors de 1..50 ou des coordonnées hors limites lancent `InvalidArgumentException`, comme les vrais clients. Corrigez les tests qui passaient de telles valeurs.
+`FakeEntreprises::rechercher('')`, `FakeAdresse::rechercher(' ')`, une limite hors de 1..50 ou des coordonnées hors limites lancent `InvalidArgumentException`, comme les vrais clients. `FakeEntreprises::rechercher()` rejette aussi un `perPage` hors de 1..25, comme `SearchQuery`. Corrigez les tests qui passaient de telles valeurs.
+
+`FakeGeo::epcisDuDepartement()` lève `NotFoundException` si le département n'est pas lui aussi stocké : ajoutez `Factories::departement()` dans `with()`.
 
 ## 7. Symfony 7.4 ou 8
 
@@ -64,11 +70,18 @@ Les contraintes suivent la convention de Symfony : le message par défaut est la
 
 ## 9. Marques `@internal`
 
-Les constructeurs des objets de données et les classes de `Support` sont `@internal`. Ils marchent toujours, mais ils sont hors de la promesse de compatibilité. Construisez les objets avec `Factories` dans vos tests.
+Les constructeurs des objets de données et les classes de `Support` sont `@internal`. Ils marchent toujours, mais ils sont hors de la promesse de compatibilité. Deux d'entre eux ont aussi changé de forme : `new Adresse(...)` prend maintenant `coordonnees` en troisième argument, et `new Etablissement(...)` prend un seul `coordonnees` au lieu de `latitude` et `longitude`. Un appel positionnel écrit pour la 0.3 casse : utilisez `Factories` ou des arguments nommés. Construisez les objets avec `Factories` dans vos tests.
 
 ## Rien à faire si
 
-Vous appelez seulement les clients via Laravel ou Symfony, vous lisez les objets de données, et vous construisez les données de test avec `Factories` sans `latitude`/`longitude`. Alors la 0.4.0 ne change rien pour vous.
+Vous n'avez rien à faire si toutes ces affirmations sont vraies :
+
+- votre code n'importe pas `Coordonnees` ;
+- il ne lit pas `latitude` ou `longitude` sur un établissement, ni les deux compteurs d'une entreprise sans `?? 0` ;
+- il ne construit pas `ApiGouvClient` ni un objet de données avec `new` (il utilise les passerelles et `Factories`) ;
+- il ne compte pas sur une liste vide de `epcisDuDepartement` pour un département inconnu ;
+- ses tests ne donnent pas d'entrées invalides aux faux, et stockent un département avant de lister ses EPCI ;
+- il tourne sous Symfony 7.4 ou 8, et ne remplace pas les clés de traduction `api_gouv.*`.
 
 ## Et la 1.0 ?
 

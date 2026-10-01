@@ -111,7 +111,8 @@ Spaces are removed and `2a` becomes `2A`. So a pasted code like " 2a004 " works.
 
 ## When nothing is found
 
-- A detail method throws `NotFoundException`. These are `commune`, `departement`, `region`, `epci`, `communesDuDepartement`, `departementsDeLaRegion` and `epcisDuDepartement`. A known departement without EPCI gives an empty list.
+- A detail method throws `NotFoundException`. These are `commune`, `departement`, `region` and `epci`.
+- A sub-list of an unknown parent throws `NotFoundException` too: `communesDuDepartement`, `departementsDeLaRegion`, `epcisDuDepartement`. A known parent without items gives an empty list.
 - A list method returns an empty list. These are `communesParCodePostal` and `rechercherCommunes`.
 - `communeParCoordonnees` returns `null`, for example for a point at sea.
 
