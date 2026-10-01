@@ -20,6 +20,10 @@ The BAN is now served by the Geoplateforme at `https://data.geopf.fr/geocodage`.
 
 Yes. The core package needs only a PSR-18 client and a PSR-17 factory. See [Plain PHP](plain-php.md).
 
+## Does it work with Symfony?
+
+Yes, since 0.3.0, through the bundle `ApiGouvBundle`. It gives autowired clients, a cache, validation constraints and a fake mode for tests. See [Symfony](symfony.md).
+
 ## Does it need an API key?
 
 No. All the APIs are open. You do not need an account.
@@ -34,7 +38,7 @@ It fails closed. The value is refused with a special message, so you know the co
 
 ## Why does a rule not stop an empty value?
 
-Laravel rule objects are skipped on empty values. Add `required` to the field if it is mandatory.
+Laravel rule objects are skipped on empty values. Add `required` to the field if it is mandatory. The Symfony constraints also accept an empty value: add `NotBlank`.
 
 ## Is the cache on?
 

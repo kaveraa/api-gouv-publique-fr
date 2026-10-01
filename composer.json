@@ -1,6 +1,6 @@
 {
     "name": "kaveraa/api-gouv-publique-fr",
-    "description": "Typed PHP client for French public APIs (company search, address and Geo) with a Laravel bridge. Unofficial.",
+    "description": "Typed PHP client for French public APIs (company search, address and Geo) with Laravel and Symfony bridges. Unofficial.",
     "type": "library",
     "license": "MIT",
     "homepage": "https://github.com/kaveraa/api-gouv-publique-fr",
@@ -11,7 +11,7 @@
         "issues": "https://github.com/kaveraa/api-gouv-publique-fr/issues",
         "source": "https://github.com/kaveraa/api-gouv-publique-fr"
     },
-    "keywords": ["api-gouv", "siren", "siret", "adresse", "ban", "geo", "commune", "laravel", "france", "open-data"],
+    "keywords": ["api-gouv", "siren", "siret", "adresse", "ban", "geo", "commune", "laravel", "symfony", "bundle", "france", "open-data"],
     "require": {
         "php": "^8.3",
         "ext-json": "*",
@@ -25,12 +25,22 @@
         "nyholm/psr7": "^1.8",
         "orchestra/testbench": "^10.0 || ^11.0",
         "pestphp/pest": "^3.0 || ^4.0",
-        "pestphp/pest-plugin-laravel": "^3.0 || ^4.0"
+        "pestphp/pest-plugin-laravel": "^3.0 || ^4.0",
+        "symfony/cache": "^7.2 || ^8.0",
+        "symfony/framework-bundle": "^7.2 || ^8.0",
+        "symfony/http-client": "^7.2 || ^8.0",
+        "symfony/translation": "^7.2 || ^8.0",
+        "symfony/validator": "^7.2 || ^8.0",
+        "symfony/yaml": "^7.2 || ^8.0"
     },
     "suggest": {
         "illuminate/support": "Enables the Laravel bridge (facade, config, validation rules, fakes).",
         "nyholm/psr7": "A PSR-17 factory, needed by Psr18Transport outside Laravel.",
-        "symfony/http-client": "A PSR-18 client for plain PHP or Symfony."
+        "symfony/cache": "Enables the response cache in the Symfony bundle.",
+        "symfony/framework-bundle": "Enables the Symfony bundle (configuration, autowired clients, cache, fake mode).",
+        "symfony/http-client": "A PSR-18 client for plain PHP, and the HTTP layer of the Symfony bundle.",
+        "symfony/translation": "Translates the Symfony constraint messages (English and French).",
+        "symfony/validator": "Enables the Siren, Siret and EntrepriseExiste constraints in Symfony."
     },
     "autoload": {
         "psr-4": { "Kaveraa\\ApiGouv\\": "src/" }

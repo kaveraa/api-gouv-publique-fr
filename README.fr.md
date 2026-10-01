@@ -10,7 +10,7 @@
 
 [English](https://github.com/kaveraa/api-gouv-publique-fr/blob/main/README.md) - **Français**
 
-Un client PHP typé pour les API publiques françaises. La version 0.1 couvre la recherche d'entreprises et la recherche d'adresses (la BAN, servie par la Géoplateforme). La version 0.2 ajoute l'API Geo (communes, départements, régions, EPCI). Il fonctionne dans tout projet PHP. Il a un pont optionnel pour Laravel.
+Un client PHP typé pour les API publiques françaises. La version 0.1 couvre la recherche d'entreprises et la recherche d'adresses (la BAN, servie par la Géoplateforme). La version 0.2 ajoute l'API Geo (communes, départements, régions, EPCI). La version 0.3 ajoute un bundle Symfony. Il fonctionne dans tout projet PHP. Il a des ponts optionnels pour Laravel et Symfony.
 
 Ce projet est non officiel. Il n'est pas affilié à l'État français.
 
@@ -18,6 +18,7 @@ Ce projet est non officiel. Il n'est pas affilié à l'État français.
 
 - PHP 8.3 ou plus récent
 - Laravel 12 ou 13 (optionnel)
+- Symfony 7.2 ou 8 (optionnel)
 
 ## Installation
 
@@ -65,7 +66,8 @@ echo $client->parSiren('812487973')->nomComplet;
 - [Recherche d'adresses](docs/fr/adresse.md)
 - [API Geo](docs/fr/geo.md)
 - [Laravel](docs/fr/laravel.md)
-- [PHP simple et Symfony](docs/fr/plain-php.md)
+- [Symfony](docs/fr/symfony.md)
+- [PHP simple](docs/fr/plain-php.md)
 - [Erreurs, cache et limite de débit](docs/fr/errors-cache-rate-limit.md)
 - [Tests](docs/fr/testing.md)
 - [FAQ](docs/fr/faq.md)
@@ -77,7 +79,9 @@ echo $client->parSiren('812487973')->nomComplet;
 - Un cache de réponses optionnel, désactivé par défaut. Il fonctionne avec tout cache PSR-16.
 - Une nouvelle tentative en cas de limite de débit dans Laravel (HTTP 429).
 - Des règles de validation Laravel : `Siren`, `Siret` et `EntrepriseExiste`.
-- Des faux et des fabriques pour vos propres tests.
+- Un bundle Symfony : configuration, clients en autowiring et cache des réponses sur un pool de cache.
+- Des contraintes de validation Symfony : `Siren`, `Siret` et `EntrepriseExiste`.
+- Des faux et des fabriques pour vos propres tests, et un mode factice pour les tests Symfony.
 
 ## Non inclus
 

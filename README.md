@@ -10,7 +10,7 @@
 
 **English** - [Français](https://github.com/kaveraa/api-gouv-publique-fr/blob/main/README.fr.md)
 
-A typed PHP client for French public APIs. Version 0.1 covers company search ("Recherche d'entreprises") and address search (the BAN, served by the Geoplateforme). Version 0.2 adds the Geo API (communes, departements, regions, EPCI). It works in any PHP project. It has an optional bridge for Laravel.
+A typed PHP client for French public APIs. Version 0.1 covers company search ("Recherche d'entreprises") and address search (the BAN, served by the Geoplateforme). Version 0.2 adds the Geo API (communes, departements, regions, EPCI). Version 0.3 adds a Symfony bundle. It works in any PHP project. It has optional bridges for Laravel and Symfony.
 
 This is an unofficial project. It is not affiliated with the French State.
 
@@ -18,6 +18,7 @@ This is an unofficial project. It is not affiliated with the French State.
 
 - PHP 8.3 or newer
 - Laravel 12 or 13 (optional)
+- Symfony 7.2 or 8 (optional)
 
 ## Install
 
@@ -65,7 +66,8 @@ echo $client->parSiren('812487973')->nomComplet;
 - [Address search](docs/en/adresse.md)
 - [Geo API](docs/en/geo.md)
 - [Laravel](docs/en/laravel.md)
-- [Plain PHP and Symfony](docs/en/plain-php.md)
+- [Symfony](docs/en/symfony.md)
+- [Plain PHP](docs/en/plain-php.md)
 - [Errors, cache and rate limit](docs/en/errors-cache-rate-limit.md)
 - [Testing](docs/en/testing.md)
 - [FAQ](docs/en/faq.md)
@@ -77,7 +79,9 @@ echo $client->parSiren('812487973')->nomComplet;
 - Optional response cache, off by default. It works with any PSR-16 cache.
 - Rate limit retry in Laravel (HTTP 429).
 - Laravel validation rules: `Siren`, `Siret` and `EntrepriseExiste`.
-- Test fakes and factories for your own tests.
+- Symfony bundle: configuration, autowired clients and a response cache on a cache pool.
+- Symfony validation constraints: `Siren`, `Siret` and `EntrepriseExiste`.
+- Test fakes and factories for your own tests, and a fake mode for Symfony tests.
 
 ## Not included
 

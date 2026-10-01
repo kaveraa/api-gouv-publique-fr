@@ -57,6 +57,10 @@ If the last try is still a 429, `RateLimitException` is thrown.
 
 The plain PHP transport does not retry. Catch `RateLimitException` and retry yourself, or use a PSR-18 client that has a retry feature.
 
+### Retry in Symfony
+
+In Symfony, the retry is configured through `framework.http_client.retry_failed`. See [Symfony](symfony.md).
+
 ## Cache
 
 The cache saves calls and speeds up your code. It is off by default.
@@ -66,4 +70,4 @@ The cache saves calls and speeds up your code. It is off by default.
 - The cache time is set per API: 3600 seconds for companies, 86400 seconds for addresses and 86400 seconds for the Geo API (Laravel defaults).
 - An empty search result is cached like any successful answer. A company created recently keeps returning "not found" until `cache_ttl` expires. Keep `cache_ttl` short if you look up new companies, or leave the cache off (default).
 
-In Laravel, set `cache.enabled` to `true`. See [Laravel](laravel.md). In plain PHP, pass a `ResponseCache` to `Requester`. See [Plain PHP](plain-php.md).
+In Laravel, set `cache.enabled` to `true`. See [Laravel](laravel.md). In Symfony, the cache is configured through `api_gouv.cache`. See [Symfony](symfony.md). In plain PHP, pass a `ResponseCache` to `Requester`. See [Plain PHP](plain-php.md).

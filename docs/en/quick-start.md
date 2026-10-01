@@ -6,7 +6,7 @@
 composer require kaveraa/api-gouv-publique-fr
 ```
 
-You need PHP 8.3 or newer. Laravel 12 or 13 is optional. You do not need an API key.
+You need PHP 8.3 or newer. Laravel 12 or 13 is optional. Symfony 7.2 or 8 is optional. You do not need an API key.
 
 ## First call in Laravel
 
@@ -26,6 +26,30 @@ echo $commune->nom;                   // Amiens
 ```
 
 The Geo API gives communes, departements, regions and EPCI. See [Geo API](geo.md).
+
+## First call in Symfony
+
+Install `symfony/http-client` and `nyholm/psr7` too. Then enable the bundle in `config/bundles.php`:
+
+```php
+Kaveraa\ApiGouv\Symfony\ApiGouvBundle::class => ['all' => true],
+```
+
+The file `config/packages/api_gouv.yaml` is optional. Every key has a default, so it can be empty:
+
+```yaml
+api_gouv: ~
+```
+
+Inject a client in a service or a controller:
+
+```php
+public function __construct(private readonly EntreprisesApi $entreprises) {}   // Kaveraa\ApiGouv\Entreprises\EntreprisesApi
+
+$name = $this->entreprises->parSiren('812487973')->nomComplet;                  // OCTO
+```
+
+See [Symfony](symfony.md).
 
 ## First call in plain PHP
 
@@ -67,4 +91,5 @@ See the full tables in [Company search](entreprises.md) and [Address search](adr
 - [Address search](adresse.md)
 - [Geo API](geo.md)
 - [Laravel](laravel.md)
+- [Symfony](symfony.md)
 - [Errors, cache and rate limit](errors-cache-rate-limit.md)

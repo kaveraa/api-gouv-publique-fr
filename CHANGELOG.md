@@ -6,6 +6,17 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). The
 
 ## [Unreleased]
 
+### Added
+
+- Symfony bundle `ApiGouvBundle`: `api_gouv` configuration (base URL and cache time per API, response cache on a PSR-6 pool), autowired `EntreprisesApi`, `AdresseApi`, `GeoApi` and `ApiGouvClient`, built on the application `http_client`.
+- Validator constraints `Siren`, `Siret` and `EntrepriseExiste`, with French and English messages.
+- Fake mode for Symfony tests (`api_gouv.fake: true`): the clients are replaced by `FakeEntreprises`, `FakeAdresse` and `FakeGeo`, reachable through `FakeApiGouv`.
+- Symfony guide in English and French.
+
+### Changed
+
+- The plain PHP guide points Symfony projects to the bundle. No change for existing code.
+
 ## [0.2.0] - 2026-09-30
 
 ### Added

@@ -11,6 +11,9 @@
         <testsuite name="Laravel">
             <directory>tests/Laravel</directory>
         </testsuite>
+        <testsuite name="Symfony">
+            <directory>tests/Symfony</directory>
+        </testsuite>
     </testsuites>
     <source>
         <include>

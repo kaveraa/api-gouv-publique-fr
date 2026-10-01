@@ -6,7 +6,7 @@
 composer require kaveraa/api-gouv-publique-fr
 ```
 
-Il faut PHP 8.3 ou plus récent. Laravel 12 ou 13 est optionnel. Il n'y a pas besoin de clé d'API.
+Il faut PHP 8.3 ou plus récent. Laravel 12 ou 13 est optionnel. Symfony 7.2 ou 8 est optionnel. Il n'y a pas besoin de clé d'API.
 
 ## Premier appel avec Laravel
 
@@ -26,6 +26,30 @@ echo $commune->nom;                   // Amiens
 ```
 
 L'API Geo donne les communes, les départements, les régions et les EPCI. Voir [API Geo](geo.md).
+
+## Premier appel avec Symfony
+
+Installez aussi `symfony/http-client` et `nyholm/psr7`. Puis activez le bundle dans `config/bundles.php` :
+
+```php
+Kaveraa\ApiGouv\Symfony\ApiGouvBundle::class => ['all' => true],
+```
+
+Le fichier `config/packages/api_gouv.yaml` est optionnel. Chaque clé a une valeur par défaut, donc il peut être vide :
+
+```yaml
+api_gouv: ~
+```
+
+Injectez un client dans un service ou un contrôleur :
+
+```php
+public function __construct(private readonly EntreprisesApi $entreprises) {}   // Kaveraa\ApiGouv\Entreprises\EntreprisesApi
+
+$name = $this->entreprises->parSiren('812487973')->nomComplet;                  // OCTO
+```
+
+Voir [Symfony](symfony.md).
 
 ## Premier appel en PHP simple
 
@@ -67,4 +91,5 @@ Les tableaux complets sont dans [Recherche d'entreprises](entreprises.md) et [Re
 - [Recherche d'adresses](adresse.md)
 - [API Geo](geo.md)
 - [Laravel](laravel.md)
+- [Symfony](symfony.md)
 - [Erreurs, cache et limite de débit](errors-cache-rate-limit.md)
