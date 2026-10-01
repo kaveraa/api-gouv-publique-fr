@@ -6,6 +6,8 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). The
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-10-01
+
 ### Added
 
 - Symfony bundle `ApiGouvBundle`: `api_gouv` configuration (base URL and cache time per API, response cache on a PSR-6 pool), autowired `EntreprisesApi`, `AdresseApi`, `GeoApi` and `ApiGouvClient`, built on the application `http_client`.
@@ -45,6 +47,7 @@ First release.
 - Test fakes and factories: `FakeApiGouv`, `FakeEntreprises`, `FakeAdresse` and `Factories`.
 - Documentation in English and French.
 
-[Unreleased]: https://github.com/kaveraa/api-gouv-publique-fr/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/kaveraa/api-gouv-publique-fr/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/kaveraa/api-gouv-publique-fr/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/kaveraa/api-gouv-publique-fr/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/kaveraa/api-gouv-publique-fr/releases/tag/v0.1.0
