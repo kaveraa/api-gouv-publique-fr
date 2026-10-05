@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Kaveraa\ApiGouv\Adresse\AdresseClient;
 use Kaveraa\ApiGouv\Entreprises\EntreprisesClient;
+use Kaveraa\ApiGouv\Exceptions\RateLimitException;
 use Kaveraa\ApiGouv\Geo\GeoClient;
 use Kaveraa\ApiGouv\Http\Psr18Transport;
 use Kaveraa\ApiGouv\Http\Requester;
@@ -33,10 +34,33 @@ function liveTransport(): Psr18Transport
     return new Psr18Transport($client, new Psr17Factory);
 }
 
+/**
+ * GitHub runners share their egress IPs, so recherche-entreprises (7 req/s per IP)
+ * sometimes answers 429 on the very first call. Retry: the test checks the contract, not the quota.
+ *
+ * @template T
+ *
+ * @param  callable(): T  $call
+ * @return T
+ */
+function withRateLimitRetry(callable $call, int $attempts = 3): mixed
+{
+    for ($i = 1; ; $i++) {
+        try {
+            return $call();
+        } catch (RateLimitException $e) {
+            if ($i >= $attempts) {
+                throw $e;
+            }
+            sleep($e->retryAfter ?? 2);
+        }
+    }
+}
+
 it('still finds a company by SIREN', function () {
     $client = new EntreprisesClient(new Requester(liveTransport(), 'https://recherche-entreprises.api.gouv.fr'));
 
-    expect($client->parSiren('812487973')->siren)->toBe('812487973');
+    expect(withRateLimitRetry(fn () => $client->parSiren('812487973'))->siren)->toBe('812487973');
 });
 
 it('still finds an address', function () {
