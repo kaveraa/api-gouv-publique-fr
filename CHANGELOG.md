@@ -6,6 +6,13 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). The
 
 ## [Unreleased]
 
+### Maintenance
+
+- **FR** Tests lancés sur PHP 8.5 et Pest 5 accepté en développement. Aucun changement dans le code.
+  **EN** Tests run on PHP 8.5 and Pest 5 allowed for development. No code change.
+
+## [Unreleased]
+
 ## [1.0.0] - 2026-10-01
 
 Same code as 0.4.0. From this version the package follows the [backward compatibility](docs/en/backward-compatibility.md) promise: no break in 1.x.
