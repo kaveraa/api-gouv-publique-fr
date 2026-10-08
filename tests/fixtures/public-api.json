@@ -907,7 +907,11 @@
         "readonly": true,
         "abstract": false,
         "parent": null,
-        "interfaces": [],
+        "interfaces": [
+            "Countable",
+            "IteratorAggregate",
+            "Traversable"
+        ],
         "constants": [],
         "properties": {
             "page": {
@@ -937,6 +941,11 @@
             }
         },
         "methods": {
+            "count": {
+                "static": false,
+                "returns": "int",
+                "parameters": []
+            },
             "fromArray": {
                 "static": true,
                 "returns": "Kaveraa\\ApiGouv\\Entreprises\\SearchResult",
@@ -950,6 +959,11 @@
                         "byReference": false
                     }
                 ]
+            },
+            "getIterator": {
+                "static": false,
+                "returns": "ArrayIterator",
+                "parameters": []
             }
         }
     },

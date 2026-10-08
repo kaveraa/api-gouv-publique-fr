@@ -6,6 +6,11 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). The
 
 ## [Unreleased]
 
+### Added
+
+- **FR** `SearchResult` est itérable et dénombrable : `foreach` et `count()` portent sur les entreprises de la page.
+  **EN** `SearchResult` is iterable and countable: `foreach` and `count()` work on the companies of the page.
+
 ## [1.0.1] - 2026-10-08
 
 ### Maintenance

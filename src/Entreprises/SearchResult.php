@@ -4,9 +4,17 @@ declare(strict_types=1);
 
 namespace Kaveraa\ApiGouv\Entreprises;
 
+use ArrayIterator;
+use Countable;
+use IteratorAggregate;
 use Kaveraa\ApiGouv\Support\Payload;
 
-final readonly class SearchResult
+/**
+ * One page of a company search. Iterating and counting work on the page; `total` covers every page.
+ *
+ * @implements IteratorAggregate<int, Entreprise>
+ */
+final readonly class SearchResult implements Countable, IteratorAggregate
 {
     /**
      * @internal Build it with Factories in tests; the package builds it from the API payload.
@@ -31,5 +39,16 @@ final readonly class SearchResult
             perPage: Payload::int($data['per_page'] ?? null, 10),
             totalPages: Payload::int($data['total_pages'] ?? null),
         );
+    }
+
+    /** @return ArrayIterator<int, Entreprise> */
+    public function getIterator(): ArrayIterator
+    {
+        return new ArrayIterator($this->results);
+    }
+
+    public function count(): int
+    {
+        return count($this->results);
     }
 }

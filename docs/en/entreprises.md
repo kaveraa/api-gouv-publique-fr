@@ -29,8 +29,9 @@ The SIRET must have 14 digits. An unknown SIRET throws `NotFoundException`.
 ```php
 $result = ApiGouv::entreprises()->rechercher('octo technology');
 
-echo $result->total;                       // number of matches
-foreach ($result->results as $company) {
+echo $result->total;                       // number of matches, all pages
+echo count($result);                       // companies on this page
+foreach ($result as $company) {
     echo $company->siren.' '.$company->nomComplet.PHP_EOL;
 }
 ```
@@ -124,6 +125,8 @@ A page size outside 1 to 25 throws `InvalidArgumentException`. This avoids an HT
 | `page` | int | Current page. |
 | `perPage` | int | Page size. |
 | `totalPages` | int | Number of pages. |
+
+`SearchResult` is iterable and countable: `foreach ($result as $company)` and `count($result)` work on the companies of the page. `total` counts the matches of every page.
 
 ## Use case: check a company at sign-up
 
