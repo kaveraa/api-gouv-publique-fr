@@ -6,6 +6,8 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). The
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-10-08
+
 ### Added
 
 - **FR** `SearchResult` est itérable et dénombrable : `foreach` et `count()` portent sur les entreprises de la page.
