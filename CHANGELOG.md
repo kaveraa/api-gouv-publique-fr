@@ -6,6 +6,8 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). The
 
 ## [Unreleased]
 
+## [1.0.1] - 2026-10-08
+
 ### Maintenance
 
 - **FR** Tests lancés sur PHP 8.5 et Pest 5 accepté en développement. Aucun changement dans le code.
